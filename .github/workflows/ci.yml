@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   build:
-    name: 코드 검사
+    name: Build & Check
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -46,7 +46,7 @@ jobs:
         run: pnpm build
 
   preview:
-    name: 프리뷰 배포
+    name: Preview Deploy
     needs: build
     # fork에서 올라온 PR은 Secrets를 읽을 수 없고, Draft PR은 배포하지 않음
     if: >-
