@@ -8,6 +8,15 @@
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
+    /* Path alias */
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@domains/*": ["./src/domains/*"],
+      "@shared/*": ["./src/shared/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
