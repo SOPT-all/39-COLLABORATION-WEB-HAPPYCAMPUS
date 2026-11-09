@@ -10,7 +10,6 @@
 
     /* Path alias */
     "paths": {
-      "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"],
       "@routes/*": ["./src/routes/*"],
       "@pages/*": ["./src/pages/*"],
