@@ -1,0 +1,69 @@
+name: Auto Label
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add labels by title and author
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const target = context.payload.pull_request ?? context.payload.issue;
+            const { title, number } = target;
+            const author = target.user.login;
+
+            // 제목 맨 앞의 [Type] 으로 라벨 지정 (대소문자 무관)
+            // ex) [Feat] 버튼 컴포넌트 구현, [Init](project): PR 템플릿 세팅
+            const typeLabels = [
+              { pattern: /^\[init\]/i, label: '⚙️ Init' },
+              { pattern: /^\[feat\]/i, label: '✨ Feat' },
+              { pattern: /^\[fix\]/i, label: '🐞 Fix' },
+              { pattern: /^\[hotfix\]/i, label: '🚑 Hotfix' },
+              { pattern: /^\[refactor\]/i, label: '🔨 Refactor' },
+              { pattern: /^\[style\]/i, label: '🎨 Style' },
+              { pattern: /^\[chore\]/i, label: '🧹 Chore' },
+              { pattern: /^\[docs\]/i, label: '📃 Docs' },
+              { pattern: /^\[asset\]/i, label: '🖼️ Asset' },
+              { pattern: /^\[deploy\]/i, label: '🚀 Deploy' },
+            ];
+
+            // 작성자 GitHub 아이디로 라벨 지정
+            const authorLabels = {
+              ahyohyo: '🦭 효정',
+              joyrii: '🦆 예슬',
+              gksgPDnjs: '🐨 혜원',
+              Junho73: '🍚 준호',
+            };
+
+            const labels = typeLabels
+              .filter(({ pattern }) => pattern.test(title.trim()))
+              .map(({ label }) => label);
+
+            if (authorLabels[author]) {
+              labels.push(authorLabels[author]);
+            }
+
+            if (labels.length === 0) {
+              console.log('추가할 라벨이 없습니다.');
+              return;
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: number,
+              labels,
+            });
+
+            console.log(`Added labels: ${labels.join(', ')}`);
