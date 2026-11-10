@@ -1,5 +1,5 @@
 function MaterialDetailPage() {
-  return <div>MaterialDetailPage</div>
+  return <div>MaterialDetailPage</div>;
 }
 
-export default MaterialDetailPage
+export default MaterialDetailPage;

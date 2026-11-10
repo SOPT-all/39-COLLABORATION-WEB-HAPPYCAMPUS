@@ -1,0 +1,187 @@
+name: Discord Notification
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, review_requested, closed]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord notification
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+
+          REVIEW_WINDOW_SECONDS: "5"
+          POLL_TRIES: "12"
+          POLL_INTERVAL: "5"
+          REQUIRED_APPROVALS: "2"
+          DISCORD_IDS: |
+            {
+              "ahyohyo": "1282282833624305665",
+              "gksgPDnjs": "837344462081490996",
+              "joyrii": "1391279326263250975",
+              "Junho73": "962338449585766411"
+            }
+        # PR 제목·본문 같은 사용자 입력은 ${{ }}로 셸에 넣지 않고 이벤트 JSON에서 jq로 읽습니다. (스크립트 인젝션 방지)
+        run: |
+          set -euo pipefail
+
+          if [ -z "${WEBHOOK_URL:-}" ]; then
+            echo "::error::DISCORD_WEBHOOK_URL 시크릿이 설정되지 않았습니다."
+            exit 1
+          fi
+
+          ev() { jq -r "$1 // empty" "$GITHUB_EVENT_PATH"; }
+
+          mention() {
+            local id
+            id=$(jq -r --arg u "$1" '.[$u] // empty' <<< "$DISCORD_IDS")
+            if [ -n "$id" ]; then echo "<@$id>"; else echo "@$1"; fi
+          }
+
+          mentions() {
+            local out="" u
+            for u in "$@"; do out="${out:+$out }$(mention "$u")"; done
+            echo "$out"
+          }
+
+          preview() {
+            jq -rn --arg s "$1" --argjson n "$2" '
+              $s | gsub("<!--[\\s\\S]*?-->"; "") | gsub("\r"; "") | gsub("\n{3,}"; "\n\n")
+              | sub("^\\s+"; "") | sub("\\s+$"; "")
+              | if length > $n then .[0:$n] + "…" else . end'
+          }
+
+          send() {
+            local title="$1" url="$2" color="$3" desc="$4" author="$5" ping="$6"
+            jq -n \
+              --arg title "$title" --arg url "$url" --argjson color "$color" \
+              --arg desc "$desc" --arg author "$author" --arg ping "$ping" \
+              --arg repo "$REPO" --argjson fields "${FIELDS:-[]}" '
+              def nonempty: with_entries(select(.value != null and .value != "" and .value != []));
+              {
+                content: $ping,
+                allowed_mentions: { parse: ["users"] },
+                embeds: [
+                  {
+                    title: ($title | .[0:256]),
+                    url: $url,
+                    color: $color,
+                    description: ($desc | .[0:4000]),
+                    fields: [ $fields[] | select(.value != "") | .value |= .[0:1024] ],
+                    author: (if $author == "" then null else
+                      { name: $author, url: ("https://github.com/" + $author), icon_url: ("https://github.com/" + $author + ".png") } end),
+                    footer: { text: $repo },
+                    timestamp: (now | todate)
+                  } | nonempty
+                ]
+              } | nonempty' \
+            | curl -fsS -X POST "$WEBHOOK_URL" -H "Content-Type: application/json" -d @-
+          }
+
+          GREEN=5763719; BLUE=3447003; PURPLE=10181046; RED=15548997
+
+          NUMBER=$(ev '.pull_request.number'); TITLE=$(ev '.pull_request.title'); URL=$(ev '.pull_request.html_url')
+          AUTHOR=$(ev '.pull_request.user.login'); DRAFT=$(ev '.pull_request.draft')
+          BASE=$(ev '.pull_request.base.ref'); HEAD=$(ev '.pull_request.head.ref')
+          CREATED_AT=$(ev '.pull_request.created_at')
+
+          if [ "$DRAFT" = "true" ]; then echo "Draft PR은 알리지 않습니다."; exit 0; fi
+
+          BRANCH="\`$HEAD\` → \`$BASE\`"
+
+          if [ "$EVENT_NAME" = "pull_request_review" ]; then
+            REVIEWER=$(ev '.review.user.login'); STATE=$(ev '.review.state')
+            REVIEW_URL=$(ev '.review.html_url'); BODY=$(preview "$(ev '.review.body')" 300)
+
+            if [ "$REVIEWER" = "$AUTHOR" ]; then echo "작성자 본인의 코멘트는 알리지 않습니다."; exit 0; fi
+
+            case "$STATE" in
+              approved)
+                APPROVALS=$(gh api --paginate "repos/$REPO/pulls/$NUMBER/reviews?per_page=100" --jq '.[]' \
+                  | jq -s '[ .[] | select(.state == "APPROVED" or .state == "CHANGES_REQUESTED" or .state == "DISMISSED") ]
+                           | group_by(.user.login) | map(max_by(.submitted_at)) | map(select(.state == "APPROVED")) | length')
+                if [ "$APPROVALS" -eq "$REQUIRED_APPROVALS" ]; then
+                  HEADLINE="✅ 머지할 수 있어요!"; COLOR=$GREEN
+                  PING="✅ $(mention "$AUTHOR") 승인 ${APPROVALS}개를 모두 받았어요. 머지해 주세요!"
+                else
+                  HEADLINE="👍 리뷰 승인"; COLOR=$GREEN
+                  PING="👍 $(mention "$AUTHOR") $REVIEWER 님이 승인했어요 (${APPROVALS}/${REQUIRED_APPROVALS})"
+                fi
+                FIELDS=$(jq -n --arg r "$(mention "$REVIEWER")" --arg n "${APPROVALS} / ${REQUIRED_APPROVALS}" '[
+                  { name: "리뷰어", value: $r, inline: true },
+                  { name: "승인", value: $n, inline: true } ]')
+                ;;
+              changes_requested)
+                HEADLINE="🛠️ 수정 요청"; COLOR=$RED
+                PING="🛠️ $(mention "$AUTHOR") $REVIEWER 님이 수정을 요청했어요"
+                FIELDS=$(jq -n --arg r "$(mention "$REVIEWER")" '[ { name: "리뷰어", value: $r, inline: true } ]')
+                ;;
+              *)
+                HEADLINE="💬 리뷰 코멘트"; COLOR=$BLUE
+                PING="💬 $(mention "$AUTHOR") $REVIEWER 님이 코멘트를 남겼어요"
+                FIELDS=$(jq -n --arg r "$(mention "$REVIEWER")" '[ { name: "리뷰어", value: $r, inline: true } ]')
+                ;;
+            esac
+
+            send "$HEADLINE · #$NUMBER $TITLE" "${REVIEW_URL:-$URL}" "$COLOR" "$BODY" "$REVIEWER" "$PING"
+            exit 0
+          fi
+
+          case "$ACTION" in
+            opened|reopened|ready_for_review)
+              for _ in $(seq "$POLL_TRIES"); do
+                PR_JSON=$(gh api "repos/$REPO/pulls/$NUMBER")
+                mapfile -t REVIEWERS < <(jq -r '.requested_reviewers[].login' <<< "$PR_JSON")
+                if [ "${#REVIEWERS[@]}" -gt 0 ]; then break; fi
+                sleep "$POLL_INTERVAL"
+              done
+
+              case "$ACTION" in
+                opened)           HEADLINE="🚀 새 PR"; COLOR=$BLUE ;;
+                reopened)         HEADLINE="🔄 다시 열린 PR"; COLOR=$BLUE ;;
+                ready_for_review) HEADLINE="👀 리뷰 준비 완료"; COLOR=$BLUE ;;
+              esac
+
+              PING=""
+              if [ "${#REVIEWERS[@]}" -gt 0 ]; then PING="🙋 $(mentions "${REVIEWERS[@]}") 리뷰 부탁드려요!"; fi
+              ADD=$(jq -r '"+\(.additions) / -\(.deletions) · 파일 \(.changed_files)개"' <<< "$PR_JSON")
+
+              FIELDS=$(jq -n --arg b "$BRANCH" --arg r "$(mentions "${REVIEWERS[@]}")" --arg c "$ADD" '[
+                { name: "브랜치", value: $b, inline: true },
+                { name: "변경", value: $c, inline: true },
+                { name: "리뷰어", value: (if $r == "" then "아직 없음" else $r end), inline: false } ]')
+              send "$HEADLINE · #$NUMBER $TITLE" "$URL" "$COLOR" "$(preview "$(ev '.pull_request.body')" 200)" "$AUTHOR" "$PING"
+              ;;
+
+            review_requested)
+              ELAPSED=$(( $(date -d "$(ev '.pull_request.updated_at')" +%s) - $(date -d "$CREATED_AT" +%s) ))
+              if [ "$ELAPSED" -lt "$REVIEW_WINDOW_SECONDS" ]; then exit 0; fi
+              REQUESTED=$(ev '.requested_reviewer.login')
+              if [ -z "$REQUESTED" ]; then echo "팀 리뷰 요청은 알리지 않습니다."; exit 0; fi
+
+              FIELDS=$(jq -n --arg b "$BRANCH" '[ { name: "브랜치", value: $b, inline: true } ]')
+              send "🙋 리뷰 요청 · #$NUMBER $TITLE" "$URL" "$PURPLE" "" "$AUTHOR" \
+                "🙋 $(mention "$REQUESTED") $AUTHOR 님이 리뷰를 요청했어요"
+              ;;
+
+            closed)
+              MERGED_BY=$(ev '.pull_request.merged_by.login')
+              FIELDS=$(jq -n --arg b "$BRANCH" --arg m "$MERGED_BY" '[
+                { name: "브랜치", value: $b, inline: true },
+                { name: "머지한 사람", value: $m, inline: true } ]')
+              send "🎉 머지 완료 · #$NUMBER $TITLE" "$URL" "$GREEN" "" "$AUTHOR" ""
+              ;;
+          esac
