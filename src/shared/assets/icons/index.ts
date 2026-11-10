@@ -17,15 +17,16 @@ export { default as IcEyeoff } from './mono/ic-eyeoff.svg?react'
 export { default as IcFile } from './mono/ic-file.svg?react'
 export { default as IcHome } from './mono/ic-home.svg?react'
 export { default as IcInfo } from './mono/ic-info.svg?react'
-export { default as IcMoneyHuge } from './mono/ic-money-huge.svg?react'
 export { default as IcMy } from './mono/ic-my.svg?react'
 export { default as IcReset } from './mono/ic-reset.svg?react'
 export { default as IcSearch } from './mono/ic-search.svg?react'
 export { default as IcShopping } from './mono/ic-shopping.svg?react'
 
 // 멀티컬러·이미지 아이콘: currentColor 변환 없이 URL로 import → <img src={...} />
-export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.png'
+export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg'
 export { default as IcFiletypePdf } from './multi/ic-filetype-pdf.svg'
-export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.png'
-export { default as IcFloating1 } from './multi/ic-floating-1.png'
-export { default as IcFloating2 } from './multi/ic-floating-2.png'
+export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.svg'
+
+// 로고: 멀티컬러라 URL로 import → <img src={...} />
+export { default as LogoEasyai } from './multi/logo-easyai.svg'
+export { default as LogoHappycampus } from './multi/logo-happycampus.svg'
