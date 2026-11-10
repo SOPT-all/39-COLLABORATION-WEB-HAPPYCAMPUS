@@ -22,6 +22,8 @@ export default defineConfig({
                 },
               },
             },
+            // clipPath·mask id 앞에 파일명을 붙여 아이콘끼리 id가 겹치지 않도록 처리
+            'prefixIds',
             // fill, stroke의 고정 색상을 currentColor로 변환 → CSS color로 아이콘 색상 변경 가능
             {
               name: 'convertColors',
