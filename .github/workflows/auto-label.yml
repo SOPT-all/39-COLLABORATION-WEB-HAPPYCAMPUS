@@ -35,6 +35,7 @@ jobs:
               { pattern: /^\[chore\]/i, label: '🧹 Chore' },
               { pattern: /^\[docs\]/i, label: '📃 Docs' },
               { pattern: /^\[asset\]/i, label: '🖼️ Asset' },
+              { pattern: /^\[deploy\]/i, label: '🚀 Deploy' },
             ];
 
             // 작성자 GitHub 아이디로 라벨 지정
