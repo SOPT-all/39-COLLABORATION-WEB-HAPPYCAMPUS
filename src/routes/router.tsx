@@ -1,8 +1,9 @@
-import CartPage from "@pages/cart/cart";
-import MaterialDetailPage from "@pages/material-detail/material-detail";
-import { ROUTE_PATH } from "@routes/path";
-import MainLayout from "@shared/ui/layout/layout";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from 'react-router';
+
+import CartPage from '@pages/cart/cart';
+import MaterialDetailPage from '@pages/material-detail/material-detail';
+import { ROUTE_PATH } from '@routes/path';
+import MainLayout from '@shared/ui/layout/layout';
 
 const router = createBrowserRouter([
   {
