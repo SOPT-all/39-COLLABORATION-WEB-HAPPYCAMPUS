@@ -1,4 +1,4 @@
 export const ROUTE_PATH = {
-  MATERIAL_DETAIL: "/",
-  CART: "/cart",
+  MATERIAL_DETAIL: '/',
+  CART: '/cart',
 } as const;
