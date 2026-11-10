@@ -1,0 +1,29 @@
+// 단색 아이콘: svgr 컴포넌트로 import, CSS color로 색상 변경 가능
+export { default as IcAdd } from './mono/ic-add.svg?react';
+export { default as IcCart } from './mono/ic-cart.svg?react';
+export { default as IcCartHuge } from './mono/ic-cart-huge.svg?react';
+export { default as IcCharge } from './mono/ic-charge.svg?react';
+export { default as IcCheck } from './mono/ic-check.svg?react';
+export { default as IcChevronDown } from './mono/ic-chevron-down.svg?react';
+export { default as IcChevronLeft } from './mono/ic-chevron-left.svg?react';
+export { default as IcChevronRight } from './mono/ic-chevron-right.svg?react';
+export { default as IcChevronUp } from './mono/ic-chevron-up.svg?react';
+export { default as IcClose } from './mono/ic-close.svg?react';
+export { default as IcCloseSmall } from './mono/ic-close-small.svg?react';
+export { default as IcEye } from './mono/ic-eye.svg?react';
+export { default as IcEyeoff } from './mono/ic-eyeoff.svg?react';
+export { default as IcFile } from './mono/ic-file.svg?react';
+export { default as IcInfo } from './mono/ic-info.svg?react';
+export { default as IcMy } from './mono/ic-my.svg?react';
+export { default as IcReset } from './mono/ic-reset.svg?react';
+export { default as IcSearch } from './mono/ic-search.svg?react';
+export { default as IcShopping } from './mono/ic-shopping.svg?react';
+
+// 멀티컬러·이미지 아이콘: currentColor 변환 없이 URL로 import → <img src={...} />
+export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';
+export { default as IcFiletypePdf } from './multi/ic-filetype-pdf.svg';
+export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.svg';
+
+// 로고: 멀티컬러라 URL로 import → <img src={...} />
+export { default as LogoEasyai } from './multi/logo-easyai.svg';
+export { default as LogoHappycampus } from './multi/logo-happycampus.svg';
