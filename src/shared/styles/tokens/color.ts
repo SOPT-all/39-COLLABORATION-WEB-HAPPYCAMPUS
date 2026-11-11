@@ -2,6 +2,7 @@ export const COLORS = {
   common0: '#FFFFFF',
   common100: '#000000',
 
+  blue50: '#EBF4FF',
   blue100: '#CDE5FF',
   blue200: '#9BCBFE',
   blue300: '#6AB1FE',
