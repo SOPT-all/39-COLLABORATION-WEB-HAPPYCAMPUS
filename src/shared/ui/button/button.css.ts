@@ -60,7 +60,7 @@ export const button = recipe({
           '&:disabled': {
             borderColor: vars.color.grey100,
             backgroundColor: vars.color.grey100,
-            color: vars.color.grey300,
+            color: vars.color.grey400,
           },
         },
       },
@@ -74,9 +74,9 @@ export const button = recipe({
             backgroundColor: vars.color.blue100,
           },
           '&:disabled': {
-            borderColor: vars.color.grey300,
+            borderColor: vars.color.grey400,
             backgroundColor: vars.color.grey100,
-            color: vars.color.grey300,
+            color: vars.color.grey400,
           },
         },
       },
@@ -92,24 +92,9 @@ export const button = recipe({
             color: vars.color.blue600,
           },
           '&:disabled': {
-            borderColor: vars.color.grey300,
+            borderColor: vars.color.grey400,
             backgroundColor: vars.color.grey100,
-            color: vars.color.grey300,
-          },
-        },
-      },
-
-      mono: {
-        borderColor: vars.color.grey100,
-        backgroundColor: vars.color.grey100,
-        color: vars.color.grey600,
-        selectors: {
-          '&:hover:not(:disabled)': {
-            borderColor: vars.color.grey200,
-            backgroundColor: vars.color.grey200,
-          },
-          '&:disabled': {
-            color: vars.color.grey300,
+            color: vars.color.grey400,
           },
         },
       },
