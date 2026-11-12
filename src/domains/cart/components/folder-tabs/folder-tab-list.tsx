@@ -2,19 +2,19 @@ import type { Folder } from '@domains/cart/types/folder';
 
 import FolderTab from './folder-tab';
 
-import * as styles from './folder-tabs.css';
+import * as styles from './folder-tab-list.css';
 
-interface FolderTabsProps {
+interface FolderTabListProps {
   folders: Folder[];
   selectedFolderId: number;
   onSelect: (folderId: number) => void;
 }
 
-const FolderTabs = ({
+const FolderTabList = ({
   folders,
   selectedFolderId,
   onSelect,
-}: FolderTabsProps) => (
+}: FolderTabListProps) => (
   <div className={styles.scroller}>
     <div role="tablist" className={styles.list}>
       {folders.map((folder) => (
@@ -29,4 +29,4 @@ const FolderTabs = ({
   </div>
 );
 
-export default FolderTabs;
+export default FolderTabList;
