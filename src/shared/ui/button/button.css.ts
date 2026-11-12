@@ -40,6 +40,7 @@ export const button = recipe({
       },
       lg: {
         gap: 6,
+        borderRadius: 8,
         padding: '10px 20px',
         vars: { [iconSize]: '24px' },
         ...vars.typography.body1Sb16,
