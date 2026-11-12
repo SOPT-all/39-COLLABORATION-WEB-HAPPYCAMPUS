@@ -4,12 +4,22 @@ import { IcCheck } from '@shared/assets/icons';
 
 import * as styles from './checkbox.css';
 
-interface CheckboxProps {
+interface BaseCheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
-  ariaLabel?: string;
-  children?: ReactNode;
 }
+
+interface TextCheckboxProps extends BaseCheckboxProps {
+  children: ReactNode;
+  ariaLabel?: never;
+}
+
+interface IconCheckboxProps extends BaseCheckboxProps {
+  children?: never;
+  ariaLabel: string;
+}
+
+type CheckboxProps = TextCheckboxProps | IconCheckboxProps;
 
 const Checkbox = ({
   checked,
