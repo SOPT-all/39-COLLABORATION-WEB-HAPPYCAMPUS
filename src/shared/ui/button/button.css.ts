@@ -13,7 +13,6 @@ export const button = recipe({
     justifyContent: 'center',
     border: '1px solid transparent',
     borderRadius: 7,
-    cursor: 'pointer',
     textAlign: 'center',
     whiteSpace: 'nowrap',
 
