@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router';
 
-import Header from '@shared/ui/layout/header/header';
+import Footer from './footer/footer';
+import Header from './header/header';
 
 const MainLayout = () => {
   return (
     <>
       <Header />
       <Outlet />
-      {/* Footer */}
+      <Footer />
     </>
   );
 };
