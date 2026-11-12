@@ -16,6 +16,7 @@ export const textInput = recipe({
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 8,
+    borderColor: vars.color.grey300,
     backgroundColor: 'transparent',
     padding: 10,
     color: vars.color.grey900,
@@ -28,31 +29,20 @@ export const textInput = recipe({
       true: {
         borderColor: vars.color.redStrong,
       },
-      false: {
-        borderColor: vars.color.grey300,
-      },
     },
-  },
-  defaultVariants: {
-    error: false,
   },
 });
 
 export const helperText = recipe({
   base: {
     ...vars.typography.labelM12,
+    color: vars.color.grey400,
   },
   variants: {
     error: {
       true: {
         color: vars.color.redStrong,
       },
-      false: {
-        color: vars.color.grey400,
-      },
     },
-  },
-  defaultVariants: {
-    error: false,
   },
 });
