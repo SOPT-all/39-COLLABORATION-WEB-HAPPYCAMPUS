@@ -33,7 +33,6 @@ export const searchBox = style({
 
 export const searchPlaceholder = style({
   ...vars.typography.body2R14,
-  lineHeight: '22px',
   color: vars.color.grey400,
 });
 
@@ -132,7 +131,6 @@ export const navMenuItem = recipe({
     justifyContent: 'center',
     height: 51,
     ...vars.typography.body1M16,
-    lineHeight: '24px',
     color: vars.color.grey800,
   },
 
