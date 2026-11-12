@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { IcCheck } from '@shared/assets/icons';
 
 import * as styles from './checkbox.css';
@@ -6,11 +8,17 @@ interface CheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   ariaLabel?: string;
+  children?: ReactNode;
 }
 
-const Checkbox = ({ checked, onChange, ariaLabel }: CheckboxProps) => {
+const Checkbox = ({
+  checked,
+  onChange,
+  ariaLabel,
+  children,
+}: CheckboxProps) => {
   return (
-    <label>
+    <label className={styles.label({ hasText: !!children })}>
       <input
         type="checkbox"
         className={styles.input}
@@ -19,8 +27,9 @@ const Checkbox = ({ checked, onChange, ariaLabel }: CheckboxProps) => {
         aria-label={ariaLabel}
       />
       <span className={styles.box}>
-        <IcCheck width={16} height={16} />
+        <IcCheck width={16} height={18} />
       </span>
+      {children && <span className={styles.text}>{children}</span>}
     </label>
   );
 };
