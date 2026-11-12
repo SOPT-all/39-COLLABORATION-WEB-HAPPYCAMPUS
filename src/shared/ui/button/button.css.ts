@@ -58,23 +58,11 @@ export const button = recipe({
           },
         },
       },
+    },
 
-      outlinedPrimary: {
-        borderColor: vars.color.blue500,
-        backgroundColor: vars.color.common0,
-        color: vars.color.blue500,
-        selectors: {
-          '&:hover:not(:disabled)': {
-            borderColor: vars.color.blue600,
-            backgroundColor: vars.color.blue50,
-            color: vars.color.blue600,
-          },
-          '&:disabled': {
-            borderColor: vars.color.grey400,
-            backgroundColor: vars.color.grey100,
-            color: vars.color.grey400,
-          },
-        },
+    hasCount: {
+      true: {
+        gap: 8,
       },
     },
   },
