@@ -38,13 +38,12 @@ export const tab = recipe({
 });
 
 export const count = recipe({
+  base: {
+    color: vars.color.grey500,
+  },
   variants: {
     selected: {
       true: { color: vars.color.grey600 },
-      false: { color: vars.color.grey500 },
     },
-  },
-  defaultVariants: {
-    selected: false,
   },
 });
