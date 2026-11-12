@@ -6,6 +6,8 @@ import {
   IcMy,
   IcSearch,
   IcShopping,
+  IcTooltipTail,
+  LogoEasyai,
   LogoHappycampus,
 } from '@shared/assets/icons';
 
@@ -22,6 +24,35 @@ const USER_MENU_ITEMS: UserMenuItem[] = [
   { menu: 'charge', label: '충전하기', Icon: IcCharge },
   { menu: 'cart', label: '장바구니', Icon: IcShopping, path: '/cart' },
   { menu: 'my', label: '내계정', Icon: IcMy },
+];
+
+interface NavMenuItem {
+  menu:
+    'home' | 'easyai' | 'topic' | 'partners' | 'expert' | 'fortune' | 'event';
+  label: string;
+  logo?: string;
+  badge?: {
+    menu: 'expert' | 'fortune';
+    label: string;
+  };
+}
+
+const NAV_MENU_ITEMS: NavMenuItem[] = [
+  { menu: 'home', label: '홈' },
+  { menu: 'easyai', label: 'EasyAI', logo: LogoEasyai },
+  { menu: 'topic', label: '토픽광장' },
+  { menu: 'partners', label: '파트너스' },
+  {
+    menu: 'expert',
+    label: '전문가 요청',
+    badge: { menu: 'expert', label: '1:1 맞춤자료' },
+  },
+  {
+    menu: 'fortune',
+    label: '운세/로또',
+    badge: { menu: 'fortune', label: '재미로 보는' },
+  },
+  { menu: 'event', label: '이벤트' },
 ];
 
 const Header = () => {
@@ -68,6 +99,37 @@ const Header = () => {
           </ul>
         </nav>
       </div>
+
+      <nav aria-label="주요 메뉴" className={styles.navContainer}>
+        <div className={styles.navInner}>
+          <span aria-hidden className={styles.hamburger}>
+            <span className={styles.hamburgerLine} />
+            <span className={styles.hamburgerLine} />
+            <span className={styles.hamburgerLine} />
+          </span>
+
+          <ul className={styles.navMenuList}>
+            {NAV_MENU_ITEMS.map(({ menu, label, logo, badge }) => (
+              <li key={menu} className={styles.navMenuItem({ menu })}>
+                {logo ? (
+                  <img src={logo} alt={label} width={51} height={19} />
+                ) : (
+                  label
+                )}
+                {badge && (
+                  <span className={styles.navBadge({ menu: badge.menu })}>
+                    {badge.label}
+                    <IcTooltipTail
+                      aria-hidden
+                      className={styles.navBadgeTail}
+                    />
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
     </header>
   );
 };
