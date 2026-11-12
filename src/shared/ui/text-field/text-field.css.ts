@@ -35,7 +35,7 @@ export const textInput = recipe({
 
 export const helperText = recipe({
   base: {
-    ...vars.typography.labelM12,
+    ...vars.typography.captionM10,
     color: vars.color.grey400,
   },
   variants: {
