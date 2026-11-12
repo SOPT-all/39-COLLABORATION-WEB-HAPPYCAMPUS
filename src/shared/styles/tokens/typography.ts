@@ -50,31 +50,31 @@ export const TYPOGRAPHY = {
   body1Sb16: {
     fontSize: '16px',
     fontWeight: 600,
-    lineHeight: '22px',
+    lineHeight: '24px',
     letterSpacing: '-0.02em',
   },
   body1M16: {
     fontSize: '16px',
     fontWeight: 500,
-    lineHeight: '22px',
+    lineHeight: '24px',
     letterSpacing: '-0.02em',
   },
   body2Sb14: {
     fontSize: '14px',
     fontWeight: 600,
-    lineHeight: '20px',
+    lineHeight: '22px',
     letterSpacing: '-0.02em',
   },
   body2M14: {
     fontSize: '14px',
     fontWeight: 500,
-    lineHeight: '20px',
+    lineHeight: '22px',
     letterSpacing: '-0.02em',
   },
   body2R14: {
     fontSize: '14px',
     fontWeight: 400,
-    lineHeight: '20px',
+    lineHeight: '22px',
     letterSpacing: '-0.02em',
   },
   labelSb12: {
