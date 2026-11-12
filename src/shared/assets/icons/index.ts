@@ -18,6 +18,7 @@ export { default as IcMy } from './mono/ic-my.svg?react';
 export { default as IcReset } from './mono/ic-reset.svg?react';
 export { default as IcSearch } from './mono/ic-search.svg?react';
 export { default as IcShopping } from './mono/ic-shopping.svg?react';
+export { default as IcTooltipTail } from './mono/ic-tooltip-tail.svg?react';
 
 // 멀티컬러·이미지 아이콘: currentColor 변환 없이 URL로 import → <img src={...} />
 export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';
