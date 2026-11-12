@@ -7,7 +7,7 @@ interface HideButtonProps {
   onClick: () => void;
 }
 
-export const HideButton = ({ materialTitle, onClick }: HideButtonProps) => (
+const HideButton = ({ materialTitle, onClick }: HideButtonProps) => (
   <button
     type="button"
     className={styles.hideButton}
@@ -18,3 +18,5 @@ export const HideButton = ({ materialTitle, onClick }: HideButtonProps) => (
     숨기기
   </button>
 );
+
+export default HideButton;
