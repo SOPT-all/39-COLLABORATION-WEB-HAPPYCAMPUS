@@ -8,7 +8,7 @@ interface MaterialHeadingProps {
 const MaterialHeading = ({ title, description }: MaterialHeadingProps) => {
   return (
     <div className={styles.headingContainer}>
-      <h1 className={styles.title}>{title}</h1>
+      <h2 className={styles.title}>{title}</h2>
       <p className={styles.description}>{description}</p>
     </div>
   );

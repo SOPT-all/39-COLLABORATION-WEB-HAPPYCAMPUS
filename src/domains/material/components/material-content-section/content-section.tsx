@@ -10,7 +10,7 @@ interface ContentSectionProps {
 const ContentSection = ({ title, children }: ContentSectionProps) => {
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>{title}</h2>
+      <h3 className={styles.title}>{title}</h3>
       <div className={styles.body}>{children}</div>
     </section>
   );
