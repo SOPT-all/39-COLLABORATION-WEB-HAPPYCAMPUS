@@ -43,6 +43,7 @@ export const bodySectionContent = style({
 
 export const tagList = style({
   display: 'flex',
+  flexWrap: 'wrap',
   gap: 7,
 });
 
