@@ -6,7 +6,6 @@ export const headingContainer = style({
   display: 'flex',
   flexDirection: 'column',
   paddingTop: 14,
-  whiteSpace: 'nowrap',
 });
 
 export const title = style({
