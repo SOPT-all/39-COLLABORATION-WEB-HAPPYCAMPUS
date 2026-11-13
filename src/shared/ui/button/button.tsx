@@ -1,13 +1,32 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 import { button, type ButtonVariants } from './button.css';
 
-export interface ButtonProps
-  extends Omit<ComponentProps<'button'>, 'className'>, ButtonVariants {}
+type ButtonContentProps =
+  | { icon?: never; count?: never }
+  | { icon: ReactNode; count?: never }
+  | { icon?: never; count: number };
 
-const Button = ({ variant, size, type = 'button', ...props }: ButtonProps) => {
+export type ButtonProps = Omit<ComponentProps<'button'>, 'className'> &
+  Omit<ButtonVariants, 'hasCount'> &
+  ButtonContentProps;
+
+const Button = ({
+  variant,
+  icon,
+  count,
+  children,
+  type = 'button',
+  ...props
+}: ButtonProps) => {
+  const hasCount = count !== undefined;
+
   return (
-    <button type={type} className={button({ variant, size })} {...props} />
+    <button type={type} className={button({ variant, hasCount })} {...props}>
+      {icon}
+      {children}
+      {hasCount && <span>{count}</span>}
+    </button>
   );
 };
 
