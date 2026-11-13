@@ -12,7 +12,7 @@ export const folderOption = recipe({
     backgroundColor: vars.color.common0,
     ...vars.typography.body2R14,
     padding: 8,
-    width: 246,
+    width: '100%',
     textAlign: 'left',
     color: vars.color.grey900,
   },
