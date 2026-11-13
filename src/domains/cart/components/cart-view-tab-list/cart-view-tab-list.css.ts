@@ -27,6 +27,16 @@ export const cartViewTabButton = recipe({
         backgroundColor: vars.color.grey700,
         color: vars.color.common0,
       },
+      false: {
+        selectors: {
+          '&:hover': {
+            color: vars.color.common100,
+          },
+        },
+      },
     },
+  },
+  defaultVariants: {
+    selected: false,
   },
 });
