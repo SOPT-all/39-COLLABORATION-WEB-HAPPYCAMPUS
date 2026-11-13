@@ -20,10 +20,8 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
 
       <ContentSection title="목차">
         <ol className={styles.tocBox}>
-          {tableOfContents.map((item, index) => (
-            <li key={item}>
-              {index + 1}. {item}
-            </li>
+          {tableOfContents.map((item) => (
+            <li key={item}>{item}</li>
           ))}
         </ol>
       </ContentSection>
