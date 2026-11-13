@@ -6,7 +6,7 @@ export const contentContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 40,
-  width: 759,
+  width: '100%',
   color: vars.color.grey700,
 });
 
