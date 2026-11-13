@@ -8,8 +8,8 @@ const NOTICES = [
 
 const NoticeBox = () => {
   return (
-    <section className={styles.noticeContainer}>
-      <h2 className={styles.title}>꼭 확인해주세요.</h2>
+    <div className={styles.noticeContainer}>
+      <p className={styles.title}>꼭 확인해주세요.</p>
       <ol className={styles.noticeList}>
         {NOTICES.map((notice, index) => (
           <li key={notice}>
@@ -17,7 +17,7 @@ const NoticeBox = () => {
           </li>
         ))}
       </ol>
-    </section>
+    </div>
   );
 };
 

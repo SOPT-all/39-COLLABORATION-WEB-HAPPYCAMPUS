@@ -7,7 +7,7 @@ export const noticeContainer = style({
   flexDirection: 'column',
   gap: 8,
   padding: '20px 0',
-  width: 760,
+  width: '100%',
 });
 
 export const title = style({
