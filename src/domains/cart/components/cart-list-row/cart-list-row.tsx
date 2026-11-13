@@ -60,6 +60,7 @@ const CartListRow = ({
         <button
           type="button"
           onClick={onDelete}
+          aria-label={`${title} 구매 목록에서 삭제`}
           className={styles.deleteButton}
         >
           삭제
