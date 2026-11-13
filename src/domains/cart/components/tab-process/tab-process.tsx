@@ -10,12 +10,16 @@ const TabProcess = () => {
       <div className={styles.processContent}>
         <div className={styles.titleContainer}>
           <IcCartHuge className={styles.cartIcon} aria-hidden />
-          <h1 className={styles.title}>장바구니</h1>
+          <h2 className={styles.title}>장바구니</h2>
         </div>
 
         <ol className={styles.stepList}>
           {STEPS.map((step, index) => (
-            <li key={step} className={styles.stepItem}>
+            <li
+              key={step}
+              className={styles.stepItem}
+              aria-current={index === 0 ? 'step' : undefined}
+            >
               {index > 0 && (
                 <IcChevronRight className={styles.chevronIcon} aria-hidden />
               )}
