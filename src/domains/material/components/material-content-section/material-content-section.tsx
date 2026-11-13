@@ -1,3 +1,4 @@
+import Tag from '@domains/material/components/tag/tag';
 import type { MaterialDetail } from '@domains/material/types/material';
 
 import ContentSection from './content-section';
@@ -43,8 +44,8 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
       <ContentSection title="태그">
         <ul className={styles.tagList}>
           {tags.map((tag) => (
-            <li key={tag} className={styles.tag}>
-              # {tag}
+            <li key={tag} className={styles.tagItem}>
+              <Tag label={tag} />
             </li>
           ))}
         </ul>

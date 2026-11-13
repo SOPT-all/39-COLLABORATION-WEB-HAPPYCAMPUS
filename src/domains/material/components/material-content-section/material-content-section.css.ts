@@ -43,9 +43,6 @@ export const tagList = style({
   gap: 7,
 });
 
-export const tag = style({
-  borderRadius: 2,
-  backgroundColor: vars.color.grey100,
-  padding: '4px 10px',
-  ...vars.typography.captionM10,
+export const tagItem = style({
+  display: 'flex',
 });
