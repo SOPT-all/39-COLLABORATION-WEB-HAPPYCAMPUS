@@ -13,6 +13,7 @@ export const textFieldContainer = style({
 export const textInput = recipe({
   base: {
     ...vars.typography.body2M14,
+    outline: 'none',
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 8,
@@ -29,7 +30,17 @@ export const textInput = recipe({
       true: {
         borderColor: vars.color.redStrong,
       },
+      false: {
+        selectors: {
+          '&:focus': {
+            borderColor: vars.color.blue500,
+          },
+        },
+      },
     },
+  },
+  defaultVariants: {
+    error: false,
   },
 });
 
