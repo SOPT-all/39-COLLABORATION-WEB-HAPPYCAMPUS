@@ -30,13 +30,13 @@ const TotalPriceCard = ({
 
   return (
     <section aria-label="결제 금액" className={styles.container}>
-      <div className={styles.content}>
+      <div className={styles.priceContainer}>
         <dl className={styles.priceList}>
           {priceItems.map(({ label, amount }) => (
             <div key={label} className={styles.priceItem}>
               <dt>{label}</dt>
               <dd className={styles.priceAmount}>
-                {amount.toLocaleString()}원
+                {amount.toLocaleString('ko-KR')}원
               </dd>
             </div>
           ))}
@@ -45,14 +45,18 @@ const TotalPriceCard = ({
         <dl className={styles.total}>
           <dt>최종 구매금액</dt>
           <dd className={styles.totalAmount}>
-            {totalAmount.toLocaleString()}
+            {totalAmount.toLocaleString('ko-KR')}
             <span className={styles.totalUnit}>원</span>
           </dd>
         </dl>
       </div>
 
-      <Button disabled={orderCount === 0} onClick={onOrderClick}>
-        주문하기 <span>{orderCount}</span>
+      <Button
+        count={orderCount}
+        disabled={orderCount === 0}
+        onClick={onOrderClick}
+      >
+        주문하기
       </Button>
     </section>
   );

@@ -15,7 +15,7 @@ export const container = style({
   height: 312,
 });
 
-export const content = style({
+export const priceContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
