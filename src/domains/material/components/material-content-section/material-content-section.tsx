@@ -28,10 +28,10 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
 
       <ContentSection title="본문내용">
         <div className={styles.bodyContainer}>
-          <p className={styles.bodySummary}>{summary}</p>
+          <p className={styles.bodyStrong}>{summary}</p>
           {bodySections.map(({ title, content }, index) => (
             <div key={title}>
-              <p className={styles.bodySectionTitle}>
+              <p className={styles.bodyStrong}>
                 [{index + 1}. {title}]
               </p>
               <p className={styles.bodySectionContent}>{content}</p>

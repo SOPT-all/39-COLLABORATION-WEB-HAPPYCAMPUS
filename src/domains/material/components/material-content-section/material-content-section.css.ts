@@ -28,11 +28,7 @@ export const bodyContainer = style({
   gap: 12,
 });
 
-export const bodySummary = style({
-  ...vars.typography.body2Sb14,
-});
-
-export const bodySectionTitle = style({
+export const bodyStrong = style({
   ...vars.typography.body2Sb14,
 });
 
