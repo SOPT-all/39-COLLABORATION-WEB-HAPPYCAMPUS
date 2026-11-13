@@ -1,9 +1,7 @@
-import { createVar, globalStyle } from '@vanilla-extract/css';
+import { globalStyle } from '@vanilla-extract/css';
 import { recipe, type RecipeVariants } from '@vanilla-extract/recipes';
 
 import { vars } from '@shared/styles/theme.css';
-
-const iconSize = createVar();
 
 export const button = recipe({
   base: {
@@ -11,10 +9,13 @@ export const button = recipe({
     flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 6,
     border: '1px solid transparent',
-    borderRadius: 7,
+    borderRadius: 8,
+    padding: '10px 20px',
     textAlign: 'center',
     whiteSpace: 'nowrap',
+    ...vars.typography.body1Sb16,
 
     selectors: {
       '&:disabled': {
@@ -24,28 +25,6 @@ export const button = recipe({
   },
 
   variants: {
-    size: {
-      sm: {
-        gap: 6,
-        padding: '6px 16px',
-        vars: { [iconSize]: '18px' },
-        ...vars.typography.body2M14,
-      },
-      md: {
-        gap: 4,
-        padding: '10px 18px 10px 26px',
-        vars: { [iconSize]: '20px' },
-        ...vars.typography.body2M14,
-      },
-      lg: {
-        gap: 6,
-        borderRadius: 8,
-        padding: '10px 20px',
-        vars: { [iconSize]: '24px' },
-        ...vars.typography.body1Sb16,
-      },
-    },
-
     variant: {
       filled: {
         borderColor: vars.color.blue500,
@@ -79,29 +58,16 @@ export const button = recipe({
           },
         },
       },
+    },
 
-      outlinedPrimary: {
-        borderColor: vars.color.blue500,
-        backgroundColor: vars.color.common0,
-        color: vars.color.blue500,
-        selectors: {
-          '&:hover:not(:disabled)': {
-            borderColor: vars.color.blue600,
-            backgroundColor: vars.color.blue50,
-            color: vars.color.blue600,
-          },
-          '&:disabled': {
-            borderColor: vars.color.grey400,
-            backgroundColor: vars.color.grey100,
-            color: vars.color.grey400,
-          },
-        },
+    hasCount: {
+      true: {
+        gap: 8,
       },
     },
   },
 
   defaultVariants: {
-    size: 'lg',
     variant: 'filled',
   },
 });
@@ -110,6 +76,6 @@ export type ButtonVariants = NonNullable<RecipeVariants<typeof button>>;
 
 globalStyle(`${button.classNames.base} > svg`, {
   flexShrink: 0,
-  width: iconSize,
-  height: iconSize,
+  width: 24,
+  height: 24,
 });
