@@ -11,6 +11,7 @@ export { default as IcChevronRight } from './mono/ic-chevron-right.svg?react';
 export { default as IcChevronUp } from './mono/ic-chevron-up.svg?react';
 export { default as IcClose } from './mono/ic-close.svg?react';
 export { default as IcCloseSmall } from './mono/ic-close-small.svg?react';
+export { default as IcExpand } from './mono/ic-expand.svg?react';
 export { default as IcEye } from './mono/ic-eye.svg?react';
 export { default as IcEyeoff } from './mono/ic-eyeoff.svg?react';
 export { default as IcFile } from './mono/ic-file.svg?react';
