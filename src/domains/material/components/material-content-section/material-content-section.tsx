@@ -1,12 +1,12 @@
 import type { MaterialDetail } from '@domains/material/types/material';
 
-import * as styles from './product-content-section.css';
+import * as styles from './material-content-section.css';
 
-interface ProductContentSectionProps {
+interface MaterialContentSectionProps {
   material: MaterialDetail;
 }
 
-const ProductContentSection = ({ material }: ProductContentSectionProps) => {
+const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
   const { description, tableOfContents, summary, bodySections, tags } =
     material;
 
@@ -59,4 +59,4 @@ const ProductContentSection = ({ material }: ProductContentSectionProps) => {
   );
 };
 
-export default ProductContentSection;
+export default MaterialContentSection;
