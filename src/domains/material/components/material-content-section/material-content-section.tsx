@@ -1,5 +1,7 @@
 import type { MaterialDetail } from '@domains/material/types/material';
 
+import ContentSection from './content-section';
+
 import * as styles from './material-content-section.css';
 
 interface MaterialContentSectionProps {
@@ -12,26 +14,21 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
 
   return (
     <div className={styles.contentContainer}>
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>소개</h2>
+      <ContentSection title="소개">
         <p className={styles.description}>{description}</p>
-      </section>
+      </ContentSection>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>목차</h2>
-        <div className={styles.sectionBody}>
-          <ol className={styles.tocBox}>
-            {tableOfContents.map((item, index) => (
-              <li key={item}>
-                {index + 1}. {item}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <ContentSection title="목차">
+        <ol className={styles.tocBox}>
+          {tableOfContents.map((item, index) => (
+            <li key={item}>
+              {index + 1}. {item}
+            </li>
+          ))}
+        </ol>
+      </ContentSection>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>본문내용</h2>
+      <ContentSection title="본문내용">
         <div className={styles.bodyContainer}>
           <p className={styles.bodySummary}>{summary}</p>
           {bodySections.map(({ title, content }, index) => (
@@ -43,10 +40,9 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
             </div>
           ))}
         </div>
-      </section>
+      </ContentSection>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>태그</h2>
+      <ContentSection title="태그">
         <ul className={styles.tagList}>
           {tags.map((tag) => (
             <li key={tag} className={styles.tag}>
@@ -54,7 +50,7 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
             </li>
           ))}
         </ul>
-      </section>
+      </ContentSection>
     </div>
   );
 };

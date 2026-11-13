@@ -10,25 +10,9 @@ export const contentContainer = style({
   color: vars.color.grey700,
 });
 
-export const section = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 6,
+export const description = style({
+  ...vars.typography.body2M14,
 });
-
-export const sectionTitle = style({
-  ...vars.typography.heading2Sb18,
-  color: vars.color.grey900,
-});
-
-export const sectionBody = style({
-  padding: 10,
-});
-
-export const description = style([
-  sectionBody,
-  { ...vars.typography.body2M14 },
-]);
 
 export const tocBox = style({
   border: `1px solid ${vars.color.grey200}`,
@@ -38,10 +22,11 @@ export const tocBox = style({
   ...vars.typography.body2M14,
 });
 
-export const bodyContainer = style([
-  sectionBody,
-  { display: 'flex', flexDirection: 'column', gap: 12 },
-]);
+export const bodyContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 12,
+});
 
 export const bodySummary = style({
   ...vars.typography.body2Sb14,
@@ -56,7 +41,10 @@ export const bodySectionContent = style({
   ...vars.typography.body2R14,
 });
 
-export const tagList = style([sectionBody, { display: 'flex', gap: 7 }]);
+export const tagList = style({
+  display: 'flex',
+  gap: 7,
+});
 
 export const tag = style({
   borderRadius: 2,
