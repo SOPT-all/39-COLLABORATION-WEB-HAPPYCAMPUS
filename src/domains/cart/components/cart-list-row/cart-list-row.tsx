@@ -1,4 +1,3 @@
-import { IcEyeoff } from '@shared/assets/icons';
 import Checkbox from '@shared/ui/checkbox/checkbox';
 
 import * as styles from './cart-list-row.css';
@@ -9,7 +8,6 @@ interface CartListRowProps {
   description: string;
   price: number;
   savedDate: string;
-  isHidden?: boolean;
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   onDelete: () => void;
@@ -21,7 +19,6 @@ const CartListRow = ({
   description,
   price,
   savedDate,
-  isHidden = false,
   checked,
   onCheckedChange,
   onDelete,
@@ -29,21 +26,11 @@ const CartListRow = ({
   return (
     <tr className={styles.cartListRow}>
       <td className={styles.checkCell}>
-        {isHidden ? (
-          <IcEyeoff
-            width={16}
-            height={16}
-            role="img"
-            aria-label="비교하기에서 숨긴 자료"
-            className={styles.hiddenIcon}
-          />
-        ) : (
-          <Checkbox
-            checked={checked}
-            onChange={onCheckedChange}
-            ariaLabel={`${title} 구매 목록에 담기`}
-          />
-        )}
+        <Checkbox
+          checked={checked}
+          onChange={onCheckedChange}
+          ariaLabel={`${title} 구매 목록에 담기`}
+        />
       </td>
       <td className={styles.infoCell}>
         <div className={styles.infoContainer}>

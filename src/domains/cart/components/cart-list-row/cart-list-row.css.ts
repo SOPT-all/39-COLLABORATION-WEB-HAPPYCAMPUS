@@ -16,11 +16,6 @@ export const checkCell = style({
   textAlign: 'center',
 });
 
-export const hiddenIcon = style({
-  display: 'inline-block',
-  verticalAlign: 'middle',
-});
-
 export const infoCell = style({
   paddingRight: 20,
   paddingLeft: 12,
