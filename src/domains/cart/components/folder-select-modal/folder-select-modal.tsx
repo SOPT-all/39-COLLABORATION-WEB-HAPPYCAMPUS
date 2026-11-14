@@ -88,9 +88,7 @@ const FolderSelectModal = ({
                     folderName={DEFAULT_CATEGORY_LABEL[defaultCategory]}
                     isDefault={isOriginal}
                     selected={isOriginal}
-                    onClick={() => {
-                      // TODO: 비활성 디자인 확정 후 FolderOption disabled 처리
-                    }}
+                    disabled={!isOriginal}
                   />
                 </li>
               );
