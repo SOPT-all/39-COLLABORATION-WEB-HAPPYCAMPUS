@@ -12,7 +12,7 @@ export const folderOption = recipe({
     backgroundColor: vars.color.common0,
     ...vars.typography.body2R14,
     padding: 8,
-    width: 246,
+    width: '100%',
     textAlign: 'left',
     color: vars.color.grey900,
   },
@@ -20,6 +20,11 @@ export const folderOption = recipe({
     selected: {
       true: {
         backgroundColor: vars.color.blue50,
+      },
+    },
+    disabled: {
+      true: {
+        color: vars.color.grey400,
       },
     },
   },
@@ -36,12 +41,26 @@ export const checkIcon = recipe({
         color: vars.color.blue500,
       },
     },
+    disabled: {
+      true: {
+        color: vars.color.grey200,
+      },
+    },
   },
 });
 
-export const fileIcon = style({
-  flexShrink: 0,
-  color: vars.color.grey800,
+export const fileIcon = recipe({
+  base: {
+    flexShrink: 0,
+    color: vars.color.grey800,
+  },
+  variants: {
+    disabled: {
+      true: {
+        color: vars.color.grey400,
+      },
+    },
+  },
 });
 
 export const defaultBadge = style({
