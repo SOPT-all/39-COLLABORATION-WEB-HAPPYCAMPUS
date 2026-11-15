@@ -83,8 +83,9 @@ export const addFolderButton = style({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
-  color: vars.color.blue500,
+  paddingBlock: 4,
   ...vars.typography.labelSb12,
+  color: vars.color.blue500,
 });
 
 export const infoText = style({
