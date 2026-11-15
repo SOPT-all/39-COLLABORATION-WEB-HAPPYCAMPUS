@@ -6,13 +6,15 @@ interface FolderOptionProps {
   folderName: string;
   isDefault: boolean;
   selected: boolean;
-  onClick: () => void;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 const FolderOption = ({
   folderName,
   isDefault,
   selected,
+  disabled = false,
   onClick,
 }: FolderOptionProps) => {
   return (
@@ -21,15 +23,20 @@ const FolderOption = ({
       role="checkbox"
       aria-checked={selected}
       onClick={onClick}
-      className={styles.folderOption({ selected })}
+      className={styles.folderOption({ selected, disabled })}
     >
       <IcCheck
         width={24}
         height={24}
         aria-hidden
-        className={styles.checkIcon({ selected })}
+        className={styles.checkIcon({ selected, disabled })}
       />
-      <IcFile width={18} height={18} aria-hidden className={styles.fileIcon} />
+      <IcFile
+        width={18}
+        height={18}
+        aria-hidden
+        className={styles.fileIcon({ disabled })}
+      />
       <span>{folderName}</span>
       {isDefault && <span className={styles.defaultBadge}>기본</span>}
     </button>
