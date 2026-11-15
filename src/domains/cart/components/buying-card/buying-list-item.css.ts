@@ -31,7 +31,14 @@ export const title = style({
   color: vars.color.grey900,
 });
 
-export const closeIcon = style({
+export const removeButton = style({
   flexShrink: 0,
+  borderRadius: '50%',
   color: vars.color.grey500,
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: vars.color.grey100,
+    },
+  },
 });

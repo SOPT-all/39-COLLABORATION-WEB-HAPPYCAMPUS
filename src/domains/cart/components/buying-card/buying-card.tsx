@@ -9,9 +9,10 @@ interface BuyingItem {
 
 interface BuyingCardProps {
   items: BuyingItem[];
+  onRemove: (cartItemId: number) => void;
 }
 
-const BuyingCard = ({ items }: BuyingCardProps) => {
+const BuyingCard = ({ items, onRemove }: BuyingCardProps) => {
   const isEmpty = items.length === 0;
 
   return (
@@ -22,7 +23,11 @@ const BuyingCard = ({ items }: BuyingCardProps) => {
       ) : (
         <ul className={styles.buyingList}>
           {items.map(({ cartItemId, title }) => (
-            <BuyingListItem key={cartItemId} title={title} />
+            <BuyingListItem
+              key={cartItemId}
+              title={title}
+              onRemove={() => onRemove(cartItemId)}
+            />
           ))}
         </ul>
       )}
