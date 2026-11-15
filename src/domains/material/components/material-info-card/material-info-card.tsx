@@ -28,9 +28,9 @@ const MaterialInfoCard = ({ info, actions }: MaterialInfoCardProps) => {
     <aside aria-labelledby={titleId} className={styles.card}>
       <div className={styles.info}>
         <div className={styles.header}>
-          <h2 id={titleId} className={styles.title}>
+          <h3 id={titleId} className={styles.title}>
             자료 정보
-          </h2>
+          </h3>
           <p className={styles.price}>{price.toLocaleString('ko-KR')}원</p>
         </div>
 
