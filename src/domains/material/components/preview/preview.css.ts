@@ -45,9 +45,9 @@ export const viewer = style({
 
 export const pageImage = style({
   border: `1px solid ${vars.color.grey300}`,
-  boxShadow: '0 6px 9px rgba(16, 24, 40, 0.12)',
+  boxShadow: '0 6px 18px rgba(16, 24, 40, 0.12)',
   backgroundColor: vars.color.common0,
-  objectFit: 'cover',
+  objectFit: 'contain',
   width: 350,
   height: 495,
 });
@@ -55,7 +55,7 @@ export const pageImage = style({
 export const pagination = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 17,
+  gap: 18,
 });
 
 export const pageButton = style({
@@ -67,16 +67,16 @@ export const pageButton = style({
   backgroundColor: vars.color.common0,
   width: 32,
   height: 32,
-  color: vars.color.common100,
+  color: vars.color.grey800,
 
   selectors: {
     '&:hover:not(:disabled)': {
-      borderColor: vars.color.blue500,
-      color: vars.color.blue500,
+      backgroundColor: vars.color.grey100,
     },
     '&:disabled': {
-      opacity: 0.38,
+      backgroundColor: vars.color.grey200,
       cursor: 'not-allowed',
+      color: vars.color.grey400,
     },
   },
 });
