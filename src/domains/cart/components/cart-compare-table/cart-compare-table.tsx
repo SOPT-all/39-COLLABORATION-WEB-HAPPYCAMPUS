@@ -25,8 +25,12 @@ const CartCompareTable = ({
   onCheckedChange,
   onHide,
 }: CartCompareTableProps) => {
-  const gridTemplateColumns = `${LABEL_COLUMN_WIDTH}px repeat(${items.length}, minmax(${ITEM_COLUMN_MIN_WIDTH}px, 1fr))`;
+  const isEmpty = items.length === 0;
+  const gridTemplateColumns = isEmpty
+    ? `${LABEL_COLUMN_WIDTH}px 1fr`
+    : `${LABEL_COLUMN_WIDTH}px repeat(${items.length}, minmax(${ITEM_COLUMN_MIN_WIDTH}px, 1fr))`;
   const minWidth = LABEL_COLUMN_WIDTH + ITEM_COLUMN_MIN_WIDTH * items.length;
+  const rowCount = COMPARE_ROWS.length + 1;
 
   const getBadge = (row: CompareRow, cartItemId: number) => {
     if (!row.badge) return null;
@@ -40,6 +44,20 @@ const CartCompareTable = ({
         className={styles.table}
         style={{ gridTemplateColumns, minWidth }}
       >
+        {isEmpty && (
+          <div role="row" className={styles.row}>
+            <div
+              role="cell"
+              className={styles.emptyCell}
+              style={{ gridRow: `1 / span ${rowCount}` }}
+            >
+              비교할 자료를 모두 숨겼어요.
+              <br />
+              초기화를 누르면 다시 볼 수 있어요.
+            </div>
+          </div>
+        )}
+
         <div role="row" className={styles.row}>
           <div role="rowheader" className={styles.labelCell}>
             비교 항목

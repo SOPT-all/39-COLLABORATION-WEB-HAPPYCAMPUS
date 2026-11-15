@@ -65,3 +65,15 @@ export const priceText = style({
   textAlign: 'center',
   color: vars.color.redStrong,
 });
+
+export const emptyCell = style({
+  display: 'flex',
+  gridColumn: 2,
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderLeft: `1px solid ${vars.color.grey400}`,
+  backgroundColor: vars.color.common0,
+  ...vars.typography.body1M16,
+  textAlign: 'center',
+  color: vars.color.grey600,
+});
