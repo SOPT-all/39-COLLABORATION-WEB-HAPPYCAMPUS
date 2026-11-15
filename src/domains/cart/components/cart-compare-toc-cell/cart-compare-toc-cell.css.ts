@@ -18,7 +18,7 @@ export const toggleButton = style({
   gap: 2,
   paddingLeft: 8,
   ...vars.typography.body1M16,
-  color: vars.color.grey900,
+  color: vars.color.common100,
 });
 
 export const icon = style({
@@ -30,5 +30,5 @@ export const icon = style({
 export const list = style({
   width: '100%',
   ...vars.typography.body2M14,
-  color: vars.color.grey900,
+  color: vars.color.common100,
 });
