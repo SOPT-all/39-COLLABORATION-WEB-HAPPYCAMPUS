@@ -35,6 +35,28 @@ export const thumbnail = style({
   width: 52,
 });
 
+export const thumbnailPlaceholder = style([
+  thumbnail,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: `1px solid ${vars.color.grey300}`,
+    backgroundColor: vars.color.common0,
+    paddingInline: '5px',
+  },
+]);
+
+export const thumbnailPlaceholderTitle = style({
+  ...vars.typography.captionM10,
+  display: '-webkit-box',
+  overflow: 'hidden',
+  textAlign: 'center',
+  color: vars.color.grey900,
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 3,
+});
+
 export const textContainer = style({
   display: 'flex',
   flexDirection: 'column',

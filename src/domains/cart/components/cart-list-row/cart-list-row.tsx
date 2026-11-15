@@ -4,7 +4,7 @@ import * as styles from './cart-list-row.css';
 
 interface CartListRowProps {
   title: string;
-  coverImageUrl: string;
+  coverImageUrl: string | null;
   description: string;
   price: number;
   savedDate: string;
@@ -34,7 +34,13 @@ const CartListRow = ({
       </td>
       <td className={styles.infoCell}>
         <div className={styles.infoContainer}>
-          <img src={coverImageUrl} alt="" className={styles.thumbnail} />
+          {coverImageUrl ? (
+            <img src={coverImageUrl} alt="" className={styles.thumbnail} />
+          ) : (
+            <div className={styles.thumbnailPlaceholder} aria-hidden>
+              <span className={styles.thumbnailPlaceholderTitle}>{title}</span>
+            </div>
+          )}
           <div className={styles.textContainer}>
             <p className={styles.title}>{title}</p>
             <p className={styles.description}>{description}</p>
