@@ -43,7 +43,7 @@ export const thumbnailPlaceholder = style([
     justifyContent: 'center',
     border: `1px solid ${vars.color.grey300}`,
     backgroundColor: vars.color.common0,
-    paddingInline: '5px',
+    paddingInline: 5,
   },
 ]);
 
