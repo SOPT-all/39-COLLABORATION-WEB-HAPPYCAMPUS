@@ -58,30 +58,9 @@ export const pagination = style({
   gap: 18,
 });
 
-export const pageButton = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: `1px solid ${vars.color.grey300}`,
-  borderRadius: 6,
-  backgroundColor: vars.color.common0,
-  width: 32,
-  height: 32,
-  color: vars.color.grey800,
-
-  selectors: {
-    '&:hover:not(:disabled)': {
-      backgroundColor: vars.color.grey100,
-    },
-    '&:disabled': {
-      backgroundColor: vars.color.grey200,
-      cursor: 'not-allowed',
-      color: vars.color.grey400,
-    },
-  },
-});
-
 export const pageCount = style({
+  display: 'flex',
+  gap: 2,
   ...vars.typography.labelSb12,
   color: vars.color.grey500,
 });

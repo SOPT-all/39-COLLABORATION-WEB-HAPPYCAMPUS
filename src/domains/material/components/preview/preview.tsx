@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { IcChevronLeft, IcChevronRight, IcExpand } from '@shared/assets/icons';
+import { IcExpand } from '@shared/assets/icons';
+
+import PaginationButton from './pagination-button';
 
 import * as styles from './preview.css';
 
@@ -29,28 +31,21 @@ const Preview = ({ images }: PreviewProps) => {
           alt={`미리보기 ${currentPage}페이지`}
         />
         <div className={styles.pagination}>
-          <button
-            type="button"
-            className={styles.pageButton}
+          <PaginationButton
+            direction="prev"
             disabled={currentPage === 1}
-            aria-label="이전 페이지"
             onClick={() => setCurrentPage(currentPage - 1)}
-          >
-            <IcChevronLeft width={18} height={18} aria-hidden />
-          </button>
+          />
           <p className={styles.pageCount}>
-            <span className={styles.currentPage}>{currentPage}</span> /{' '}
-            {totalPage}
+            <span className={styles.currentPage}>{currentPage}</span>
+            <span>/</span>
+            <span>{totalPage}</span>
           </p>
-          <button
-            type="button"
-            className={styles.pageButton}
+          <PaginationButton
+            direction="next"
             disabled={currentPage === totalPage}
-            aria-label="다음 페이지"
             onClick={() => setCurrentPage(currentPage + 1)}
-          >
-            <IcChevronRight width={18} height={18} aria-hidden />
-          </button>
+          />
         </div>
       </div>
     </section>
