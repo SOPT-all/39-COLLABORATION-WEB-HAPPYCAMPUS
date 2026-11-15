@@ -20,7 +20,7 @@ const MaterialInfoCard = ({ info, actions }: MaterialInfoCardProps) => {
 
   const rows = [
     { label: '분량', value: `${pageCount}페이지` },
-    { label: '파일 형식', value: fileType },
+    { label: '파일 형식', value: fileType.toUpperCase() },
     { label: '저작 시기', value: String(savedYear) },
   ];
 
@@ -34,7 +34,7 @@ const MaterialInfoCard = ({ info, actions }: MaterialInfoCardProps) => {
           <p className={styles.price}>{price.toLocaleString('ko-KR')}원</p>
         </div>
 
-        <hr className={styles.divider} />
+        <hr aria-hidden="true" className={styles.divider} />
 
         <dl className={styles.infoList}>
           {rows.map(({ label, value }) => (
