@@ -49,13 +49,10 @@ export const info = style({
 });
 
 export const title = style({
-  display: '-webkit-box',
   width: '100%',
   overflow: 'hidden',
   ...vars.typography.body2Sb14,
-  overflowWrap: 'anywhere',
-  wordBreak: 'keep-all',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
   color: vars.color.grey900,
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical',
 });
