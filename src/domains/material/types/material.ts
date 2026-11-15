@@ -6,7 +6,7 @@ export interface MaterialBodySection {
 export interface MaterialDetail {
   title: string;
   description: string;
-  tableOfContents: string[];
+  tableOfContents: string;
   summary: string;
   bodySections: MaterialBodySection[];
   tags: string[];

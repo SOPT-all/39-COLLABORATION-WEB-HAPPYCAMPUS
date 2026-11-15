@@ -21,7 +21,7 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
 
       <ContentSection title="목차">
         <ol className={styles.tocBox}>
-          {tableOfContents.map((item) => (
+          {tableOfContents.split('\n').map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ol>
