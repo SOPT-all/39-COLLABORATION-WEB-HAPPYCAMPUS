@@ -39,10 +39,14 @@ export const textContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: 4,
+  minWidth: 0,
 });
 
 export const title = style({
   ...vars.typography.body2Sb14,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
   color: vars.color.grey900,
 });
 
