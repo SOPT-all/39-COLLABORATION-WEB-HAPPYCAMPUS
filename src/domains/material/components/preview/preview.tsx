@@ -34,7 +34,7 @@ const Preview = ({ images }: PreviewProps) => {
           <PaginationButton
             direction="prev"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
           />
           <p className={styles.pageCount}>
             <span className={styles.currentPage}>{currentPage}</span>
@@ -44,7 +44,7 @@ const Preview = ({ images }: PreviewProps) => {
           <PaginationButton
             direction="next"
             disabled={currentPage === totalPage}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
           />
         </div>
       </div>
