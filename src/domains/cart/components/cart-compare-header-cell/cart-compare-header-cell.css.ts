@@ -35,9 +35,27 @@ export const cover = style({
 export const coverPlaceholder = style([
   cover,
   {
-    backgroundColor: vars.color.grey100,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    border: `1px solid ${vars.color.grey300}`,
+    backgroundColor: vars.color.common0,
+    padding: '30px 7px',
   },
 ]);
+
+export const coverTitle = style({
+  display: '-webkit-box',
+  flex: '1 0 0',
+  overflow: 'hidden',
+  ...vars.typography.captionM10,
+  textAlign: 'center',
+  textOverflow: 'ellipsis',
+  color: vars.color.grey900,
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: 'vertical',
+});
 
 export const info = style({
   display: 'flex',

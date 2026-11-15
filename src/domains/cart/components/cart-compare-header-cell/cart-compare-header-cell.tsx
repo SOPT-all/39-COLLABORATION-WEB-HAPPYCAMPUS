@@ -35,7 +35,9 @@ const CartCompareHeaderCell = ({
           alt={`${title} 표지`}
         />
       ) : (
-        <div className={styles.coverPlaceholder} aria-hidden />
+        <div className={styles.coverPlaceholder} aria-hidden>
+          <span className={styles.coverTitle}>{title}</span>
+        </div>
       )}
 
       <div className={styles.info}>
