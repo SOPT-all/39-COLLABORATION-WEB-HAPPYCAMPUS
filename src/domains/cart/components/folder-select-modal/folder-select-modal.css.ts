@@ -63,6 +63,12 @@ export const folderContainer = style({
   gap: 12,
 });
 
+export const folderListContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+});
+
 export const folderList = style({
   display: 'flex',
   flexDirection: 'column',

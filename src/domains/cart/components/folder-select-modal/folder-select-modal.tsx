@@ -78,45 +78,49 @@ const FolderSelectModal = ({
         </header>
 
         <div className={styles.folderContainer}>
-          <ul className={styles.folderList}>
-            {orderedCategories.map((defaultCategory) => {
-              const isOriginal = defaultCategory === category;
+          <div className={styles.folderListContainer}>
+            <ul className={styles.folderList}>
+              {orderedCategories.map((defaultCategory) => {
+                const isOriginal = defaultCategory === category;
 
-              return (
-                <li key={defaultCategory}>
-                  <FolderOption
-                    folderName={DEFAULT_CATEGORY_LABEL[defaultCategory]}
-                    isDefault={isOriginal}
-                    selected={isOriginal}
-                    disabled={!isOriginal}
-                  />
-                </li>
-              );
-            })}
+                return (
+                  <li key={defaultCategory}>
+                    <FolderOption
+                      folderName={DEFAULT_CATEGORY_LABEL[defaultCategory]}
+                      isDefault={isOriginal}
+                      selected={isOriginal}
+                      disabled={!isOriginal}
+                    />
+                  </li>
+                );
+              })}
 
-            {folders.map((folder) => {
-              const isSelected = selectedFolderIds.includes(folder.folderId);
+              {folders.map((folder) => {
+                const isSelected = selectedFolderIds.includes(folder.folderId);
 
-              return (
-                <li key={folder.folderId}>
-                  <FolderOption
-                    folderName={folder.name}
-                    isDefault={false}
-                    selected={isSelected}
-                    onClick={() => onFolderToggle(folder.folderId, !isSelected)}
-                  />
-                </li>
-              );
-            })}
-          </ul>
+                return (
+                  <li key={folder.folderId}>
+                    <FolderOption
+                      folderName={folder.name}
+                      isDefault={false}
+                      selected={isSelected}
+                      onClick={() =>
+                        onFolderToggle(folder.folderId, !isSelected)
+                      }
+                    />
+                  </li>
+                );
+              })}
+            </ul>
 
-          <button
-            type="button"
-            onClick={onCreateFolderClick}
-            className={styles.addFolderButton}
-          >
-            <IcAdd width={20} height={20} aria-hidden />새 폴더 만들기
-          </button>
+            <button
+              type="button"
+              onClick={onCreateFolderClick}
+              className={styles.addFolderButton}
+            >
+              <IcAdd width={20} height={20} aria-hidden />새 폴더 만들기
+            </button>
+          </div>
 
           <p className={styles.infoText}>
             <IcInfo width={16} height={16} aria-hidden />
