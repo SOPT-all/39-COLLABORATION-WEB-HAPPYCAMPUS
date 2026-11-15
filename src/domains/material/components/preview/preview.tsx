@@ -15,7 +15,7 @@ const Preview = ({ images }: PreviewProps) => {
   return (
     <section className={styles.previewContainer}>
       <div className={styles.header}>
-        <h2 className={styles.title}>문서 미리보기</h2>
+        <h3 className={styles.title}>문서 미리보기</h3>
         <span className={styles.zoom}>
           <IcExpand aria-hidden />
           확대 보기
