@@ -22,19 +22,9 @@ export const tocBox = style({
   ...vars.typography.body2M14,
 });
 
-export const bodyContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 12,
-});
-
-export const bodyStrong = style({
-  ...vars.typography.body2Sb14,
-});
-
-export const bodySectionContent = style({
-  padding: '0 8px',
+export const content = style({
   ...vars.typography.body2R14,
+  whiteSpace: 'pre-line',
 });
 
 export const tagList = style({
