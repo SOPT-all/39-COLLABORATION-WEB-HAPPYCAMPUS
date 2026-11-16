@@ -136,35 +136,36 @@ export const navMenuItem = recipe({
   },
 });
 
-export const navBadge = recipe({
+export const navBubble = recipe({
   base: {
     position: 'absolute',
-    top: -3.7,
+    top: -4,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10.63,
-    backgroundColor: vars.color.blue500,
-    width: 47.64,
-    height: 14.17,
-    lineHeight: '7.97px',
-    letterSpacing: 0,
-    whiteSpace: 'nowrap',
-    color: vars.color.common0,
-    fontSize: 8,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
 
   variants: {
     menu: {
-      expert: { left: 33 },
-      fortune: { left: 22 },
+      expert: { left: 36 },
+      fortune: { left: 24 },
     },
   },
 });
 
-export const navBadgeTail = style({
-  position: 'absolute',
-  top: 8.86,
-  left: 36.12,
+export const navBubbleText = style({
+  borderRadius: 7,
+  backgroundColor: vars.color.blue500,
+  padding: '3px 4px',
+  lineHeight: '8px',
+  letterSpacing: 0,
+  whiteSpace: 'nowrap',
+  color: vars.color.common0,
+  fontSize: 8,
+});
+
+export const navBubbleTail = style({
+  transform: 'scaleY(-1)',
+  marginLeft: 32,
   color: vars.color.blue500,
 });

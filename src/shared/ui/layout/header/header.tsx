@@ -115,11 +115,11 @@ const Header = () => {
                   label
                 )}
                 {badge && (
-                  <span className={styles.navBadge({ menu: badge.menu })}>
-                    {badge.label}
+                  <span className={styles.navBubble({ menu: badge.menu })}>
+                    <span className={styles.navBubbleText}>{badge.label}</span>
                     <IcTooltipTail
                       aria-hidden
-                      className={styles.navBadgeTail}
+                      className={styles.navBubbleTail}
                     />
                   </span>
                 )}
