@@ -60,7 +60,9 @@ const AddFolderModal = ({
           <h2 id={titleId} className={styles.title}>
             폴더 추가
           </h2>
-          <p className={styles.description}>공백 포함 최대 8자 이내</p>
+          <p className={styles.description}>
+            공백 포함 최대 {FOLDER_NAME_MAX_LENGTH}자 이내
+          </p>
         </hgroup>
       </header>
 
