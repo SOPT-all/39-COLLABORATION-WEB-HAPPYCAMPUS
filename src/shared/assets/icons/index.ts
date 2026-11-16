@@ -2,7 +2,6 @@
 export { default as IcAdd } from './mono/ic-add.svg?react';
 export { default as IcArrowUpRight } from './mono/ic-arrow-up-right.svg?react';
 export { default as IcCart } from './mono/ic-cart.svg?react';
-export { default as IcCartHuge } from './mono/ic-cart-huge.svg?react';
 export { default as IcCharge } from './mono/ic-charge.svg?react';
 export { default as IcCheck } from './mono/ic-check.svg?react';
 export { default as IcChevronDown } from './mono/ic-chevron-down.svg?react';
@@ -22,6 +21,7 @@ export { default as IcShopping } from './mono/ic-shopping.svg?react';
 export { default as IcTooltipTail } from './mono/ic-tooltip-tail.svg?react';
 
 // 멀티컬러·이미지 아이콘: currentColor 변환 없이 URL로 import → <img src={...} />
+export { default as IcCartHuge } from './multi/ic-cart-huge.svg';
 export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';
 export { default as IcFiletypePdf } from './multi/ic-filetype-pdf.svg';
 export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.svg';
