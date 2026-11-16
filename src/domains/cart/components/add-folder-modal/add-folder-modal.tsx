@@ -87,7 +87,11 @@ const AddFolderModal = ({
           placeholder="폴더명을 입력하세요"
           value={folderName}
           error={isError}
-          helperText={isError ? '최대 8자 이내로 입력해주세요' : undefined}
+          helperText={
+            isError
+              ? `최대 ${FOLDER_NAME_MAX_LENGTH}자 이내로 입력해주세요`
+              : undefined
+          }
           onChange={(event) => setFolderName(event.target.value)}
         />
         <div className={styles.buttonContainer}>
