@@ -70,18 +70,8 @@ export const userMenuItem = recipe({
   },
 });
 
-export const userMenuLabel = recipe({
-  base: {
-    ...vars.typography.captionR10,
-  },
-
-  variants: {
-    menu: {
-      charge: { color: vars.color.common100 },
-      cart: { color: vars.color.grey800 },
-      my: { color: vars.color.grey800 },
-    },
-  },
+export const userMenuLabel = style({
+  ...vars.typography.captionR10,
 });
 
 export const navContainer = style({

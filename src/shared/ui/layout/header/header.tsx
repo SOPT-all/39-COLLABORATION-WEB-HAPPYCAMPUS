@@ -76,9 +76,7 @@ const Header = () => {
               const content = (
                 <>
                   <Icon aria-hidden />
-                  <span className={styles.userMenuLabel({ menu })}>
-                    {label}
-                  </span>
+                  <span className={styles.userMenuLabel}>{label}</span>
                 </>
               );
 
