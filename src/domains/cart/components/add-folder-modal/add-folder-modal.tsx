@@ -1,4 +1,4 @@
-import { type SubmitEvent, useEffect, useRef, useState } from 'react';
+import { type SubmitEvent, useEffect, useId, useRef, useState } from 'react';
 
 import { IcClose } from '@shared/assets/icons';
 import Button from '@shared/ui/button/button';
@@ -20,6 +20,7 @@ const AddFolderModal = ({
   onConfirm,
 }: AddFolderModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   const [folderName, setFolderName] = useState('');
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const AddFolderModal = ({
   return (
     <dialog
       ref={dialogRef}
+      aria-labelledby={titleId}
       className={styles.container}
       onCancel={onClose}
       onClose={() => setFolderName('')}
@@ -55,7 +57,9 @@ const AddFolderModal = ({
           <IcClose aria-hidden />
         </button>
         <hgroup className={styles.titleContainer}>
-          <h2 className={styles.title}>폴더 추가</h2>
+          <h2 id={titleId} className={styles.title}>
+            폴더 추가
+          </h2>
           <p className={styles.description}>공백 포함 최대 8자 이내</p>
         </hgroup>
       </header>
