@@ -1,4 +1,11 @@
-import { type SubmitEvent, useEffect, useId, useRef, useState } from 'react';
+import {
+  type SubmitEvent,
+  type SyntheticEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 
 import { IcClose } from '@shared/assets/icons';
 import Button from '@shared/ui/button/button';
@@ -41,12 +48,17 @@ const AddFolderModal = ({
     onConfirm(folderName.trim());
   };
 
+  const handleDialogCancel = (event: SyntheticEvent<HTMLDialogElement>) => {
+    event.preventDefault();
+    onClose();
+  };
+
   return (
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
       className={styles.container}
-      onCancel={onClose}
+      onCancel={handleDialogCancel}
       onClose={() => setFolderName('')}
     >
       <header className={styles.header}>
