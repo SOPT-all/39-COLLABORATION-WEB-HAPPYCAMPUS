@@ -20,12 +20,14 @@ const AddFolderModal = ({
   onConfirm,
 }: AddFolderModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const titleId = useId();
   const [folderName, setFolderName] = useState('');
 
   useEffect(() => {
     if (isOpen) {
       dialogRef.current?.showModal();
+      inputRef.current?.focus();
     } else {
       dialogRef.current?.close();
     }
@@ -68,6 +70,7 @@ const AddFolderModal = ({
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <TextField
+          ref={inputRef}
           placeholder="폴더명을 입력하세요"
           value={folderName}
           error={isError}
