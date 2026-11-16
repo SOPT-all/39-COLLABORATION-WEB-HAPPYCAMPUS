@@ -71,6 +71,7 @@ const AddFolderModal = ({
       <form className={styles.form} onSubmit={handleSubmit}>
         <TextField
           ref={inputRef}
+          aria-label="폴더명"
           placeholder="폴더명을 입력하세요"
           value={folderName}
           error={isError}
