@@ -36,7 +36,7 @@ const AddFolderModal = ({
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onConfirm(folderName);
+    onConfirm(folderName.trim());
   };
 
   return (
