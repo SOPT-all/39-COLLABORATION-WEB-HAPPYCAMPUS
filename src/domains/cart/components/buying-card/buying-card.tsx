@@ -5,6 +5,7 @@ import * as styles from './buying-card.css';
 interface BuyingItem {
   cartItemId: number;
   title: string;
+  fileType: string;
 }
 
 interface BuyingCardProps {
@@ -22,10 +23,11 @@ const BuyingCard = ({ items, onRemove }: BuyingCardProps) => {
         <p className={styles.emptyText}>선택된 구매 상품이 없습니다</p>
       ) : (
         <ul className={styles.buyingList}>
-          {items.map(({ cartItemId, title }) => (
+          {items.map(({ cartItemId, title, fileType }) => (
             <BuyingListItem
               key={cartItemId}
               title={title}
+              fileType={fileType}
               onRemove={() => onRemove(cartItemId)}
             />
           ))}

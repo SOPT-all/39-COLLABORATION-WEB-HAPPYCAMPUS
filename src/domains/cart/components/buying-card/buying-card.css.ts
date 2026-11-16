@@ -23,6 +23,13 @@ export const title = style({
 
 export const buyingList = style({
   overflowY: 'auto',
+  scrollbarWidth: 'none',
+
+  selectors: {
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
 });
 
 export const emptyText = style({

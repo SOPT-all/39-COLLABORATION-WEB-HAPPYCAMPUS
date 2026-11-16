@@ -1,18 +1,37 @@
-import { IcCloseSmall, IcFiletypePdf } from '@shared/assets/icons';
+import {
+  IcCloseSmall,
+  IcFiletypeHwp,
+  IcFiletypePdf,
+  IcFiletypePpt,
+} from '@shared/assets/icons';
 
 import * as styles from './buying-list-item.css';
 
+const FILE_TYPE_ICON: Record<string, string> = {
+  pdf: IcFiletypePdf,
+  hwp: IcFiletypeHwp,
+  ppt: IcFiletypePpt,
+  pptx: IcFiletypePpt,
+};
+
 interface BuyingListItemProps {
   title: string;
+  fileType: string;
   onRemove: () => void;
 }
 
-const BuyingListItem = ({ title, onRemove }: BuyingListItemProps) => {
+const BuyingListItem = ({ title, fileType, onRemove }: BuyingListItemProps) => {
   return (
     <li className={styles.listItem}>
       <div className={styles.titleContainer}>
-        <img src={IcFiletypePdf} alt="" className={styles.fileIcon} />
-        <p className={styles.title}>{title}</p>
+        <img
+          src={FILE_TYPE_ICON[fileType] ?? IcFiletypePdf}
+          alt=""
+          className={styles.fileIcon}
+        />
+        <p className={styles.title} title={title}>
+          {title}
+        </p>
       </div>
       <button
         type="button"
