@@ -9,7 +9,7 @@ const TabProcess = () => {
     <div className={styles.processContainer}>
       <div className={styles.processContent}>
         <div className={styles.titleContainer}>
-          <IcCartHuge className={styles.cartIcon} aria-hidden />
+          <img src={IcCartHuge} alt="" />
           <h2 className={styles.title}>장바구니</h2>
         </div>
 

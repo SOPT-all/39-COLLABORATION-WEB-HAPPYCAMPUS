@@ -24,10 +24,6 @@ export const titleContainer = style({
   gap: 10,
 });
 
-export const cartIcon = style({
-  color: '#FFD06C',
-});
-
 export const title = style({
   ...vars.typography.title2M24,
 });
