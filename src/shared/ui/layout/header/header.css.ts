@@ -6,7 +6,6 @@ import { vars } from '@shared/styles/theme.css';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 1,
   backgroundColor: vars.color.common0,
 });
 
@@ -86,14 +85,14 @@ export const userMenuLabel = recipe({
 });
 
 export const navContainer = style({
-  borderTop: '1px solid #EEEEEE',
+  borderTop: `1px solid ${vars.color.grey100}`,
   borderBottom: `2px solid ${vars.color.blue500}`,
 });
 
 export const navInner = style({
   display: 'flex',
   alignItems: 'center',
-  margin: '-1px auto 0',
+  margin: '0 auto',
   paddingLeft: 168,
   width: 1366,
   height: 51,
