@@ -20,14 +20,16 @@ function CartPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: CartViewTypes =
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
+  const [cartItems, setCartItems] = useState(MOCK_CART_ITEMS);
   const [folders, setFolders] = useState(MOCK_FOLDERS);
+  const [folderItemMap, setFolderItemMap] = useState(MOCK_FOLDER_ITEM_IDS);
   const [selectedFolderId, setSelectedFolderId] = useState(
     MOCK_FOLDERS[0].folderId,
   );
   const [checkedIds, setCheckedIds] = useState<number[]>([]);
 
-  const folderItemIds = MOCK_FOLDER_ITEM_IDS[selectedFolderId] ?? [];
-  const folderItems = MOCK_CART_ITEMS.filter((item) =>
+  const folderItemIds = folderItemMap[selectedFolderId] ?? [];
+  const folderItems = cartItems.filter((item) =>
     folderItemIds.includes(item.cartItemId),
   );
 
@@ -58,6 +60,28 @@ function CartPage() {
     });
   };
 
+  const handleDelete = (cartItemId: number) => {
+    setCartItems((prev) =>
+      prev.filter((item) => item.cartItemId !== cartItemId),
+    );
+    setFolders((prev) =>
+      prev.map((folder) =>
+        folderItemMap[folder.folderId]?.includes(cartItemId)
+          ? { ...folder, itemCount: folder.itemCount - 1 }
+          : folder,
+      ),
+    );
+    setFolderItemMap((prev) =>
+      Object.fromEntries(
+        Object.entries(prev).map(([folderId, itemIds]) => [
+          folderId,
+          itemIds.filter((id) => id !== cartItemId),
+        ]),
+      ),
+    );
+    setCheckedIds((prev) => prev.filter((id) => id !== cartItemId));
+  };
+
   return (
     <>
       <TabProcess />
@@ -74,10 +98,11 @@ function CartPage() {
             {view === 'list' && (
               <CartListSection
                 items={folderItems}
-                emptyType={MOCK_CART_ITEMS.length === 0 ? 'cart' : 'folder'}
+                emptyType={cartItems.length === 0 ? 'cart' : 'folder'}
                 checkedIds={checkedIds}
                 onCheckedChange={handleCheckedChange}
                 onAllCheckedChange={handleAllCheckedChange}
+                onDelete={handleDelete}
               />
             )}
             <NoticeBox />

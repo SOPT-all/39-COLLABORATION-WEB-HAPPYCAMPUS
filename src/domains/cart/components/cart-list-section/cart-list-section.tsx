@@ -12,6 +12,7 @@ interface CartListSectionProps {
   checkedIds: number[];
   onCheckedChange: (cartItemId: number, checked: boolean) => void;
   onAllCheckedChange: (checked: boolean) => void;
+  onDelete: (cartItemId: number) => void;
 }
 
 const CartListSection = ({
@@ -20,6 +21,7 @@ const CartListSection = ({
   checkedIds,
   onCheckedChange,
   onAllCheckedChange,
+  onDelete,
 }: CartListSectionProps) => {
   const isEmpty = items.length === 0;
   const isAllChecked =
@@ -48,7 +50,7 @@ const CartListSection = ({
                 onCheckedChange={(checked) =>
                   onCheckedChange(item.cartItemId, checked)
                 }
-                onDelete={() => {}}
+                onDelete={() => onDelete(item.cartItemId)}
               />
             ))}
           </tbody>
