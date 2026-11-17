@@ -1,12 +1,12 @@
 import { type KeyboardEvent, useEffect, useId, useRef } from 'react';
 
 import FolderOption from '@domains/cart/components/folder-option/folder-option';
+import type { Folder } from '@domains/cart/types/folder';
+import { IcAdd, IcClose, IcInfo } from '@shared/assets/icons';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
-} from '@domains/cart/constants/default-category';
-import type { Folder } from '@domains/cart/types/folder';
-import { IcAdd, IcClose, IcInfo } from '@shared/assets/icons';
+} from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 
 import * as styles from './folder-select-modal.css';
