@@ -41,7 +41,7 @@ const AddFolderModal = ({
   }, [isOpen]);
 
   const isEmpty = folderName.trim().length === 0;
-  const isError = folderName.length > FOLDER_NAME_MAX_LENGTH;
+  const isError = folderName.trim().length > FOLDER_NAME_MAX_LENGTH;
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
