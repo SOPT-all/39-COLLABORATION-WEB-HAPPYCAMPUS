@@ -3,6 +3,7 @@ import CartListHeader from '@domains/cart/components/cart-list-header/cart-list-
 import CartListRow from '@domains/cart/components/cart-list-row/cart-list-row';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import type { CartItem } from '@domains/cart/types/cart-compare';
+import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-list-section.css';
 
@@ -45,7 +46,7 @@ const CartListSection = ({
                 coverImageUrl={item.coverImageUrl}
                 description={item.description}
                 price={item.price}
-                savedDate={String(item.savedYear)}
+                savedDate={formatSavedYear(item.savedYear)}
                 checked={checkedIds.includes(item.cartItemId)}
                 onCheckedChange={(checked) =>
                   onCheckedChange(item.cartItemId, checked)
