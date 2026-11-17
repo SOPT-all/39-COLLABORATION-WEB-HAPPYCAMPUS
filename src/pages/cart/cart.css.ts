@@ -1,14 +1,16 @@
 import { style } from '@vanilla-extract/css';
 
-export const content = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  gap: 24,
-  margin: '0 auto',
-  padding: '40px 138px 100px',
-  width: 1366,
-});
+import { pageContainer } from '@shared/styles/page.css';
+
+export const content = style([
+  pageContainer,
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 24,
+  },
+]);
 
 export const body = style({
   display: 'flex',
