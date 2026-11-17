@@ -74,13 +74,14 @@ function CartPage() {
             {view === 'list' && (
               <CartListSection
                 items={folderItems}
+                emptyType={MOCK_CART_ITEMS.length === 0 ? 'cart' : 'folder'}
                 checkedIds={checkedIds}
                 onCheckedChange={handleCheckedChange}
                 onAllCheckedChange={handleAllCheckedChange}
               />
             )}
             <NoticeBox />
-            {view === 'list' && <Pagination />}
+            {view === 'list' && folderItems.length > 0 && <Pagination />}
           </section>
           <aside className={styles.aside} />
         </div>
