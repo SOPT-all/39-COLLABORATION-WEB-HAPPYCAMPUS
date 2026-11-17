@@ -12,6 +12,7 @@ import {
   MOCK_FOLDER_ITEM_IDS,
   MOCK_FOLDERS,
 } from '@domains/cart/constants/cart-mock';
+import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 import {
   DEFAULT_CATEGORY_LABEL,
@@ -37,7 +38,7 @@ function CartPage() {
 
     return folder?.folderId ?? MOCK_FOLDERS[0].folderId;
   });
-  const [checkedIds, setCheckedIds] = useState<number[]>([]);
+  const { checkedIds, setItemsChecked } = useCheckedItems();
 
   const folderItemIds = folderItemMap[selectedFolderId] ?? [];
   const folderItems = cartItems.filter((item) =>
@@ -57,18 +58,14 @@ function CartPage() {
   };
 
   const handleCheckedChange = (cartItemId: number, checked: boolean) => {
-    setCheckedIds((prev) =>
-      checked ? [...prev, cartItemId] : prev.filter((id) => id !== cartItemId),
-    );
+    setItemsChecked([cartItemId], checked);
   };
 
   const handleAllCheckedChange = (checked: boolean) => {
-    const folderIds = folderItems.map((item) => item.cartItemId);
-
-    setCheckedIds((prev) => {
-      const rest = prev.filter((id) => !folderIds.includes(id));
-      return checked ? [...rest, ...folderIds] : rest;
-    });
+    setItemsChecked(
+      folderItems.map((item) => item.cartItemId),
+      checked,
+    );
   };
 
   const handleDelete = (cartItemId: number) => {
@@ -99,7 +96,7 @@ function CartPage() {
         ]),
       ),
     );
-    setCheckedIds((prev) => prev.filter((id) => id !== cartItemId));
+    setItemsChecked([cartItemId], false);
   };
 
   return (

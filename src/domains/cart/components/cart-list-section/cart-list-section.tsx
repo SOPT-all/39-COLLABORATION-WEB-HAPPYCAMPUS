@@ -10,7 +10,7 @@ import * as styles from './cart-list-section.css';
 interface CartListSectionProps {
   items: CartItem[];
   emptyType: CartEmptyType;
-  checkedIds: number[];
+  checkedIds: Set<number>;
   onCheckedChange: (cartItemId: number, checked: boolean) => void;
   onAllCheckedChange: (checked: boolean) => void;
   onDelete: (cartItemId: number) => void;
@@ -26,7 +26,7 @@ const CartListSection = ({
 }: CartListSectionProps) => {
   const isEmpty = items.length === 0;
   const isAllChecked =
-    !isEmpty && items.every((item) => checkedIds.includes(item.cartItemId));
+    !isEmpty && items.every((item) => checkedIds.has(item.cartItemId));
 
   return (
     <div>
@@ -47,7 +47,7 @@ const CartListSection = ({
                 description={item.description}
                 price={item.price}
                 savedDate={formatSavedYear(item.savedYear)}
-                checked={checkedIds.includes(item.cartItemId)}
+                checked={checkedIds.has(item.cartItemId)}
                 onCheckedChange={(checked) =>
                   onCheckedChange(item.cartItemId, checked)
                 }
