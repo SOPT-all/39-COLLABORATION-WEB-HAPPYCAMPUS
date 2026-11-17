@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import CartCompareTocCell from '@domains/cart/components/cart-compare-toc-cell/cart-compare-toc-cell';
 import type { BadgeType } from '@domains/cart/constants/badge';
 import type { CartItem } from '@domains/cart/types/cart-compare';
+import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-compare-table.css';
 
@@ -13,11 +14,6 @@ export interface CompareRow {
   badge?: BadgeType;
   render: (item: CartItem) => ReactNode;
 }
-
-const formatSavedYear = (savedYear: number) => {
-  const value = String(savedYear);
-  return `${value.slice(0, 4)}.${value.slice(4)}`;
-};
 
 export const COMPARE_ROWS: CompareRow[] = [
   {
