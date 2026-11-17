@@ -1,12 +1,25 @@
+import { useSearchParams } from 'react-router';
+
+import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
+import type { CartViewTypes } from '@domains/cart/types/cart-view';
 
 import * as styles from './cart.css';
 
 function CartPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view: CartViewTypes =
+    searchParams.get('view') === 'compare' ? 'compare' : 'list';
+
+  const handleViewSelect = (nextView: CartViewTypes) => {
+    setSearchParams({ view: nextView }, { replace: true });
+  };
+
   return (
     <>
       <TabProcess />
       <div className={styles.content}>
+        <CartViewTabList selected={view} onSelect={handleViewSelect} />
         <div className={styles.body}>
           <section className={styles.main} />
           <aside className={styles.aside} />

@@ -3,6 +3,7 @@ import { style } from '@vanilla-extract/css';
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'flex-start',
   gap: 24,
   margin: '0 auto',
   padding: '40px 138px 100px',
@@ -12,7 +13,8 @@ export const content = style({
 export const body = style({
   display: 'flex',
   alignItems: 'flex-start',
-  gap: 33,
+  gap: 32,
+  width: '100%',
 });
 
 export const main = style({
