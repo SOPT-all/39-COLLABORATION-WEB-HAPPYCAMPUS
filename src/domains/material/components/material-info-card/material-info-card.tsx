@@ -1,16 +1,11 @@
 import { type ReactNode, useId } from 'react';
 
+import type { MaterialDetail } from '@domains/material/types/material';
+
 import * as styles from './material-info-card.css';
 
-interface MaterialInfo {
-  price: number;
-  pageCount: number;
-  fileType: string;
-  savedYear: number;
-}
-
 interface MaterialInfoCardProps {
-  info: MaterialInfo;
+  info: Pick<MaterialDetail, 'price' | 'pageCount' | 'fileType' | 'savedYear'>;
   actions: ReactNode;
 }
 
