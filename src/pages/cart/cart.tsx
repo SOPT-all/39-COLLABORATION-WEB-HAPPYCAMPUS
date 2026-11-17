@@ -24,6 +24,7 @@ function CartPage() {
   const [selectedFolderId, setSelectedFolderId] = useState(
     MOCK_FOLDERS[0].folderId,
   );
+  const [checkedIds, setCheckedIds] = useState<number[]>([]);
 
   const folderItemIds = MOCK_FOLDER_ITEM_IDS[selectedFolderId] ?? [];
   const folderItems = MOCK_CART_ITEMS.filter((item) =>
@@ -42,6 +43,21 @@ function CartPage() {
     setSelectedFolderId(folderId);
   };
 
+  const handleCheckedChange = (cartItemId: number, checked: boolean) => {
+    setCheckedIds((prev) =>
+      checked ? [...prev, cartItemId] : prev.filter((id) => id !== cartItemId),
+    );
+  };
+
+  const handleAllCheckedChange = (checked: boolean) => {
+    const folderIds = folderItems.map((item) => item.cartItemId);
+
+    setCheckedIds((prev) => {
+      const rest = prev.filter((id) => !folderIds.includes(id));
+      return checked ? [...rest, ...folderIds] : rest;
+    });
+  };
+
   return (
     <>
       <TabProcess />
@@ -55,7 +71,14 @@ function CartPage() {
               onSelectFolder={setSelectedFolderId}
               onAddFolder={handleAddFolder}
             />
-            {view === 'list' && <CartListSection items={folderItems} />}
+            {view === 'list' && (
+              <CartListSection
+                items={folderItems}
+                checkedIds={checkedIds}
+                onCheckedChange={handleCheckedChange}
+                onAllCheckedChange={handleAllCheckedChange}
+              />
+            )}
             <NoticeBox />
             {view === 'list' && <Pagination />}
           </section>
