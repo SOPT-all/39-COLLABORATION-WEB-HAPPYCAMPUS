@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router';
 
+import CartFolderSection from '@domains/cart/components/cart-folder-section/cart-folder-section';
 import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
@@ -21,7 +22,9 @@ function CartPage() {
       <div className={styles.content}>
         <CartViewTabList selected={view} onSelect={handleViewSelect} />
         <div className={styles.body}>
-          <section className={styles.main} />
+          <section className={styles.main}>
+            <CartFolderSection />
+          </section>
           <aside className={styles.aside} />
         </div>
       </div>
