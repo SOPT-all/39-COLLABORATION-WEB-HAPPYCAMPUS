@@ -2,11 +2,16 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import CartFolderSection from '@domains/cart/components/cart-folder-section/cart-folder-section';
+import CartListSection from '@domains/cart/components/cart-list-section/cart-list-section';
 import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
 import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
-import { MOCK_FOLDERS } from '@domains/cart/constants/cart-mock';
+import {
+  MOCK_CART_ITEMS,
+  MOCK_FOLDER_ITEM_IDS,
+  MOCK_FOLDERS,
+} from '@domains/cart/constants/cart-mock';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 
 import * as styles from './cart.css';
@@ -18,6 +23,11 @@ function CartPage() {
   const [folders, setFolders] = useState(MOCK_FOLDERS);
   const [selectedFolderId, setSelectedFolderId] = useState(
     MOCK_FOLDERS[0].folderId,
+  );
+
+  const folderItemIds = MOCK_FOLDER_ITEM_IDS[selectedFolderId] ?? [];
+  const folderItems = MOCK_CART_ITEMS.filter((item) =>
+    folderItemIds.includes(item.cartItemId),
   );
 
   const handleViewSelect = (nextView: CartViewTypes) => {
@@ -45,6 +55,7 @@ function CartPage() {
               onSelectFolder={setSelectedFolderId}
               onAddFolder={handleAddFolder}
             />
+            {view === 'list' && <CartListSection items={folderItems} />}
             <NoticeBox />
             {view === 'list' && <Pagination />}
           </section>
