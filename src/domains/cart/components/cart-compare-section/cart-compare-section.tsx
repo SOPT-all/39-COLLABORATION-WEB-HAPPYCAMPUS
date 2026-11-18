@@ -8,6 +8,7 @@ interface CartCompareSectionProps {
   hasHiddenItems: boolean;
   checkedIds: Set<number>;
   onCheckedChange: (cartItemId: number, checked: boolean) => void;
+  onAllCheckedChange: (checked: boolean) => void;
   onHide: (cartItemId: number) => void;
   onResetHidden: () => void;
 }
@@ -17,14 +18,18 @@ const CartCompareSection = ({
   hasHiddenItems,
   checkedIds,
   onCheckedChange,
+  onAllCheckedChange,
   onHide,
   onResetHidden,
 }: CartCompareSectionProps) => {
+  const isAllChecked =
+    items.length > 0 && items.every((item) => checkedIds.has(item.cartItemId));
+
   return (
     <div>
       <CartCompareToolbar
-        isAllSelected={false}
-        onSelectAllChange={() => {}}
+        isAllSelected={isAllChecked}
+        onSelectAllChange={onAllCheckedChange}
         onResetHidden={onResetHidden}
         isResetDisabled={!hasHiddenItems}
       />

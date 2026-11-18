@@ -72,6 +72,13 @@ function CartPage() {
     );
   };
 
+  const handleVisibleAllCheckedChange = (checked: boolean) => {
+    setItemsChecked(
+      visibleItems.map((item) => item.cartItemId),
+      checked,
+    );
+  };
+
   const handleDelete = (cartItemId: number) => {
     const title = cartItems.find(
       (item) => item.cartItemId === cartItemId,
@@ -132,6 +139,7 @@ function CartPage() {
                 hasHiddenItems={hasHiddenItems}
                 checkedIds={checkedIds}
                 onCheckedChange={handleCheckedChange}
+                onAllCheckedChange={handleVisibleAllCheckedChange}
                 onHide={hideItem}
                 onResetHidden={resetHidden}
               />
