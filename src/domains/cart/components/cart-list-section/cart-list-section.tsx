@@ -3,15 +3,15 @@ import CartListHeader from '@domains/cart/components/cart-list-header/cart-list-
 import CartListRow from '@domains/cart/components/cart-list-row/cart-list-row';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import type { CartItem } from '@domains/cart/types/cart-compare';
+import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-list-section.css';
 
 interface CartListSectionProps {
   items: CartItem[];
   emptyType: CartEmptyType;
-  checkedIds: number[];
-  onCheckedChange: (cartItemId: number, checked: boolean) => void;
-  onAllCheckedChange: (checked: boolean) => void;
+  checkedIds: Set<number>;
+  onItemsCheckedChange: (cartItemIds: number[], checked: boolean) => void;
   onDelete: (cartItemId: number) => void;
 }
 
@@ -19,13 +19,19 @@ const CartListSection = ({
   items,
   emptyType,
   checkedIds,
-  onCheckedChange,
-  onAllCheckedChange,
+  onItemsCheckedChange,
   onDelete,
 }: CartListSectionProps) => {
   const isEmpty = items.length === 0;
   const isAllChecked =
-    !isEmpty && items.every((item) => checkedIds.includes(item.cartItemId));
+    !isEmpty && items.every((item) => checkedIds.has(item.cartItemId));
+
+  const handleAllCheckedChange = (checked: boolean) => {
+    onItemsCheckedChange(
+      items.map((item) => item.cartItemId),
+      checked,
+    );
+  };
 
   return (
     <div>
@@ -33,7 +39,7 @@ const CartListSection = ({
         <thead>
           <CartListHeader
             checked={isAllChecked}
-            onCheckedChange={onAllCheckedChange}
+            onCheckedChange={handleAllCheckedChange}
           />
         </thead>
         {!isEmpty && (
@@ -45,10 +51,10 @@ const CartListSection = ({
                 coverImageUrl={item.coverImageUrl}
                 description={item.description}
                 price={item.price}
-                savedDate={String(item.savedYear)}
-                checked={checkedIds.includes(item.cartItemId)}
+                savedDate={formatSavedYear(item.savedYear)}
+                checked={checkedIds.has(item.cartItemId)}
                 onCheckedChange={(checked) =>
-                  onCheckedChange(item.cartItemId, checked)
+                  onItemsCheckedChange([item.cartItemId], checked)
                 }
                 onDelete={() => onDelete(item.cartItemId)}
               />

@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
 import CartFolderSection from '@domains/cart/components/cart-folder-section/cart-folder-section';
 import CartListSection from '@domains/cart/components/cart-list-section/cart-list-section';
+import CartPurchaseSection from '@domains/cart/components/cart-purchase-section/cart-purchase-section';
 import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
 import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
+import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import {
   MOCK_CART_ITEMS,
   MOCK_FOLDER_ITEM_IDS,
   MOCK_FOLDERS,
 } from '@domains/cart/constants/cart-mock';
+import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
+import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 import {
   DEFAULT_CATEGORY_LABEL,
@@ -37,12 +42,22 @@ function CartPage() {
 
     return folder?.folderId ?? MOCK_FOLDERS[0].folderId;
   });
-  const [checkedIds, setCheckedIds] = useState<number[]>([]);
+  const { checkedIds, setItemsChecked } = useCheckedItems();
 
   const folderItemIds = folderItemMap[selectedFolderId] ?? [];
   const folderItems = cartItems.filter((item) =>
     folderItemIds.includes(item.cartItemId),
   );
+  const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
+    useHiddenItems(selectedFolderId, folderItems);
+
+  const checkedItems = cartItems.filter((item) =>
+    checkedIds.has(item.cartItemId),
+  );
+
+  const isCompareTableVisible = view === 'compare' && folderItems.length > 0;
+  const listEmptyType: CartEmptyType =
+    view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
@@ -54,21 +69,6 @@ function CartPage() {
 
     setFolders([...folders, { folderId, name, itemCount: 0 }]);
     setSelectedFolderId(folderId);
-  };
-
-  const handleCheckedChange = (cartItemId: number, checked: boolean) => {
-    setCheckedIds((prev) =>
-      checked ? [...prev, cartItemId] : prev.filter((id) => id !== cartItemId),
-    );
-  };
-
-  const handleAllCheckedChange = (checked: boolean) => {
-    const folderIds = folderItems.map((item) => item.cartItemId);
-
-    setCheckedIds((prev) => {
-      const rest = prev.filter((id) => !folderIds.includes(id));
-      return checked ? [...rest, ...folderIds] : rest;
-    });
   };
 
   const handleDelete = (cartItemId: number) => {
@@ -99,7 +99,7 @@ function CartPage() {
         ]),
       ),
     );
-    setCheckedIds((prev) => prev.filter((id) => id !== cartItemId));
+    setItemsChecked([cartItemId], false);
   };
 
   return (
@@ -115,20 +115,34 @@ function CartPage() {
               onSelectFolder={setSelectedFolderId}
               onAddFolder={handleAddFolder}
             />
-            {view === 'list' && (
+            {!isCompareTableVisible && (
               <CartListSection
                 items={folderItems}
-                emptyType={cartItems.length === 0 ? 'cart' : 'folder'}
+                emptyType={listEmptyType}
                 checkedIds={checkedIds}
-                onCheckedChange={handleCheckedChange}
-                onAllCheckedChange={handleAllCheckedChange}
+                onItemsCheckedChange={setItemsChecked}
                 onDelete={handleDelete}
+              />
+            )}
+            {isCompareTableVisible && (
+              <CartCompareSection
+                items={visibleItems}
+                hasHiddenItems={hasHiddenItems}
+                checkedIds={checkedIds}
+                onItemsCheckedChange={setItemsChecked}
+                onHide={hideItem}
+                onResetHidden={resetHidden}
               />
             )}
             <NoticeBox />
             {view === 'list' && folderItems.length > 0 && <Pagination />}
           </section>
-          <aside className={styles.aside} />
+          <aside className={styles.aside}>
+            <CartPurchaseSection
+              items={checkedItems}
+              onItemsCheckedChange={setItemsChecked}
+            />
+          </aside>
         </div>
       </div>
     </>
