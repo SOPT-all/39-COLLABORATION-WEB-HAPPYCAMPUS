@@ -74,6 +74,7 @@ const AddToCart = ({ category }: AddToCartProps) => {
   return (
     <>
       <CartEntry
+        isModalOpen={isFolderSelectModalOpen}
         onAddToCartClick={handleAddToCart}
         onLinkClick={handleCompareLinkClick}
       />

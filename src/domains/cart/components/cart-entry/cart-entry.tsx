@@ -6,12 +6,14 @@ import * as styles from './cart-entry.css';
 
 interface CartEntryProps {
   disabled?: boolean;
+  isModalOpen?: boolean;
   onAddToCartClick?: () => void;
   onLinkClick?: () => void;
 }
 
 const CartEntry = ({
   disabled,
+  isModalOpen,
   onAddToCartClick,
   onLinkClick,
 }: CartEntryProps) => (
@@ -20,6 +22,8 @@ const CartEntry = ({
       icon={<IcCart aria-hidden />}
       disabled={disabled}
       onClick={onAddToCartClick}
+      aria-haspopup="dialog"
+      aria-expanded={isModalOpen}
     >
       장바구니 담기
     </Button>
