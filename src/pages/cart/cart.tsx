@@ -51,6 +51,10 @@ function CartPage() {
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
     useHiddenItems(selectedFolderId, folderItems);
 
+  const checkedItems = cartItems.filter((item) =>
+    checkedIds.has(item.cartItemId),
+  );
+
   const isCompareTableVisible = view === 'compare' && folderItems.length > 0;
   const listEmptyType: CartEmptyType =
     view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
@@ -76,6 +80,10 @@ function CartPage() {
       folderItems.map((item) => item.cartItemId),
       checked,
     );
+  };
+
+  const handleUncheck = (cartItemId: number) => {
+    setItemsChecked([cartItemId], false);
   };
 
   const handleVisibleAllCheckedChange = (checked: boolean) => {
@@ -154,7 +162,10 @@ function CartPage() {
             {view === 'list' && folderItems.length > 0 && <Pagination />}
           </section>
           <aside className={styles.aside}>
-            <CartPurchaseSection />
+            <CartPurchaseSection
+              items={checkedItems}
+              onRemove={handleUncheck}
+            />
           </aside>
         </div>
       </div>
