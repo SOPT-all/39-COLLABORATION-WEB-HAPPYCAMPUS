@@ -47,10 +47,13 @@ const FolderSelectModal = ({
   ];
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+
     if (isOpen) {
-      dialogRef.current?.show();
+      dialog?.show();
+      dialog?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     } else {
-      dialogRef.current?.close();
+      dialog?.close();
     }
   }, [isOpen]);
 
