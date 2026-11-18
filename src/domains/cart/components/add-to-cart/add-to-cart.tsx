@@ -27,7 +27,7 @@ const AddToCart = ({ category }: AddToCartProps) => {
   const navigateToCompare = () => {
     void navigate({
       pathname: ROUTE_PATH.CART,
-      search: '?view=compare',
+      search: `?view=compare&category=${category}`,
     });
   };
 
