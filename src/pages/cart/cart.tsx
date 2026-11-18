@@ -8,6 +8,7 @@ import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-vi
 import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
+import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import {
   MOCK_CART_ITEMS,
   MOCK_FOLDER_ITEM_IDS,
@@ -48,6 +49,10 @@ function CartPage() {
   );
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
     useHiddenItems(selectedFolderId, folderItems);
+
+  const isCompareTableVisible = view === 'compare' && folderItems.length > 0;
+  const listEmptyType: CartEmptyType =
+    view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
@@ -123,17 +128,17 @@ function CartPage() {
               onSelectFolder={setSelectedFolderId}
               onAddFolder={handleAddFolder}
             />
-            {view === 'list' && (
+            {!isCompareTableVisible && (
               <CartListSection
                 items={folderItems}
-                emptyType={cartItems.length === 0 ? 'cart' : 'folder'}
+                emptyType={listEmptyType}
                 checkedIds={checkedIds}
                 onCheckedChange={handleCheckedChange}
                 onAllCheckedChange={handleAllCheckedChange}
                 onDelete={handleDelete}
               />
             )}
-            {view === 'compare' && (
+            {isCompareTableVisible && (
               <CartCompareSection
                 items={visibleItems}
                 hasHiddenItems={hasHiddenItems}
