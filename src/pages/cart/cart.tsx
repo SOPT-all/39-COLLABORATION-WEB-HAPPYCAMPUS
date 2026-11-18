@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router';
 import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
 import CartFolderSection from '@domains/cart/components/cart-folder-section/cart-folder-section';
 import CartListSection from '@domains/cart/components/cart-list-section/cart-list-section';
+import CartPurchaseSection from '@domains/cart/components/cart-purchase-section/cart-purchase-section';
 import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
 import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
@@ -152,7 +153,9 @@ function CartPage() {
             <NoticeBox />
             {view === 'list' && folderItems.length > 0 && <Pagination />}
           </section>
-          <aside className={styles.aside} />
+          <aside className={styles.aside}>
+            <CartPurchaseSection />
+          </aside>
         </div>
       </div>
     </>
