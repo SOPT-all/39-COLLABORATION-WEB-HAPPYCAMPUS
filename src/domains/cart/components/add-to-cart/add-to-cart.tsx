@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
+import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
+import { FOLDER_MOCK } from '@domains/cart/constants/folder-mock';
+import type { Folder } from '@domains/cart/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
 
@@ -15,6 +18,10 @@ const AddToCart = ({ category }: AddToCartProps) => {
   const [isInCart, setIsInCart] = useState<boolean>(false);
   const [isFolderSelectModalOpen, setIsFolderSelectModalOpen] =
     useState<boolean>(false);
+  const [isAddFolderModalOpen, setIsAddFolderModalOpen] =
+    useState<boolean>(false);
+  const [folders, setFolders] = useState<Folder[]>(FOLDER_MOCK);
+  const [selectedFolderIds, setSelectedFolderIds] = useState<number[]>([]);
 
   const navigateToCompare = () => {
     void navigate({
@@ -43,11 +50,31 @@ const AddToCart = ({ category }: AddToCartProps) => {
     }
   };
 
+  const handleFolderToggle = (folderId: number, checked: boolean) => {
+    if (checked) {
+      setSelectedFolderIds((prev) => [...prev, folderId]);
+    } else {
+      setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
+    }
+  };
+
   return (
-    <CartEntry
-      onAddToCartClick={handleAddToCart}
-      onLinkClick={handleCompareLinkClick}
-    />
+    <>
+      <CartEntry
+        onAddToCartClick={handleAddToCart}
+        onLinkClick={handleCompareLinkClick}
+      />
+      <FolderSelectModal
+        isOpen={isFolderSelectModalOpen}
+        category={category}
+        folders={folders}
+        selectedFolderIds={selectedFolderIds}
+        onFolderToggle={handleFolderToggle}
+        onCreateFolderClick={() => setIsAddFolderModalOpen(true)}
+        onClose={() => setIsFolderSelectModalOpen(false)}
+        onCompareClick={navigateToCompare}
+      />
+    </>
   );
 };
 
