@@ -12,11 +12,11 @@ import {
   MOCK_FOLDER_ITEM_IDS,
   MOCK_FOLDERS,
 } from '@domains/cart/constants/cart-mock';
+import type { CartViewTypes } from '@domains/cart/types/cart-view';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
-} from '@domains/cart/constants/default-category';
-import type { CartViewTypes } from '@domains/cart/types/cart-view';
+} from '@shared/constants/default-category';
 
 import * as styles from './cart.css';
 
