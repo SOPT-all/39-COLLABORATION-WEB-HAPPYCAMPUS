@@ -1,4 +1,4 @@
-import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
+import AddToCart from '@domains/cart/components/add-to-cart/add-to-cart';
 import MaterialContentSection from '@domains/material/components/material-content-section/material-content-section';
 import MaterialHeading from '@domains/material/components/material-heading/material-heading';
 import MaterialInfoCard from '@domains/material/components/material-info-card/material-info-card';
@@ -22,7 +22,10 @@ function MaterialDetailPage() {
           <Preview images={mock.imageUrls} />
           <MaterialContentSection material={mock} tags={mockTags} />
         </div>
-        <MaterialInfoCard info={mock} actions={<CartEntry />} />
+        <MaterialInfoCard
+          info={mock}
+          actions={<AddToCart category={mock.category} />}
+        />
       </div>
     </div>
   );
