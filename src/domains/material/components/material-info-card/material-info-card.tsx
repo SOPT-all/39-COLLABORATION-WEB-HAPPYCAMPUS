@@ -1,16 +1,12 @@
 import { type ReactNode, useId } from 'react';
 
+import type { MaterialDetail } from '@domains/material/types/material';
+import { formatSavedYear } from '@shared/utils/format-saved-year';
+
 import * as styles from './material-info-card.css';
 
-interface MaterialInfo {
-  price: number;
-  pageCount: number;
-  fileType: string;
-  savedYear: number;
-}
-
 interface MaterialInfoCardProps {
-  info: MaterialInfo;
+  info: Pick<MaterialDetail, 'price' | 'pageCount' | 'fileType' | 'savedYear'>;
   actions: ReactNode;
 }
 
@@ -21,7 +17,7 @@ const MaterialInfoCard = ({ info, actions }: MaterialInfoCardProps) => {
   const rows = [
     { label: '분량', value: `${pageCount}페이지` },
     { label: '파일 형식', value: fileType.toUpperCase() },
-    { label: '저작 시기', value: String(savedYear) },
+    { label: '저작 시기', value: formatSavedYear(savedYear) },
   ];
 
   return (

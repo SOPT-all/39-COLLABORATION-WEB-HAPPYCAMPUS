@@ -6,7 +6,7 @@ import ContentSection from './content-section';
 import * as styles from './material-content-section.css';
 
 interface MaterialContentSectionProps {
-  material: MaterialDetail;
+  material: Pick<MaterialDetail, 'description' | 'tableOfContents' | 'content'>;
   tags: string[];
 }
 
