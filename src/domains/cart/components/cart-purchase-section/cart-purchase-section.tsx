@@ -8,17 +8,23 @@ interface CartPurchaseSectionProps {
 }
 
 const CartPurchaseSection = ({ items, onRemove }: CartPurchaseSectionProps) => {
+  const orderAmount = items.reduce((sum, item) => sum + item.price, 0);
+
+  const handleOrderClick = () => {
+    alert('주문이 완료되었습니다');
+  };
+
   return (
     <>
       <BuyingCard items={items} onRemove={onRemove} />
       <TotalPriceCard
-        orderAmount={0}
+        orderAmount={orderAmount}
         chargeAmount={0}
         couponAmount={0}
         profitAmount={0}
-        totalAmount={0}
-        orderCount={0}
-        onOrderClick={() => {}}
+        totalAmount={orderAmount}
+        orderCount={items.length}
+        onOrderClick={handleOrderClick}
       />
     </>
   );
