@@ -5,29 +5,35 @@ import { getCompareBadges } from '@domains/cart/utils/get-compare-badges';
 
 interface CartCompareSectionProps {
   items: CartItem[];
+  hasHiddenItems: boolean;
   checkedIds: Set<number>;
   onCheckedChange: (cartItemId: number, checked: boolean) => void;
+  onHide: (cartItemId: number) => void;
+  onResetHidden: () => void;
 }
 
 const CartCompareSection = ({
   items,
+  hasHiddenItems,
   checkedIds,
   onCheckedChange,
+  onHide,
+  onResetHidden,
 }: CartCompareSectionProps) => {
   return (
     <div>
       <CartCompareToolbar
         isAllSelected={false}
         onSelectAllChange={() => {}}
-        onResetHidden={() => {}}
-        isResetDisabled
+        onResetHidden={onResetHidden}
+        isResetDisabled={!hasHiddenItems}
       />
       <CartCompareTable
         items={items}
         badges={getCompareBadges(items)}
         checkedIds={checkedIds}
         onCheckedChange={onCheckedChange}
-        onHide={() => {}}
+        onHide={onHide}
       />
     </div>
   );

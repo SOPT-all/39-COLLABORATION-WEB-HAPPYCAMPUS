@@ -14,6 +14,7 @@ import {
   MOCK_FOLDERS,
 } from '@domains/cart/constants/cart-mock';
 import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
+import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 import {
   DEFAULT_CATEGORY_LABEL,
@@ -45,6 +46,8 @@ function CartPage() {
   const folderItems = cartItems.filter((item) =>
     folderItemIds.includes(item.cartItemId),
   );
+  const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
+    useHiddenItems(selectedFolderId, folderItems);
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
@@ -125,9 +128,12 @@ function CartPage() {
             )}
             {view === 'compare' && (
               <CartCompareSection
-                items={folderItems}
+                items={visibleItems}
+                hasHiddenItems={hasHiddenItems}
                 checkedIds={checkedIds}
                 onCheckedChange={handleCheckedChange}
+                onHide={hideItem}
+                onResetHidden={resetHidden}
               />
             )}
             <NoticeBox />
