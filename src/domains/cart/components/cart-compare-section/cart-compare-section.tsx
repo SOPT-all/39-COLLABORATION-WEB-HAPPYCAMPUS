@@ -6,9 +6,14 @@ import { getCompareBadges } from '@domains/cart/utils/get-compare-badges';
 interface CartCompareSectionProps {
   items: CartItem[];
   checkedIds: Set<number>;
+  onCheckedChange: (cartItemId: number, checked: boolean) => void;
 }
 
-const CartCompareSection = ({ items, checkedIds }: CartCompareSectionProps) => {
+const CartCompareSection = ({
+  items,
+  checkedIds,
+  onCheckedChange,
+}: CartCompareSectionProps) => {
   return (
     <div>
       <CartCompareToolbar
@@ -21,7 +26,7 @@ const CartCompareSection = ({ items, checkedIds }: CartCompareSectionProps) => {
         items={items}
         badges={getCompareBadges(items)}
         checkedIds={checkedIds}
-        onCheckedChange={() => {}}
+        onCheckedChange={onCheckedChange}
         onHide={() => {}}
       />
     </div>

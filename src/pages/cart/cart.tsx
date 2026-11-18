@@ -124,7 +124,11 @@ function CartPage() {
               />
             )}
             {view === 'compare' && (
-              <CartCompareSection items={folderItems} checkedIds={checkedIds} />
+              <CartCompareSection
+                items={folderItems}
+                checkedIds={checkedIds}
+                onCheckedChange={handleCheckedChange}
+              />
             )}
             <NoticeBox />
             {view === 'list' && folderItems.length > 0 && <Pagination />}
