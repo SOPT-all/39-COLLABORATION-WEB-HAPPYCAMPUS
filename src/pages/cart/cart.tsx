@@ -12,6 +12,10 @@ import {
   MOCK_FOLDER_ITEM_IDS,
   MOCK_FOLDERS,
 } from '@domains/cart/constants/cart-mock';
+import {
+  DEFAULT_CATEGORY_LABEL,
+  type DefaultCategoryType,
+} from '@domains/cart/constants/default-category';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 
 import * as styles from './cart.css';
@@ -23,9 +27,16 @@ function CartPage() {
   const [cartItems, setCartItems] = useState(MOCK_CART_ITEMS);
   const [folders, setFolders] = useState(MOCK_FOLDERS);
   const [folderItemMap, setFolderItemMap] = useState(MOCK_FOLDER_ITEM_IDS);
-  const [selectedFolderId, setSelectedFolderId] = useState(
-    MOCK_FOLDERS[0].folderId,
-  );
+  const [selectedFolderId, setSelectedFolderId] = useState(() => {
+    const category = searchParams.get('category');
+    const label =
+      category && category in DEFAULT_CATEGORY_LABEL
+        ? DEFAULT_CATEGORY_LABEL[category as DefaultCategoryType]
+        : null;
+    const folder = MOCK_FOLDERS.find((folder) => folder.name === label);
+
+    return folder?.folderId ?? MOCK_FOLDERS[0].folderId;
+  });
   const [checkedIds, setCheckedIds] = useState<number[]>([]);
 
   const folderItemIds = folderItemMap[selectedFolderId] ?? [];
