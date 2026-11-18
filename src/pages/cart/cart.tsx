@@ -61,6 +61,15 @@ function CartPage() {
   };
 
   const handleDelete = (cartItemId: number) => {
+    const title = cartItems.find(
+      (item) => item.cartItemId === cartItemId,
+    )?.title;
+    const isConfirmed = confirm(
+      `자료를 삭제할까요? '${title}' 자료를 장바구니와 모든 폴더에서 삭제해요. 구매 선택도 함께 해제돼요.`,
+    );
+
+    if (!isConfirmed) return;
+
     setCartItems((prev) =>
       prev.filter((item) => item.cartItemId !== cartItemId),
     );
