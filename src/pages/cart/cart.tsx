@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
+import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
 import CartFolderSection from '@domains/cart/components/cart-folder-section/cart-folder-section';
 import CartListSection from '@domains/cart/components/cart-list-section/cart-list-section';
 import CartViewTabList from '@domains/cart/components/cart-view-tab-list/cart-view-tab-list';
@@ -121,6 +122,9 @@ function CartPage() {
                 onAllCheckedChange={handleAllCheckedChange}
                 onDelete={handleDelete}
               />
+            )}
+            {view === 'compare' && (
+              <CartCompareSection items={folderItems} checkedIds={checkedIds} />
             )}
             <NoticeBox />
             {view === 'list' && folderItems.length > 0 && <Pagination />}
