@@ -31,7 +31,12 @@ const AddToCart = ({ category }: AddToCartProps) => {
     });
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCartClick = () => {
+    if (isFolderSelectModalOpen) {
+      setIsFolderSelectModalOpen(false);
+      return;
+    }
+
     if (
       isInCart &&
       !confirm('이미 담긴 자료입니다. 다른 폴더에 추가하시겠어요?')
@@ -47,7 +52,7 @@ const AddToCart = ({ category }: AddToCartProps) => {
     if (isInCart) {
       navigateToCompare();
     } else {
-      handleAddToCart();
+      handleAddToCartClick();
     }
   };
 
@@ -75,7 +80,7 @@ const AddToCart = ({ category }: AddToCartProps) => {
     <>
       <CartEntry
         isModalOpen={isFolderSelectModalOpen}
-        onAddToCartClick={handleAddToCart}
+        onAddToCartClick={handleAddToCartClick}
         onLinkClick={handleCompareLinkClick}
       />
       <FolderSelectModal
