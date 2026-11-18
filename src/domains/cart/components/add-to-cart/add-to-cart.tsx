@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder-modal';
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
 import { FOLDER_MOCK } from '@domains/cart/constants/folder-mock';
@@ -58,6 +59,18 @@ const AddToCart = ({ category }: AddToCartProps) => {
     }
   };
 
+  const handleFolderCreate = (folderName: string) => {
+    const newFolder: Folder = {
+      folderId: Date.now(), // TODO: 서버 고유 ID로 변경 필요
+      name: folderName,
+      itemCount: 1,
+    };
+
+    setFolders((prev) => [...prev, newFolder]);
+    setSelectedFolderIds((prev) => [...prev, newFolder.folderId]);
+    setIsAddFolderModalOpen(false);
+  };
+
   return (
     <>
       <CartEntry
@@ -73,6 +86,11 @@ const AddToCart = ({ category }: AddToCartProps) => {
         onCreateFolderClick={() => setIsAddFolderModalOpen(true)}
         onClose={() => setIsFolderSelectModalOpen(false)}
         onCompareClick={navigateToCompare}
+      />
+      <AddFolderModal
+        isOpen={isAddFolderModalOpen}
+        onClose={() => setIsAddFolderModalOpen(false)}
+        onConfirm={handleFolderCreate}
       />
     </>
   );
