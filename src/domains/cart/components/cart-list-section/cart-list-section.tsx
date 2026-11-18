@@ -11,8 +11,7 @@ interface CartListSectionProps {
   items: CartItem[];
   emptyType: CartEmptyType;
   checkedIds: Set<number>;
-  onCheckedChange: (cartItemId: number, checked: boolean) => void;
-  onAllCheckedChange: (checked: boolean) => void;
+  onItemsCheckedChange: (cartItemIds: number[], checked: boolean) => void;
   onDelete: (cartItemId: number) => void;
 }
 
@@ -20,13 +19,19 @@ const CartListSection = ({
   items,
   emptyType,
   checkedIds,
-  onCheckedChange,
-  onAllCheckedChange,
+  onItemsCheckedChange,
   onDelete,
 }: CartListSectionProps) => {
   const isEmpty = items.length === 0;
   const isAllChecked =
     !isEmpty && items.every((item) => checkedIds.has(item.cartItemId));
+
+  const handleAllCheckedChange = (checked: boolean) => {
+    onItemsCheckedChange(
+      items.map((item) => item.cartItemId),
+      checked,
+    );
+  };
 
   return (
     <div>
@@ -34,7 +39,7 @@ const CartListSection = ({
         <thead>
           <CartListHeader
             checked={isAllChecked}
-            onCheckedChange={onAllCheckedChange}
+            onCheckedChange={handleAllCheckedChange}
           />
         </thead>
         {!isEmpty && (
@@ -49,7 +54,7 @@ const CartListSection = ({
                 savedDate={formatSavedYear(item.savedYear)}
                 checked={checkedIds.has(item.cartItemId)}
                 onCheckedChange={(checked) =>
-                  onCheckedChange(item.cartItemId, checked)
+                  onItemsCheckedChange([item.cartItemId], checked)
                 }
                 onDelete={() => onDelete(item.cartItemId)}
               />

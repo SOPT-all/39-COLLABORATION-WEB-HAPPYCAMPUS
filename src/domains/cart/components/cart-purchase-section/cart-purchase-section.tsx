@@ -4,11 +4,18 @@ import type { CartItem } from '@domains/cart/types/cart-compare';
 
 interface CartPurchaseSectionProps {
   items: CartItem[];
-  onRemove: (cartItemId: number) => void;
+  onItemsCheckedChange: (cartItemIds: number[], checked: boolean) => void;
 }
 
-const CartPurchaseSection = ({ items, onRemove }: CartPurchaseSectionProps) => {
+const CartPurchaseSection = ({
+  items,
+  onItemsCheckedChange,
+}: CartPurchaseSectionProps) => {
   const orderAmount = items.reduce((sum, item) => sum + item.price, 0);
+
+  const handleRemove = (cartItemId: number) => {
+    onItemsCheckedChange([cartItemId], false);
+  };
 
   const handleOrderClick = () => {
     alert('주문이 완료되었습니다');
@@ -16,7 +23,7 @@ const CartPurchaseSection = ({ items, onRemove }: CartPurchaseSectionProps) => {
 
   return (
     <>
-      <BuyingCard items={items} onRemove={onRemove} />
+      <BuyingCard items={items} onRemove={handleRemove} />
       <TotalPriceCard
         orderAmount={orderAmount}
         chargeAmount={0}

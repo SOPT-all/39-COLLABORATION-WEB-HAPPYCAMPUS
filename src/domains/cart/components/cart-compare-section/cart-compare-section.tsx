@@ -7,8 +7,7 @@ interface CartCompareSectionProps {
   items: CartItem[];
   hasHiddenItems: boolean;
   checkedIds: Set<number>;
-  onCheckedChange: (cartItemId: number, checked: boolean) => void;
-  onAllCheckedChange: (checked: boolean) => void;
+  onItemsCheckedChange: (cartItemIds: number[], checked: boolean) => void;
   onHide: (cartItemId: number) => void;
   onResetHidden: () => void;
 }
@@ -17,19 +16,29 @@ const CartCompareSection = ({
   items,
   hasHiddenItems,
   checkedIds,
-  onCheckedChange,
-  onAllCheckedChange,
+  onItemsCheckedChange,
   onHide,
   onResetHidden,
 }: CartCompareSectionProps) => {
   const isAllChecked =
     items.length > 0 && items.every((item) => checkedIds.has(item.cartItemId));
 
+  const handleAllCheckedChange = (checked: boolean) => {
+    onItemsCheckedChange(
+      items.map((item) => item.cartItemId),
+      checked,
+    );
+  };
+
+  const handleCheckedChange = (cartItemId: number, checked: boolean) => {
+    onItemsCheckedChange([cartItemId], checked);
+  };
+
   return (
     <div>
       <CartCompareToolbar
         isAllSelected={isAllChecked}
-        onSelectAllChange={onAllCheckedChange}
+        onSelectAllChange={handleAllCheckedChange}
         onResetHidden={onResetHidden}
         isResetDisabled={!hasHiddenItems}
       />
@@ -37,7 +46,7 @@ const CartCompareSection = ({
         items={items}
         badges={getCompareBadges(items)}
         checkedIds={checkedIds}
-        onCheckedChange={onCheckedChange}
+        onCheckedChange={handleCheckedChange}
         onHide={onHide}
       />
     </div>

@@ -71,28 +71,6 @@ function CartPage() {
     setSelectedFolderId(folderId);
   };
 
-  const handleCheckedChange = (cartItemId: number, checked: boolean) => {
-    setItemsChecked([cartItemId], checked);
-  };
-
-  const handleAllCheckedChange = (checked: boolean) => {
-    setItemsChecked(
-      folderItems.map((item) => item.cartItemId),
-      checked,
-    );
-  };
-
-  const handleUncheck = (cartItemId: number) => {
-    setItemsChecked([cartItemId], false);
-  };
-
-  const handleVisibleAllCheckedChange = (checked: boolean) => {
-    setItemsChecked(
-      visibleItems.map((item) => item.cartItemId),
-      checked,
-    );
-  };
-
   const handleDelete = (cartItemId: number) => {
     const title = cartItems.find(
       (item) => item.cartItemId === cartItemId,
@@ -142,8 +120,7 @@ function CartPage() {
                 items={folderItems}
                 emptyType={listEmptyType}
                 checkedIds={checkedIds}
-                onCheckedChange={handleCheckedChange}
-                onAllCheckedChange={handleAllCheckedChange}
+                onItemsCheckedChange={setItemsChecked}
                 onDelete={handleDelete}
               />
             )}
@@ -152,8 +129,7 @@ function CartPage() {
                 items={visibleItems}
                 hasHiddenItems={hasHiddenItems}
                 checkedIds={checkedIds}
-                onCheckedChange={handleCheckedChange}
-                onAllCheckedChange={handleVisibleAllCheckedChange}
+                onItemsCheckedChange={setItemsChecked}
                 onHide={hideItem}
                 onResetHidden={resetHidden}
               />
@@ -164,7 +140,7 @@ function CartPage() {
           <aside className={styles.aside}>
             <CartPurchaseSection
               items={checkedItems}
-              onRemove={handleUncheck}
+              onItemsCheckedChange={setItemsChecked}
             />
           </aside>
         </div>
