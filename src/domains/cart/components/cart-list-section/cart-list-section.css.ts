@@ -4,6 +4,7 @@ import { vars } from '@shared/styles/theme.css';
 
 export const table = style({
   width: '100%',
+  tableLayout: 'fixed',
 });
 
 export const tableBody = style({
