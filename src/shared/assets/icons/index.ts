@@ -16,6 +16,7 @@ export { default as IcEyeoff } from './mono/ic-eyeoff.svg?react';
 export { default as IcFile } from './mono/ic-file.svg?react';
 export { default as IcInfo } from './mono/ic-info.svg?react';
 export { default as IcMy } from './mono/ic-my.svg?react';
+export { default as IcPreviewEmpty } from './mono/ic-preview-empty.svg?react';
 export { default as IcReset } from './mono/ic-reset.svg?react';
 export { default as IcSearch } from './mono/ic-search.svg?react';
 export { default as IcShopping } from './mono/ic-shopping.svg?react';
