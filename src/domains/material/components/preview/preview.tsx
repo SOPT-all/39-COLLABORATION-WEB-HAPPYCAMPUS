@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { IcExpand } from '@shared/assets/icons';
+import { IcExpand, IcPreviewEmpty } from '@shared/assets/icons';
 
 import PaginationButton from './pagination-button';
 
@@ -12,7 +12,8 @@ interface PreviewProps {
 
 const Preview = ({ images }: PreviewProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPage = images.length;
+  const hasImage = images.length > 0;
+  const totalPage = Math.max(images.length, 1);
 
   return (
     <section className={styles.previewContainer}>
@@ -25,11 +26,18 @@ const Preview = ({ images }: PreviewProps) => {
       </div>
 
       <div className={styles.viewer}>
-        <img
-          className={styles.pageImage}
-          src={images[currentPage - 1]}
-          alt={`미리보기 ${currentPage}페이지`}
-        />
+        {hasImage ? (
+          <img
+            className={styles.pageImage}
+            src={images[currentPage - 1]}
+            alt={`미리보기 ${currentPage}페이지`}
+          />
+        ) : (
+          <div className={styles.emptyPage}>
+            <IcPreviewEmpty className={styles.emptyIcon} aria-hidden />
+            <p className={styles.emptyText}>미리보기 이미지가 없습니다.</p>
+          </div>
+        )}
         <div className={styles.pagination}>
           <PaginationButton
             direction="prev"
