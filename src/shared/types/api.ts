@@ -4,3 +4,5 @@ export interface ApiResponse<T> {
   message: string;
   data: T;
 }
+
+export type ApiErrorResponse = Omit<ApiResponse<unknown>, 'data'>;
