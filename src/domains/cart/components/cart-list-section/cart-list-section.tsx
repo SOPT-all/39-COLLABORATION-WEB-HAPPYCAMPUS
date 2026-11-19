@@ -2,7 +2,7 @@ import CartEmpty from '@domains/cart/components/cart-empty/cart-empty';
 import CartListHeader from '@domains/cart/components/cart-list-header/cart-list-header';
 import CartListRow from '@domains/cart/components/cart-list-row/cart-list-row';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-list-section.css';

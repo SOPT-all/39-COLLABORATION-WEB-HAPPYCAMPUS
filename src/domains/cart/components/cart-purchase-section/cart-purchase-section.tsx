@@ -1,6 +1,6 @@
 import BuyingCard from '@domains/cart/components/buying-card/buying-card';
 import TotalPriceCard from '@domains/cart/components/total-price-card/total-price-card';
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 
 interface CartPurchaseSectionProps {
   items: CartItem[];

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 
 export const useHiddenItems = (folderId: number, folderItems: CartItem[]) => {
   const [hiddenIdMap, setHiddenIdMap] = useState<Record<number, number[]>>({});

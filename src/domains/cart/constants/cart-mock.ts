@@ -1,4 +1,4 @@
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 import type { Folder } from '@domains/cart/types/folder';
 
 export const MOCK_FOLDERS: Folder[] = [
@@ -13,6 +13,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 1,
     postId: 101,
+    category: 'SELF_INTRODUCTION',
     title: 'A기업 마케팅 합격 자소서(2026)',
     coverImageUrl: null,
     description: '데이터 기반 캠페인 기획과 콘텐츠 개선 경험을 담은 자기소개서',
@@ -25,6 +26,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 2,
     postId: 102,
+    category: 'SELF_INTRODUCTION',
     title: 'A기업 영업 합격 자소서(2023)',
     coverImageUrl: null,
     description:
@@ -38,6 +40,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 3,
     postId: 103,
+    category: 'SELF_INTRODUCTION',
     title: 'A기업 마케팅 합격 자소서(2024)',
     coverImageUrl: null,
     description:
@@ -51,6 +54,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 4,
     postId: 104,
+    category: 'SELF_INTRODUCTION',
     title: 'A기업 마케팅 합격 자소서(2025)',
     coverImageUrl: null,
     description:
@@ -64,6 +68,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 5,
     postId: 105,
+    category: 'THESIS',
     title: '소비자 행동 분석 석사 논문',
     coverImageUrl: null,
     description:
@@ -77,6 +82,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 6,
     postId: 106,
+    category: 'THESIS',
     title: '디지털 광고 효과 측정 연구',
     coverImageUrl: null,
     description: '검색 광고와 디스플레이 광고의 전환 효과를 비교한 학술 논문',
@@ -89,6 +95,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 7,
     postId: 107,
+    category: 'REPORT',
     title: '경영 전략 사례 분석 레포트',
     coverImageUrl: null,
     description: '국내 유통 기업의 옴니채널 전략을 SWOT으로 분석한 레포트',
@@ -101,6 +108,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 8,
     postId: 108,
+    category: 'RESUME',
     title: '마케팅 신입 이력서 양식',
     coverImageUrl: null,
     description: '마케팅 직무 신입 지원자를 위한 한 장 이력서 양식과 작성 예시',
@@ -113,6 +121,7 @@ export const MOCK_CART_ITEMS: CartItem[] = [
   {
     cartItemId: 9,
     postId: 109,
+    category: 'RESUME',
     title: '개발자 경력 이력서 예시',
     coverImageUrl: null,
     description: '3년 차 프론트엔드 개발자의 프로젝트 중심 경력 이력서 예시',

@@ -1,5 +1,5 @@
 import type { BadgeType } from '@domains/cart/constants/badge';
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 
 const BADGE_CRITERIA: {
   type: BadgeType;
