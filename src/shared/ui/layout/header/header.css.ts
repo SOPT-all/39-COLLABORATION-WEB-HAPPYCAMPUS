@@ -165,7 +165,7 @@ export const navBubbleText = style({
 });
 
 export const navBubbleTail = style({
-  transform: 'scaleY(-1)',
+  marginTop: -0.5,
   marginLeft: 32,
   color: vars.color.blue500,
 });
