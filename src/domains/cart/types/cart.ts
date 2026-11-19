@@ -13,3 +13,7 @@ export interface CartItem {
   fileType: string;
   tableOfContents: string;
 }
+
+export interface CartItemsPage {
+  content: CartItem[];
+}
