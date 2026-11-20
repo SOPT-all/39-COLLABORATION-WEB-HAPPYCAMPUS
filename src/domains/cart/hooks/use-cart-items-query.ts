@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import {
   getCartItems,
@@ -10,4 +10,5 @@ export const useCartItemsQuery = (params: GetCartItemsParams) =>
   useQuery({
     queryKey: QUERY_KEY.cart.list(params),
     queryFn: () => getCartItems(params),
+    placeholderData: keepPreviousData,
   });
