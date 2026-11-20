@@ -27,6 +27,7 @@ export { default as IcFiletypeDocx } from './multi/ic-filetype-docx.svg';
 export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';
 export { default as IcFiletypePdf } from './multi/ic-filetype-pdf.svg';
 export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.svg';
+export { default as IcPreviewEmpty } from './multi/ic-preview-empty.svg';
 
 // 로고: 멀티컬러라 URL로 import → <img src={...} />
 export { default as LogoEasyai } from './multi/logo-easyai.svg';
