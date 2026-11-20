@@ -43,13 +43,36 @@ export const viewer = style({
   height: 600,
 });
 
-export const pageImage = style({
+const page = style({
   border: `1px solid ${vars.color.grey300}`,
   boxShadow: '0 6px 18px rgba(16, 24, 40, 0.12)',
   backgroundColor: vars.color.common0,
-  objectFit: 'contain',
   width: 350,
   height: 495,
+});
+
+export const pageImage = style([page, { objectFit: 'contain' }]);
+
+export const emptyPage = style([
+  page,
+  {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    paddingBottom: 39,
+  },
+]);
+
+export const emptyIcon = style({
+  width: 56,
+  height: 56,
+});
+
+export const emptyText = style({
+  ...vars.typography.body2R14,
+  color: vars.color.grey500,
 });
 
 export const pagination = style({
