@@ -56,11 +56,13 @@ function CartPage() {
     view === 'compare' && !isError && tabItems.length > 0;
   const listEmptyType: CartEmptyType = isError
     ? 'error'
-    : view === 'compare'
-      ? 'compare'
-      : cartItems.length === 0
-        ? 'cart'
-        : 'folder';
+    : isLoading
+      ? 'loading'
+      : view === 'compare'
+        ? 'compare'
+        : cartItems.length === 0
+          ? 'cart'
+          : 'folder';
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
@@ -92,9 +94,9 @@ function CartPage() {
               onSelectTab={setSelectedTab}
               onAddFolder={addFolder}
             />
-            {!isLoading && !isCompareTableVisible && (
+            {!isCompareTableVisible && (
               <CartListSection
-                items={isError ? [] : tabItems}
+                items={isError || isLoading ? [] : tabItems}
                 emptyType={listEmptyType}
                 checkedIds={checkedIds}
                 onItemsCheckedChange={setItemsChecked}
