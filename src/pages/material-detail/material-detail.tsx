@@ -3,24 +3,31 @@ import MaterialContentSection from '@domains/material/components/material-conten
 import MaterialHeading from '@domains/material/components/material-heading/material-heading';
 import MaterialInfoCard from '@domains/material/components/material-info-card/material-info-card';
 import Preview from '@domains/material/components/preview/preview';
-import { MATERIAL_DETAIL_MOCK } from '@domains/material/constants/material-detail-mock';
+import { useMaterialDetailQuery } from '@domains/material/hooks/use-material-detail-query';
 
 import * as styles from './material-detail.css';
 
+const POST_ID = 1;
+
 function MaterialDetailPage() {
-  const mock = MATERIAL_DETAIL_MOCK;
+  const { data: material } = useMaterialDetailQuery(POST_ID);
+
+  if (!material) return null;
 
   return (
     <div className={styles.materialDetailContainer}>
-      <MaterialHeading title={mock.title} description={mock.description} />
+      <MaterialHeading
+        title={material.title}
+        description={material.description}
+      />
       <div className={styles.bodyContainer}>
         <div className={styles.contentContainer}>
-          <Preview images={mock.imageUrls} />
-          <MaterialContentSection material={mock} />
+          <Preview images={material.imageUrls} />
+          <MaterialContentSection material={material} />
         </div>
         <MaterialInfoCard
-          info={mock}
-          actions={<AddToCart category={mock.category} />}
+          info={material}
+          actions={<AddToCart category={material.category} />}
         />
       </div>
     </div>
