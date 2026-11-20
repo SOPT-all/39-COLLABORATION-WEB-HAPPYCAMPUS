@@ -31,7 +31,13 @@ function MaterialDetailPage() {
         </div>
         <MaterialInfoCard
           info={material}
-          actions={<AddToCart category={material.category} />}
+          actions={
+            <AddToCart
+              postId={material.postId}
+              category={material.category}
+              cartItemId={material.cartItemId}
+            />
+          }
         />
       </div>
     </div>
