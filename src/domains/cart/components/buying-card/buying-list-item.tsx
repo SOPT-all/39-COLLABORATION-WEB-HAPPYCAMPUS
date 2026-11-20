@@ -1,5 +1,6 @@
 import {
   IcCloseSmall,
+  IcFiletypeDocx,
   IcFiletypeHwp,
   IcFiletypePdf,
   IcFiletypePpt,
@@ -12,6 +13,7 @@ const FILE_TYPE_ICON: Record<string, string> = {
   hwp: IcFiletypeHwp,
   ppt: IcFiletypePpt,
   pptx: IcFiletypePpt,
+  docx: IcFiletypeDocx,
 };
 
 interface BuyingListItemProps {
