@@ -24,7 +24,14 @@ function MaterialDetailPage() {
         </div>
         <MaterialInfoCard
           info={mock}
-          actions={<AddToCart category={mock.category} />}
+          actions={
+            // TODO: 자료 상세 API 연동 후 서버 응답 값으로 교체
+            <AddToCart
+              postId={mock.postId}
+              category={mock.category}
+              cartItemId={mock.cartItemId}
+            />
+          }
         />
       </div>
     </div>
