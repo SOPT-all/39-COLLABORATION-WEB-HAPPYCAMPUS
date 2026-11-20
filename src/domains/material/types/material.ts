@@ -13,4 +13,6 @@ export interface MaterialDetail {
   tableOfContents: string;
   content: string;
   imageUrls: string[];
+  cartItemId: number | null;
+  tag: string;
 }
