@@ -23,10 +23,3 @@ export const MATERIAL_DETAIL_MOCK: MaterialDetail = {
   cartItemId: null,
   tag: '#자기소개서, #자기소개서샘플, #마케팅, #마케팅자기소개서',
 };
-
-export const MATERIAL_TAGS_MOCK = [
-  '자기소개서',
-  '자기소개서샘플',
-  '마케팅',
-  '마케팅자기소개서',
-];

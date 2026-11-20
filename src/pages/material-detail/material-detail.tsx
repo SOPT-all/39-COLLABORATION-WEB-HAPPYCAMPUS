@@ -3,16 +3,12 @@ import MaterialContentSection from '@domains/material/components/material-conten
 import MaterialHeading from '@domains/material/components/material-heading/material-heading';
 import MaterialInfoCard from '@domains/material/components/material-info-card/material-info-card';
 import Preview from '@domains/material/components/preview/preview';
-import {
-  MATERIAL_DETAIL_MOCK,
-  MATERIAL_TAGS_MOCK,
-} from '@domains/material/constants/material-detail-mock';
+import { MATERIAL_DETAIL_MOCK } from '@domains/material/constants/material-detail-mock';
 
 import * as styles from './material-detail.css';
 
 function MaterialDetailPage() {
   const mock = MATERIAL_DETAIL_MOCK;
-  const mockTags = MATERIAL_TAGS_MOCK;
 
   return (
     <div className={styles.materialDetailContainer}>
@@ -20,7 +16,7 @@ function MaterialDetailPage() {
       <div className={styles.bodyContainer}>
         <div className={styles.contentContainer}>
           <Preview images={mock.imageUrls} />
-          <MaterialContentSection material={mock} tags={mockTags} />
+          <MaterialContentSection material={mock} />
         </div>
         <MaterialInfoCard
           info={mock}
