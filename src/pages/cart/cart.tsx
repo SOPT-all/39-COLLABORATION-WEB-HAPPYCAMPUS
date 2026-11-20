@@ -24,12 +24,20 @@ function CartPage() {
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
   const { checkedIds, setItemsChecked } = useCheckedItems();
 
-  const { data: cartItems = [] } = useCartItemsQuery({});
+  const {
+    data: cartItems = [],
+    isPending: isCartItemsPending,
+    isError: isCartItemsError,
+  } = useCartItemsQuery({});
   const { tabs, selectedTab, setSelectedTab, addFolder } = useCartTabs(
     searchParams.get('category'),
     cartItems,
   );
-  const { data: tabItems = [], isPending } = useCartItemsQuery(
+  const {
+    data: tabItems = [],
+    isPending: isTabItemsPending,
+    isError: isTabItemsError,
+  } = useCartItemsQuery(
     selectedTab.type === 'category'
       ? { category: selectedTab.category }
       : { folderId: selectedTab.folderId },
@@ -41,9 +49,18 @@ function CartPage() {
     checkedIds.has(item.cartItemId),
   );
 
-  const isCompareTableVisible = view === 'compare' && tabItems.length > 0;
-  const listEmptyType: CartEmptyType =
-    view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
+  const isLoading = isCartItemsPending || isTabItemsPending;
+  const isError = isCartItemsError || isTabItemsError;
+
+  const isCompareTableVisible =
+    view === 'compare' && !isError && tabItems.length > 0;
+  const listEmptyType: CartEmptyType = isError
+    ? 'error'
+    : view === 'compare'
+      ? 'compare'
+      : cartItems.length === 0
+        ? 'cart'
+        : 'folder';
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
@@ -75,9 +92,9 @@ function CartPage() {
               onSelectTab={setSelectedTab}
               onAddFolder={addFolder}
             />
-            {!isPending && !isCompareTableVisible && (
+            {!isLoading && !isCompareTableVisible && (
               <CartListSection
-                items={tabItems}
+                items={isError ? [] : tabItems}
                 emptyType={listEmptyType}
                 checkedIds={checkedIds}
                 onItemsCheckedChange={setItemsChecked}
@@ -95,7 +112,9 @@ function CartPage() {
               />
             )}
             <NoticeBox />
-            {view === 'list' && tabItems.length > 0 && <Pagination />}
+            {view === 'list' && !isError && tabItems.length > 0 && (
+              <Pagination />
+            )}
           </section>
           <aside className={styles.aside}>
             <CartPurchaseSection
