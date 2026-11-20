@@ -3,21 +3,21 @@ import { useState } from 'react';
 import AddFolderButton from '@domains/cart/components/add-folder-button/add-folder-button';
 import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder-modal';
 import FolderTabList from '@domains/cart/components/folder-tabs/folder-tab-list';
-import type { Folder } from '@domains/cart/types/folder';
+import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
 
 import * as styles from './cart-folder-section.css';
 
 interface CartFolderSectionProps {
-  folders: Folder[];
-  selectedFolderId: number;
-  onSelectFolder: (folderId: number) => void;
+  tabs: FolderTabItem[];
+  selectedTab: SelectedTab;
+  onSelectTab: (tab: SelectedTab) => void;
   onAddFolder: (folderName: string) => void;
 }
 
 const CartFolderSection = ({
-  folders,
-  selectedFolderId,
-  onSelectFolder,
+  tabs,
+  selectedTab,
+  onSelectTab,
   onAddFolder,
 }: CartFolderSectionProps) => {
   const [isAddFolderModalOpen, setIsAddFolderModalOpen] = useState(false);
@@ -37,9 +37,9 @@ const CartFolderSection = ({
         <AddFolderButton onClick={openAddFolderModal} />
       </div>
       <FolderTabList
-        folders={folders}
-        selectedFolderId={selectedFolderId}
-        onSelect={onSelectFolder}
+        tabs={tabs}
+        selectedTab={selectedTab}
+        onSelect={onSelectTab}
       />
       <AddFolderModal
         isOpen={isAddFolderModalOpen}

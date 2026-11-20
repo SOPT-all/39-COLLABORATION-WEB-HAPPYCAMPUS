@@ -17,7 +17,7 @@ export const getCartItems = async ({
   if (folderId !== undefined) searchParams.set('folderId', String(folderId));
 
   const { content } = await api
-    .get(`api/v1/users/${USER_ID}/cart-items`, { searchParams })
+    .get(`users/${USER_ID}/cart-items`, { searchParams })
     .json<CartItemsPage>();
 
   return content;

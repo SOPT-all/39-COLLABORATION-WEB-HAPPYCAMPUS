@@ -10,14 +10,16 @@ import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
-import {
-  MOCK_CART_ITEMS,
-  MOCK_FOLDER_ITEM_IDS,
-  MOCK_FOLDERS,
-} from '@domains/cart/constants/cart-mock';
+import { useCartItemsQuery } from '@domains/cart/hooks/use-cart-items-query';
 import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
 import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
+import type {
+  Folder,
+  FolderTabItem,
+  SelectedTab,
+} from '@domains/cart/types/folder';
+import { getTabKey } from '@domains/cart/utils/get-tab-key';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
@@ -25,37 +27,55 @@ import {
 
 import * as styles from './cart.css';
 
+const DEFAULT_CATEGORIES = Object.keys(
+  DEFAULT_CATEGORY_LABEL,
+) as DefaultCategoryType[];
+
+const getInitialTab = (category: string | null): SelectedTab => ({
+  type: 'category',
+  category:
+    category && category in DEFAULT_CATEGORY_LABEL
+      ? (category as DefaultCategoryType)
+      : DEFAULT_CATEGORIES[0],
+});
+
 function CartPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: CartViewTypes =
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
-  const [cartItems, setCartItems] = useState(MOCK_CART_ITEMS);
-  const [folders, setFolders] = useState(MOCK_FOLDERS);
-  const [folderItemMap, setFolderItemMap] = useState(MOCK_FOLDER_ITEM_IDS);
-  const [selectedFolderId, setSelectedFolderId] = useState(() => {
-    const category = searchParams.get('category');
-    const label =
-      category && category in DEFAULT_CATEGORY_LABEL
-        ? DEFAULT_CATEGORY_LABEL[category as DefaultCategoryType]
-        : null;
-    const folder = MOCK_FOLDERS.find((folder) => folder.name === label);
-
-    return folder?.folderId ?? MOCK_FOLDERS[0].folderId;
-  });
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [selectedTab, setSelectedTab] = useState(() =>
+    getInitialTab(searchParams.get('category')),
+  );
   const { checkedIds, setItemsChecked } = useCheckedItems();
 
-  const folderItemIds = folderItemMap[selectedFolderId] ?? [];
-  const folderItems = cartItems.filter((item) =>
-    folderItemIds.includes(item.cartItemId),
+  const { data: cartItems = [] } = useCartItemsQuery({});
+  const { data: tabItems = [], isPending } = useCartItemsQuery(
+    selectedTab.type === 'category'
+      ? { category: selectedTab.category }
+      : { folderId: selectedTab.folderId },
   );
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
-    useHiddenItems(selectedFolderId, folderItems);
+    useHiddenItems(getTabKey(selectedTab), tabItems);
+
+  const tabs: FolderTabItem[] = [
+    ...DEFAULT_CATEGORIES.map((category) => ({
+      tab: { type: 'category', category } as const,
+      name: DEFAULT_CATEGORY_LABEL[category],
+      itemCount: cartItems.filter((item) => item.category === category).length,
+    })),
+    ...folders.map(({ folderId, name, itemCount }) => ({
+      tab: { type: 'folder', folderId } as const,
+      name,
+      itemCount,
+    })),
+  ];
 
   const checkedItems = cartItems.filter((item) =>
     checkedIds.has(item.cartItemId),
   );
 
-  const isCompareTableVisible = view === 'compare' && folderItems.length > 0;
+  const isCompareTableVisible = view === 'compare' && tabItems.length > 0;
   const listEmptyType: CartEmptyType =
     view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
 
@@ -68,7 +88,7 @@ function CartPage() {
       Math.max(0, ...folders.map((folder) => folder.folderId)) + 1;
 
     setFolders([...folders, { folderId, name, itemCount: 0 }]);
-    setSelectedFolderId(folderId);
+    setSelectedTab({ type: 'folder', folderId });
   };
 
   const handleDelete = (cartItemId: number) => {
@@ -81,24 +101,6 @@ function CartPage() {
 
     if (!isConfirmed) return;
 
-    setCartItems((prev) =>
-      prev.filter((item) => item.cartItemId !== cartItemId),
-    );
-    setFolders((prev) =>
-      prev.map((folder) =>
-        folderItemMap[folder.folderId]?.includes(cartItemId)
-          ? { ...folder, itemCount: folder.itemCount - 1 }
-          : folder,
-      ),
-    );
-    setFolderItemMap((prev) =>
-      Object.fromEntries(
-        Object.entries(prev).map(([folderId, itemIds]) => [
-          folderId,
-          itemIds.filter((id) => id !== cartItemId),
-        ]),
-      ),
-    );
     setItemsChecked([cartItemId], false);
   };
 
@@ -110,14 +112,14 @@ function CartPage() {
         <div className={styles.body}>
           <section className={styles.main}>
             <CartFolderSection
-              folders={folders}
-              selectedFolderId={selectedFolderId}
-              onSelectFolder={setSelectedFolderId}
+              tabs={tabs}
+              selectedTab={selectedTab}
+              onSelectTab={setSelectedTab}
               onAddFolder={handleAddFolder}
             />
-            {!isCompareTableVisible && (
+            {!isPending && !isCompareTableVisible && (
               <CartListSection
-                items={folderItems}
+                items={tabItems}
                 emptyType={listEmptyType}
                 checkedIds={checkedIds}
                 onItemsCheckedChange={setItemsChecked}
@@ -135,7 +137,7 @@ function CartPage() {
               />
             )}
             <NoticeBox />
-            {view === 'list' && folderItems.length > 0 && <Pagination />}
+            {view === 'list' && tabItems.length > 0 && <Pagination />}
           </section>
           <aside className={styles.aside}>
             <CartPurchaseSection
