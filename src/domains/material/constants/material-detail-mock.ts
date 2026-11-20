@@ -20,6 +20,7 @@ export const MATERIAL_DETAIL_MOCK: MaterialDetail = {
     'https://picsum.photos/seed/preview-4/350/495',
     'https://picsum.photos/seed/preview-5/350/495',
   ],
+  cartItemId: null,
 };
 
 export const MATERIAL_TAGS_MOCK = [
