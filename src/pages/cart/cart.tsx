@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
@@ -11,45 +10,25 @@ import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import { useCartItemsQuery } from '@domains/cart/hooks/use-cart-items-query';
+import { useCartTabs } from '@domains/cart/hooks/use-cart-tabs';
 import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
 import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
-import type {
-  Folder,
-  FolderTabItem,
-  SelectedTab,
-} from '@domains/cart/types/folder';
 import { getTabKey } from '@domains/cart/utils/get-tab-key';
-import {
-  DEFAULT_CATEGORY_LABEL,
-  type DefaultCategoryType,
-} from '@shared/constants/default-category';
 
 import * as styles from './cart.css';
-
-const DEFAULT_CATEGORIES = Object.keys(
-  DEFAULT_CATEGORY_LABEL,
-) as DefaultCategoryType[];
-
-const getInitialTab = (category: string | null): SelectedTab => ({
-  type: 'category',
-  category:
-    category && category in DEFAULT_CATEGORY_LABEL
-      ? (category as DefaultCategoryType)
-      : DEFAULT_CATEGORIES[0],
-});
 
 function CartPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: CartViewTypes =
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
-  const [folders, setFolders] = useState<Folder[]>([]);
-  const [selectedTab, setSelectedTab] = useState(() =>
-    getInitialTab(searchParams.get('category')),
-  );
   const { checkedIds, setItemsChecked } = useCheckedItems();
 
   const { data: cartItems = [] } = useCartItemsQuery({});
+  const { tabs, selectedTab, setSelectedTab, addFolder } = useCartTabs(
+    searchParams.get('category'),
+    cartItems,
+  );
   const { data: tabItems = [], isPending } = useCartItemsQuery(
     selectedTab.type === 'category'
       ? { category: selectedTab.category }
@@ -57,19 +36,6 @@ function CartPage() {
   );
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
     useHiddenItems(getTabKey(selectedTab), tabItems);
-
-  const tabs: FolderTabItem[] = [
-    ...DEFAULT_CATEGORIES.map((category) => ({
-      tab: { type: 'category', category } as const,
-      name: DEFAULT_CATEGORY_LABEL[category],
-      itemCount: cartItems.filter((item) => item.category === category).length,
-    })),
-    ...folders.map(({ folderId, name, itemCount }) => ({
-      tab: { type: 'folder', folderId } as const,
-      name,
-      itemCount,
-    })),
-  ];
 
   const checkedItems = cartItems.filter((item) =>
     checkedIds.has(item.cartItemId),
@@ -81,14 +47,6 @@ function CartPage() {
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
-  };
-
-  const handleAddFolder = (name: string) => {
-    const folderId =
-      Math.max(0, ...folders.map((folder) => folder.folderId)) + 1;
-
-    setFolders([...folders, { folderId, name, itemCount: 0 }]);
-    setSelectedTab({ type: 'folder', folderId });
   };
 
   const handleDelete = (cartItemId: number) => {
@@ -115,7 +73,7 @@ function CartPage() {
               tabs={tabs}
               selectedTab={selectedTab}
               onSelectTab={setSelectedTab}
-              onAddFolder={handleAddFolder}
+              onAddFolder={addFolder}
             />
             {!isPending && !isCompareTableVisible && (
               <CartListSection
