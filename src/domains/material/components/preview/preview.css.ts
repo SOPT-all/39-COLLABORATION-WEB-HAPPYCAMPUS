@@ -68,7 +68,6 @@ export const emptyPage = style([
 export const emptyIcon = style({
   width: 56,
   height: 56,
-  color: vars.color.grey300,
 });
 
 export const emptyText = style({

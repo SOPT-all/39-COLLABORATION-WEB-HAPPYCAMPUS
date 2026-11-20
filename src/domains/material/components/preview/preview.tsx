@@ -34,7 +34,7 @@ const Preview = ({ images }: PreviewProps) => {
           />
         ) : (
           <div className={styles.emptyPage}>
-            <IcPreviewEmpty className={styles.emptyIcon} aria-hidden />
+            <img src={IcPreviewEmpty} alt="" className={styles.emptyIcon} />
             <p className={styles.emptyText}>미리보기 이미지가 없습니다.</p>
           </div>
         )}

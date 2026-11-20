@@ -16,7 +16,6 @@ export { default as IcEyeoff } from './mono/ic-eyeoff.svg?react';
 export { default as IcFile } from './mono/ic-file.svg?react';
 export { default as IcInfo } from './mono/ic-info.svg?react';
 export { default as IcMy } from './mono/ic-my.svg?react';
-export { default as IcPreviewEmpty } from './mono/ic-preview-empty.svg?react';
 export { default as IcReset } from './mono/ic-reset.svg?react';
 export { default as IcSearch } from './mono/ic-search.svg?react';
 export { default as IcShopping } from './mono/ic-shopping.svg?react';
@@ -27,6 +26,7 @@ export { default as IcCartHuge } from './multi/ic-cart-huge.svg';
 export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';
 export { default as IcFiletypePdf } from './multi/ic-filetype-pdf.svg';
 export { default as IcFiletypePpt } from './multi/ic-filetype-ppt.svg';
+export { default as IcPreviewEmpty } from './multi/ic-preview-empty.svg';
 
 // 로고: 멀티컬러라 URL로 import → <img src={...} />
 export { default as LogoEasyai } from './multi/logo-easyai.svg';
