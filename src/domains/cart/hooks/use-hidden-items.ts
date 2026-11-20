@@ -1,25 +1,25 @@
 import { useState } from 'react';
 
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 
-export const useHiddenItems = (folderId: number, folderItems: CartItem[]) => {
-  const [hiddenIdMap, setHiddenIdMap] = useState<Record<number, number[]>>({});
+export const useHiddenItems = (tabKey: string, items: CartItem[]) => {
+  const [hiddenIdMap, setHiddenIdMap] = useState<Record<string, number[]>>({});
 
-  const hiddenIds = hiddenIdMap[folderId] ?? [];
-  const visibleItems = folderItems.filter(
+  const hiddenIds = hiddenIdMap[tabKey] ?? [];
+  const visibleItems = items.filter(
     (item) => !hiddenIds.includes(item.cartItemId),
   );
-  const hasHiddenItems = visibleItems.length < folderItems.length;
+  const hasHiddenItems = visibleItems.length < items.length;
 
   const hideItem = (cartItemId: number) => {
     setHiddenIdMap((prev) => ({
       ...prev,
-      [folderId]: [...(prev[folderId] ?? []), cartItemId],
+      [tabKey]: [...(prev[tabKey] ?? []), cartItemId],
     }));
   };
 
   const resetHidden = () => {
-    setHiddenIdMap((prev) => ({ ...prev, [folderId]: [] }));
+    setHiddenIdMap((prev) => ({ ...prev, [tabKey]: [] }));
   };
 
   return { visibleItems, hasHiddenItems, hideItem, resetHidden };
