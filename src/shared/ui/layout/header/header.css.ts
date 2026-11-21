@@ -156,12 +156,10 @@ export const navBubble = recipe({
 export const navBubbleText = style({
   borderRadius: 7,
   backgroundColor: vars.color.blue500,
-  padding: '3px 4px',
-  lineHeight: '8px',
-  letterSpacing: 0,
+  padding: '1px 4px',
   whiteSpace: 'nowrap',
   color: vars.color.common0,
-  fontSize: 8,
+  ...vars.typography.captionM8,
 });
 
 export const navBubbleTail = style({
