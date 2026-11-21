@@ -12,6 +12,7 @@ import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
 import { useCartItemsQuery } from '@domains/cart/hooks/use-cart-items-query';
 import { useCartTabs } from '@domains/cart/hooks/use-cart-tabs';
 import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
+import { useDeleteCartItemMutation } from '@domains/cart/hooks/use-delete-cart-item-mutation';
 import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
 import { getTabKey } from '@domains/cart/utils/get-tab-key';
@@ -44,6 +45,8 @@ function CartPage() {
   );
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
     useHiddenItems(getTabKey(selectedTab), tabItems);
+  const { mutate: deleteCartItem, isPending: isDeletePending } =
+    useDeleteCartItemMutation();
 
   const checkedItems = cartItems.filter((item) =>
     checkedIds.has(item.cartItemId),
@@ -69,6 +72,8 @@ function CartPage() {
   };
 
   const handleDelete = (cartItemId: number) => {
+    if (isDeletePending) return;
+
     const title = tabItems.find(
       (item) => item.cartItemId === cartItemId,
     )?.title;
@@ -78,7 +83,14 @@ function CartPage() {
 
     if (!isConfirmed) return;
 
-    setItemsChecked([cartItemId], false);
+    deleteCartItem(cartItemId, {
+      onSuccess: () => {
+        setItemsChecked([cartItemId], false);
+      },
+      onError: () => {
+        alert('자료 삭제에 실패했습니다. 다시 시도해주세요.');
+      },
+    });
   };
 
   return (
