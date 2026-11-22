@@ -5,18 +5,24 @@ import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
 import { FOLDER_MOCK } from '@domains/cart/constants/folder-mock';
+import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
 import type { Folder } from '@domains/cart/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
+import { getApiErrorCode } from '@shared/utils/get-api-error-code';
 
 interface AddToCartProps {
+  postId: number;
   category: DefaultCategoryType;
+  cartItemId: number | null;
 }
 
-const AddToCart = ({ category }: AddToCartProps) => {
+const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
   const navigate = useNavigate();
 
-  const [isInCart, setIsInCart] = useState<boolean>(false);
+  const { mutate, isPending } = useAddCartItemMutation();
+
+  const isInCart = cartItemId !== null;
   const [isFolderSelectModalOpen, setIsFolderSelectModalOpen] =
     useState<boolean>(false);
   const [isAddFolderModalOpen, setIsAddFolderModalOpen] =
@@ -31,21 +37,41 @@ const AddToCart = ({ category }: AddToCartProps) => {
     });
   };
 
+  const confirmAndOpenModal = () => {
+    if (confirm('이미 담긴 자료입니다. 다른 폴더에 추가하시겠어요?')) {
+      setIsFolderSelectModalOpen(true);
+    }
+  };
+
   const handleAddToCartClick = () => {
+    if (isPending) return;
+
     if (isFolderSelectModalOpen) {
       setIsFolderSelectModalOpen(false);
       return;
     }
 
-    if (
-      isInCart &&
-      !confirm('이미 담긴 자료입니다. 다른 폴더에 추가하시겠어요?')
-    ) {
+    if (isInCart) {
+      confirmAndOpenModal();
       return;
     }
 
-    setIsInCart(true);
-    setIsFolderSelectModalOpen(true);
+    mutate(
+      { postId },
+      {
+        onSuccess: () => {
+          setIsFolderSelectModalOpen(true);
+        },
+        onError: (error) => {
+          if (getApiErrorCode(error) === 'CART_ITEM_DUPLICATED') {
+            confirmAndOpenModal();
+            return;
+          }
+
+          alert('장바구니 담기에 실패했습니다. 다시 시도해주세요.');
+        },
+      },
+    );
   };
 
   const handleCompareLinkClick = () => {
@@ -79,6 +105,7 @@ const AddToCart = ({ category }: AddToCartProps) => {
   return (
     <>
       <CartEntry
+        disabled={isPending}
         isModalOpen={isFolderSelectModalOpen}
         onAddToCartClick={handleAddToCartClick}
         onLinkClick={handleCompareLinkClick}
