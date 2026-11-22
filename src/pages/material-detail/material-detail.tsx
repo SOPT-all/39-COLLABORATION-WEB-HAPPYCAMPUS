@@ -4,6 +4,7 @@ import MaterialHeading from '@domains/material/components/material-heading/mater
 import MaterialInfoCard from '@domains/material/components/material-info-card/material-info-card';
 import Preview from '@domains/material/components/preview/preview';
 import { useMaterialDetailQuery } from '@domains/material/hooks/use-material-detail-query';
+import { parseTags } from '@domains/material/utils/parse-tags';
 
 import * as styles from './material-detail.css';
 
@@ -23,7 +24,10 @@ function MaterialDetailPage() {
       <div className={styles.bodyContainer}>
         <div className={styles.contentContainer}>
           <Preview images={material.imageUrls} />
-          <MaterialContentSection material={material} />
+          <MaterialContentSection
+            material={material}
+            tags={parseTags(material.tag)}
+          />
         </div>
         <MaterialInfoCard
           info={material}

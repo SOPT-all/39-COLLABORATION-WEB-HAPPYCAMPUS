@@ -1,20 +1,20 @@
 import Tag from '@domains/material/components/tag/tag';
 import type { MaterialDetail } from '@domains/material/types/material';
-import { parseTags } from '@domains/material/utils/parse-tags';
 
 import ContentSection from './content-section';
 
 import * as styles from './material-content-section.css';
 
 interface MaterialContentSectionProps {
-  material: Pick<
-    MaterialDetail,
-    'description' | 'tableOfContents' | 'content' | 'tag'
-  >;
+  material: Pick<MaterialDetail, 'description' | 'tableOfContents' | 'content'>;
+  tags: string[];
 }
 
-const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
-  const { description, tableOfContents, content, tag } = material;
+const MaterialContentSection = ({
+  material,
+  tags,
+}: MaterialContentSectionProps) => {
+  const { description, tableOfContents, content } = material;
 
   return (
     <div className={styles.contentContainer}>
@@ -36,9 +36,9 @@ const MaterialContentSection = ({ material }: MaterialContentSectionProps) => {
 
       <ContentSection title="태그">
         <ul className={styles.tagList}>
-          {parseTags(tag).map((label) => (
-            <li key={label} className={styles.tagItem}>
-              <Tag label={label} />
+          {tags.map((tag) => (
+            <li key={tag} className={styles.tagItem}>
+              <Tag label={tag} />
             </li>
           ))}
         </ul>
