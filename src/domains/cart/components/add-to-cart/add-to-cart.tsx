@@ -44,6 +44,8 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
   };
 
   const handleAddToCartClick = () => {
+    if (isPending) return;
+
     if (isFolderSelectModalOpen) {
       setIsFolderSelectModalOpen(false);
       return;
