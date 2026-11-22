@@ -113,4 +113,10 @@ export const TYPOGRAPHY = {
     lineHeight: '13px',
     letterSpacing: '-0.01em',
   },
+  captionM8: {
+    fontSize: '8px',
+    fontWeight: 500,
+    lineHeight: '13px',
+    letterSpacing: '0',
+  },
 } as const;
