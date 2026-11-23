@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { IcClose } from '@shared/assets/icons';
+import { DEFAULT_CATEGORY_LABEL } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 import TextField from '@shared/ui/text-field/text-field';
 
@@ -47,6 +48,14 @@ const AddFolderModal = ({
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (
+      Object.values<string>(DEFAULT_CATEGORY_LABEL).includes(folderName.trim())
+    ) {
+      alert('새 폴더를 만들지 못했어요. 다시 시도해 주세요.');
+      return;
+    }
+
     onConfirm(folderName.trim());
   };
 
