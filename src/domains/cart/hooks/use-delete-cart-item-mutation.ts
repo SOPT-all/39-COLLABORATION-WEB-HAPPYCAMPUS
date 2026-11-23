@@ -12,6 +12,7 @@ export const useDeleteCartItemMutation = () => {
       Promise.all([
         queryClient.invalidateQueries({ queryKey: QUERY_KEY.cart.all }),
         queryClient.invalidateQueries({ queryKey: QUERY_KEY.material.all }),
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.folders.all }),
       ]),
   });
 };
