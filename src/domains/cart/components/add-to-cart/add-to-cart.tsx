@@ -146,7 +146,7 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
         isOpen={isAddFolderModalOpen}
         onClose={() => setIsAddFolderModalOpen(false)}
         onConfirm={handleFolderCreate}
-        isPending={isFolderCreating}
+        disabled={isFolderCreating}
       />
     </>
   );

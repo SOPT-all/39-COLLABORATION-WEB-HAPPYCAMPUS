@@ -46,7 +46,7 @@ const CartFolderSection = ({
         isOpen={isAddFolderModalOpen}
         onClose={closeAddFolderModal}
         onConfirm={handleConfirmAddFolder}
-        isPending={isAddingFolder}
+        disabled={isAddingFolder}
       />
     </div>
   );
