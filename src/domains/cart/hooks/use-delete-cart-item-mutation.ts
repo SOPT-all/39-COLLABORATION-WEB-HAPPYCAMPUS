@@ -9,8 +9,9 @@ export const useDeleteCartItemMutation = () => {
   return useMutation({
     mutationFn: deleteCartItem,
     onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEY.cart.all,
-      }),
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.cart.all }),
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.material.all }),
+      ]),
   });
 };
