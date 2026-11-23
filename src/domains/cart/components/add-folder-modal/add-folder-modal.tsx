@@ -19,12 +19,14 @@ interface AddFolderModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (folderName: string) => void;
+  isPending?: boolean;
 }
 
 const AddFolderModal = ({
   isOpen,
   onClose,
   onConfirm,
+  isPending,
 }: AddFolderModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -98,7 +100,7 @@ const AddFolderModal = ({
           <Button variant="outlined" onClick={onClose}>
             취소
           </Button>
-          <Button type="submit" disabled={isEmpty || isError}>
+          <Button type="submit" disabled={isEmpty || isError || isPending}>
             확인
           </Button>
         </div>
