@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 
+import { FOLDER_CREATE_ERROR_MESSAGE } from '@domains/cart/constants/folder-create';
 import { IcClose } from '@shared/assets/icons';
 import { DEFAULT_CATEGORY_LABEL } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
@@ -52,7 +53,7 @@ const AddFolderModal = ({
     if (
       Object.values<string>(DEFAULT_CATEGORY_LABEL).includes(folderName.trim())
     ) {
-      alert('새 폴더를 만들지 못했어요. 다시 시도해 주세요.');
+      alert(FOLDER_CREATE_ERROR_MESSAGE.duplicated);
       return;
     }
 
