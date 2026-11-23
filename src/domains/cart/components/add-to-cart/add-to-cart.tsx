@@ -6,8 +6,8 @@ import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
 import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
 import { useAddFolderItemsMutation } from '@domains/cart/hooks/use-add-folder-items-mutation';
+import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-mutation';
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
-import type { Folder } from '@domains/cart/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
 import { getApiErrorCode } from '@shared/utils/get-api-error-code';
@@ -30,9 +30,9 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
     useState<boolean>(false);
   const [isAddFolderModalOpen, setIsAddFolderModalOpen] =
     useState<boolean>(false);
-  const { data: fetchedFolders = [] } = useFoldersQuery();
-  const [addedFolders, setAddedFolders] = useState<Folder[]>([]);
-  const folders = [...fetchedFolders, ...addedFolders];
+  const { data: folders = [] } = useFoldersQuery();
+  const { mutate: createFolder, isPending: isFolderCreating } =
+    useCreateFolderMutation();
   const [selectedFolderIds, setSelectedFolderIds] = useState<number[]>([]);
 
   const navigateToCompare = () => {
@@ -110,15 +110,18 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
   };
 
   const handleFolderCreate = (folderName: string) => {
-    const newFolder: Folder = {
-      folderId: Date.now(), // TODO: 서버 고유 ID로 변경 필요
-      name: folderName,
-      itemCount: 1,
-    };
-
-    setAddedFolders((prev) => [...prev, newFolder]);
-    setSelectedFolderIds((prev) => [...prev, newFolder.folderId]);
-    setIsAddFolderModalOpen(false);
+    createFolder(
+      { name: folderName },
+      {
+        onSuccess: ({ folderId }) => {
+          setIsAddFolderModalOpen(false);
+          handleFolderToggle(folderId, true);
+        },
+        onError: () => {
+          alert('새 폴더를 만들지 못했어요. 다시 시도해 주세요.');
+        },
+      },
+    );
   };
 
   return (
@@ -143,6 +146,7 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
         isOpen={isAddFolderModalOpen}
         onClose={() => setIsAddFolderModalOpen(false)}
         onConfirm={handleFolderCreate}
+        isPending={isFolderCreating}
       />
     </>
   );
