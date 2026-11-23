@@ -69,7 +69,7 @@ function CartPage() {
   };
 
   const handleDelete = (cartItemId: number) => {
-    const title = cartItems.find(
+    const title = tabItems.find(
       (item) => item.cartItemId === cartItemId,
     )?.title;
     const isConfirmed = confirm(
