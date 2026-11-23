@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { CartItem } from '@domains/cart/types/cart';
 import type {
   Folder,
@@ -27,7 +28,9 @@ export const useCartTabs = (
   initialCategory: string | null,
   cartItems: CartItem[],
 ) => {
-  const [folders, setFolders] = useState<Folder[]>([]);
+  const { data: fetchedFolders = [] } = useFoldersQuery();
+  const [addedFolders, setAddedFolders] = useState<Folder[]>([]);
+  const folders = [...fetchedFolders, ...addedFolders];
   const [selectedTab, setSelectedTab] = useState(() =>
     getInitialTab(initialCategory),
   );
@@ -49,7 +52,7 @@ export const useCartTabs = (
     const folderId =
       Math.max(0, ...folders.map((folder) => folder.folderId)) + 1;
 
-    setFolders([...folders, { folderId, name, itemCount: 0 }]);
+    setAddedFolders([...addedFolders, { folderId, name, itemCount: 0 }]);
     setSelectedTab({ type: 'folder', folderId });
   };
 

@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router';
 import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder-modal';
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
-import { FOLDER_MOCK } from '@domains/cart/constants/folder-mock';
 import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
+import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { Folder } from '@domains/cart/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
@@ -27,7 +27,9 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
     useState<boolean>(false);
   const [isAddFolderModalOpen, setIsAddFolderModalOpen] =
     useState<boolean>(false);
-  const [folders, setFolders] = useState<Folder[]>(FOLDER_MOCK);
+  const { data: fetchedFolders = [] } = useFoldersQuery();
+  const [addedFolders, setAddedFolders] = useState<Folder[]>([]);
+  const folders = [...fetchedFolders, ...addedFolders];
   const [selectedFolderIds, setSelectedFolderIds] = useState<number[]>([]);
 
   const navigateToCompare = () => {
@@ -97,7 +99,7 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
       itemCount: 1,
     };
 
-    setFolders((prev) => [...prev, newFolder]);
+    setAddedFolders((prev) => [...prev, newFolder]);
     setSelectedFolderIds((prev) => [...prev, newFolder.folderId]);
     setIsAddFolderModalOpen(false);
   };
