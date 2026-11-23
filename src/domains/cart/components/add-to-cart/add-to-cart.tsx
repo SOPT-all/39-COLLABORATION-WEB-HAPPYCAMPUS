@@ -5,6 +5,7 @@ import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
 import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
+import { useAddFolderItemsMutation } from '@domains/cart/hooks/use-add-folder-items-mutation';
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { Folder } from '@domains/cart/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
@@ -21,6 +22,8 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
   const navigate = useNavigate();
 
   const { mutate, isPending } = useAddCartItemMutation();
+  const { mutate: addFolderItems, isPending: isFolderSaving } =
+    useAddFolderItemsMutation();
 
   const isInCart = cartItemId !== null;
   const [isFolderSelectModalOpen, setIsFolderSelectModalOpen] =
@@ -85,11 +88,25 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
   };
 
   const handleFolderToggle = (folderId: number, checked: boolean) => {
-    if (checked) {
-      setSelectedFolderIds((prev) => [...prev, folderId]);
-    } else {
+    if (isFolderSaving || cartItemId === null) return;
+
+    if (!checked) {
+      // TODO: 폴더에서 제외 API 호출 필요
       setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
+      return;
     }
+
+    setSelectedFolderIds((prev) => [...prev, folderId]);
+
+    addFolderItems(
+      { folderId, cartItemIds: [cartItemId] },
+      {
+        onError: () => {
+          alert('저장에 실패했습니다. 다시 시도해주세요.');
+          setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
+        },
+      },
+    );
   };
 
   const handleFolderCreate = (folderName: string) => {
