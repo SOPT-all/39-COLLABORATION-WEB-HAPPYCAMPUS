@@ -18,8 +18,8 @@ export const useAddCartItemMutation = () => {
           queryKey: QUERY_KEY.material.detail(postId),
         }),
       ]),
-    onError: (_error, { postId }) => {
-      if (getApiErrorCode(_error) !== 'CART_ITEM_DUPLICATED') return;
+    onError: (error, { postId }) => {
+      if (getApiErrorCode(error) !== 'CART_ITEM_DUPLICATED') return;
 
       return queryClient.invalidateQueries({
         queryKey: QUERY_KEY.material.detail(postId),
