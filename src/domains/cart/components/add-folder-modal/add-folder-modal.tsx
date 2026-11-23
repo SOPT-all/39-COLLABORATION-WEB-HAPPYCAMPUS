@@ -7,7 +7,9 @@ import {
   useState,
 } from 'react';
 
+import { FOLDER_CREATE_ERROR_MESSAGE } from '@domains/cart/constants/folder-create';
 import { IcClose } from '@shared/assets/icons';
+import { DEFAULT_CATEGORY_LABEL } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 import TextField from '@shared/ui/text-field/text-field';
 
@@ -19,12 +21,14 @@ interface AddFolderModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (folderName: string) => void;
+  disabled?: boolean;
 }
 
 const AddFolderModal = ({
   isOpen,
   onClose,
   onConfirm,
+  disabled,
 }: AddFolderModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,6 +49,14 @@ const AddFolderModal = ({
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (
+      Object.values<string>(DEFAULT_CATEGORY_LABEL).includes(folderName.trim())
+    ) {
+      alert(FOLDER_CREATE_ERROR_MESSAGE.duplicated);
+      return;
+    }
+
     onConfirm(folderName.trim());
   };
 
@@ -98,7 +110,7 @@ const AddFolderModal = ({
           <Button variant="outlined" onClick={onClose}>
             취소
           </Button>
-          <Button type="submit" disabled={isEmpty || isError}>
+          <Button type="submit" disabled={isEmpty || isError || disabled}>
             확인
           </Button>
         </div>

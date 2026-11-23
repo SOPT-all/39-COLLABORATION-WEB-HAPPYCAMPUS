@@ -11,7 +11,8 @@ interface CartFolderSectionProps {
   tabs: FolderTabItem[];
   selectedTab: SelectedTab;
   onSelectTab: (tab: SelectedTab) => void;
-  onAddFolder: (folderName: string) => void;
+  onAddFolder: (folderName: string, onSuccess: () => void) => void;
+  isAddingFolder: boolean;
 }
 
 const CartFolderSection = ({
@@ -19,6 +20,7 @@ const CartFolderSection = ({
   selectedTab,
   onSelectTab,
   onAddFolder,
+  isAddingFolder,
 }: CartFolderSectionProps) => {
   const [isAddFolderModalOpen, setIsAddFolderModalOpen] = useState(false);
 
@@ -26,8 +28,7 @@ const CartFolderSection = ({
   const closeAddFolderModal = () => setIsAddFolderModalOpen(false);
 
   const handleConfirmAddFolder = (folderName: string) => {
-    onAddFolder(folderName);
-    closeAddFolderModal();
+    onAddFolder(folderName, closeAddFolderModal);
   };
 
   return (
@@ -45,6 +46,7 @@ const CartFolderSection = ({
         isOpen={isAddFolderModalOpen}
         onClose={closeAddFolderModal}
         onConfirm={handleConfirmAddFolder}
+        disabled={isAddingFolder}
       />
     </div>
   );
