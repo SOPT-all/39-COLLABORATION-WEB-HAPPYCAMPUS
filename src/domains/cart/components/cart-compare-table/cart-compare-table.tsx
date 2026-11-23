@@ -1,7 +1,7 @@
 import Badge from '@domains/cart/components/badge/badge';
 import CartCompareHeaderCell from '@domains/cart/components/cart-compare-header-cell/cart-compare-header-cell';
 import type { BadgeType } from '@domains/cart/constants/badge';
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 
 import { COMPARE_ROWS, type CompareRow } from './cart-compare-rows';
 
