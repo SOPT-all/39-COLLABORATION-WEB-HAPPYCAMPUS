@@ -1,12 +1,9 @@
 import { useState } from 'react';
 
+import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-mutation';
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { CartItem } from '@domains/cart/types/cart';
-import type {
-  Folder,
-  FolderTabItem,
-  SelectedTab,
-} from '@domains/cart/types/folder';
+import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
@@ -28,9 +25,9 @@ export const useCartTabs = (
   initialCategory: string | null,
   cartItems: CartItem[],
 ) => {
-  const { data: fetchedFolders = [] } = useFoldersQuery();
-  const [addedFolders, setAddedFolders] = useState<Folder[]>([]);
-  const folders = [...fetchedFolders, ...addedFolders];
+  const { data: folders = [] } = useFoldersQuery();
+  const { mutate: createFolder, isPending: isFolderCreating } =
+    useCreateFolderMutation();
   const [selectedTab, setSelectedTab] = useState(() =>
     getInitialTab(initialCategory),
   );
@@ -48,13 +45,20 @@ export const useCartTabs = (
     })),
   ];
 
-  const addFolder = (name: string) => {
-    const folderId =
-      Math.max(0, ...folders.map((folder) => folder.folderId)) + 1;
-
-    setAddedFolders([...addedFolders, { folderId, name, itemCount: 0 }]);
-    setSelectedTab({ type: 'folder', folderId });
+  const addFolder = (name: string, onSuccess: () => void) => {
+    createFolder(
+      { name },
+      {
+        onSuccess: ({ folderId }) => {
+          setSelectedTab({ type: 'folder', folderId });
+          onSuccess();
+        },
+        onError: () => {
+          alert('새 폴더를 만들지 못했어요. 다시 시도해 주세요.');
+        },
+      },
+    );
   };
 
-  return { tabs, selectedTab, setSelectedTab, addFolder };
+  return { tabs, selectedTab, setSelectedTab, addFolder, isFolderCreating };
 };

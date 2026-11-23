@@ -30,10 +30,8 @@ function CartPage() {
     isPending: isCartItemsPending,
     isError: isCartItemsError,
   } = useCartItemsQuery({});
-  const { tabs, selectedTab, setSelectedTab, addFolder } = useCartTabs(
-    searchParams.get('category'),
-    cartItems,
-  );
+  const { tabs, selectedTab, setSelectedTab, addFolder, isFolderCreating } =
+    useCartTabs(searchParams.get('category'), cartItems);
   const {
     data: tabItems = [],
     isPending: isTabItemsPending,
@@ -105,6 +103,7 @@ function CartPage() {
               selectedTab={selectedTab}
               onSelectTab={setSelectedTab}
               onAddFolder={addFolder}
+              isAddingFolder={isFolderCreating}
             />
             {!isCompareTableVisible && (
               <CartListSection
