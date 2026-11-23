@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import CartCompareTocCell from '@domains/cart/components/cart-compare-toc-cell/cart-compare-toc-cell';
 import type { BadgeType } from '@domains/cart/constants/badge';
-import type { CartItem } from '@domains/cart/types/cart-compare';
+import type { CartItem } from '@domains/cart/types/cart';
 import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-compare-table.css';

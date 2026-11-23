@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
@@ -10,18 +9,13 @@ import NoticeBox from '@domains/cart/components/notice-box/notice-box';
 import Pagination from '@domains/cart/components/pagination/pagination';
 import TabProcess from '@domains/cart/components/tab-process/tab-process';
 import type { CartEmptyType } from '@domains/cart/constants/cart-empty';
-import {
-  MOCK_CART_ITEMS,
-  MOCK_FOLDER_ITEM_IDS,
-  MOCK_FOLDERS,
-} from '@domains/cart/constants/cart-mock';
+import { useCartItemsQuery } from '@domains/cart/hooks/use-cart-items-query';
+import { useCartTabs } from '@domains/cart/hooks/use-cart-tabs';
 import { useCheckedItems } from '@domains/cart/hooks/use-checked-items';
+import { useDeleteCartItemMutation } from '@domains/cart/hooks/use-delete-cart-item-mutation';
 import { useHiddenItems } from '@domains/cart/hooks/use-hidden-items';
 import type { CartViewTypes } from '@domains/cart/types/cart-view';
-import {
-  DEFAULT_CATEGORY_LABEL,
-  type DefaultCategoryType,
-} from '@shared/constants/default-category';
+import { getTabKey } from '@domains/cart/utils/get-tab-key';
 
 import * as styles from './cart.css';
 
@@ -29,50 +23,58 @@ function CartPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: CartViewTypes =
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
-  const [cartItems, setCartItems] = useState(MOCK_CART_ITEMS);
-  const [folders, setFolders] = useState(MOCK_FOLDERS);
-  const [folderItemMap, setFolderItemMap] = useState(MOCK_FOLDER_ITEM_IDS);
-  const [selectedFolderId, setSelectedFolderId] = useState(() => {
-    const category = searchParams.get('category');
-    const label =
-      category && category in DEFAULT_CATEGORY_LABEL
-        ? DEFAULT_CATEGORY_LABEL[category as DefaultCategoryType]
-        : null;
-    const folder = MOCK_FOLDERS.find((folder) => folder.name === label);
-
-    return folder?.folderId ?? MOCK_FOLDERS[0].folderId;
-  });
   const { checkedIds, setItemsChecked } = useCheckedItems();
 
-  const folderItemIds = folderItemMap[selectedFolderId] ?? [];
-  const folderItems = cartItems.filter((item) =>
-    folderItemIds.includes(item.cartItemId),
+  const {
+    data: cartItems = [],
+    isPending: isCartItemsPending,
+    isError: isCartItemsError,
+  } = useCartItemsQuery({});
+  const { tabs, selectedTab, setSelectedTab, addFolder } = useCartTabs(
+    searchParams.get('category'),
+    cartItems,
+  );
+  const {
+    data: tabItems = [],
+    isPending: isTabItemsPending,
+    isError: isTabItemsError,
+  } = useCartItemsQuery(
+    selectedTab.type === 'category'
+      ? { category: selectedTab.category }
+      : { folderId: selectedTab.folderId },
   );
   const { visibleItems, hasHiddenItems, hideItem, resetHidden } =
-    useHiddenItems(selectedFolderId, folderItems);
+    useHiddenItems(getTabKey(selectedTab), tabItems);
+  const { mutate: deleteCartItem, isPending: isDeletePending } =
+    useDeleteCartItemMutation();
 
   const checkedItems = cartItems.filter((item) =>
     checkedIds.has(item.cartItemId),
   );
 
-  const isCompareTableVisible = view === 'compare' && folderItems.length > 0;
-  const listEmptyType: CartEmptyType =
-    view === 'compare' ? 'compare' : cartItems.length === 0 ? 'cart' : 'folder';
+  const isLoading = isCartItemsPending || isTabItemsPending;
+  const isError = isCartItemsError || isTabItemsError;
+
+  const isCompareTableVisible =
+    view === 'compare' && !isError && tabItems.length > 0;
+  const getListEmptyType = (): CartEmptyType => {
+    if (isError) return 'error';
+    if (isLoading) return 'loading';
+    if (view === 'compare') return 'compare';
+    if (cartItems.length === 0) return 'cart';
+    return 'folder';
+  };
+
+  const listEmptyType = getListEmptyType();
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
   };
 
-  const handleAddFolder = (name: string) => {
-    const folderId =
-      Math.max(0, ...folders.map((folder) => folder.folderId)) + 1;
-
-    setFolders([...folders, { folderId, name, itemCount: 0 }]);
-    setSelectedFolderId(folderId);
-  };
-
   const handleDelete = (cartItemId: number) => {
-    const title = cartItems.find(
+    if (isDeletePending) return;
+
+    const title = tabItems.find(
       (item) => item.cartItemId === cartItemId,
     )?.title;
     const isConfirmed = confirm(
@@ -81,25 +83,14 @@ function CartPage() {
 
     if (!isConfirmed) return;
 
-    setCartItems((prev) =>
-      prev.filter((item) => item.cartItemId !== cartItemId),
-    );
-    setFolders((prev) =>
-      prev.map((folder) =>
-        folderItemMap[folder.folderId]?.includes(cartItemId)
-          ? { ...folder, itemCount: folder.itemCount - 1 }
-          : folder,
-      ),
-    );
-    setFolderItemMap((prev) =>
-      Object.fromEntries(
-        Object.entries(prev).map(([folderId, itemIds]) => [
-          folderId,
-          itemIds.filter((id) => id !== cartItemId),
-        ]),
-      ),
-    );
-    setItemsChecked([cartItemId], false);
+    deleteCartItem(cartItemId, {
+      onSuccess: () => {
+        setItemsChecked([cartItemId], false);
+      },
+      onError: () => {
+        alert('자료 삭제에 실패했습니다. 다시 시도해주세요.');
+      },
+    });
   };
 
   return (
@@ -110,14 +101,14 @@ function CartPage() {
         <div className={styles.body}>
           <section className={styles.main}>
             <CartFolderSection
-              folders={folders}
-              selectedFolderId={selectedFolderId}
-              onSelectFolder={setSelectedFolderId}
-              onAddFolder={handleAddFolder}
+              tabs={tabs}
+              selectedTab={selectedTab}
+              onSelectTab={setSelectedTab}
+              onAddFolder={addFolder}
             />
             {!isCompareTableVisible && (
               <CartListSection
-                items={folderItems}
+                items={isError || isLoading ? [] : tabItems}
                 emptyType={listEmptyType}
                 checkedIds={checkedIds}
                 onItemsCheckedChange={setItemsChecked}
@@ -135,7 +126,9 @@ function CartPage() {
               />
             )}
             <NoticeBox />
-            {view === 'list' && folderItems.length > 0 && <Pagination />}
+            {view === 'list' && !isError && tabItems.length > 0 && (
+              <Pagination />
+            )}
           </section>
           <aside className={styles.aside}>
             <CartPurchaseSection
