@@ -54,15 +54,15 @@ function CartPage() {
 
   const isCompareTableVisible =
     view === 'compare' && !isError && tabItems.length > 0;
-  const listEmptyType: CartEmptyType = isError
-    ? 'error'
-    : isLoading
-      ? 'loading'
-      : view === 'compare'
-        ? 'compare'
-        : cartItems.length === 0
-          ? 'cart'
-          : 'folder';
+  const getListEmptyType = (): CartEmptyType => {
+    if (isError) return 'error';
+    if (isLoading) return 'loading';
+    if (view === 'compare') return 'compare';
+    if (cartItems.length === 0) return 'cart';
+    return 'folder';
+  };
+
+  const listEmptyType = getListEmptyType();
 
   const handleViewSelect = (nextView: CartViewTypes) => {
     setSearchParams({ view: nextView }, { replace: true });
