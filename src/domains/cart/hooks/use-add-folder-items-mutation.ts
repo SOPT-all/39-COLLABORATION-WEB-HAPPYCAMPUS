@@ -16,6 +16,9 @@ export const useAddFolderItemsMutation = () => {
         queryClient.invalidateQueries({
           queryKey: QUERY_KEY.folders.all,
         }),
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEY.material.all,
+        }),
       ]),
   });
 };
