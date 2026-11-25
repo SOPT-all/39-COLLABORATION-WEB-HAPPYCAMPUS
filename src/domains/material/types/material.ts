@@ -1,3 +1,4 @@
+import type { MaterialFolder } from '@domains/material/types/folder';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 
 export interface MaterialDetail {
@@ -15,4 +16,5 @@ export interface MaterialDetail {
   imageUrls: string[];
   cartItemId: number | null;
   tag: string;
+  folders: MaterialFolder[];
 }
