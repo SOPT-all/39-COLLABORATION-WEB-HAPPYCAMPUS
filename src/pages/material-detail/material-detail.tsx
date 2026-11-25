@@ -36,6 +36,7 @@ function MaterialDetailPage() {
               postId={material.postId}
               category={material.category}
               cartItemId={material.cartItemId}
+              savedFolderIds={material.folders.map(({ folderId }) => folderId)}
             />
           }
         />

@@ -16,9 +16,15 @@ interface AddToCartProps {
   postId: number;
   category: DefaultCategoryType;
   cartItemId: number | null;
+  savedFolderIds: number[];
 }
 
-const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
+const AddToCart = ({
+  postId,
+  category,
+  cartItemId,
+  savedFolderIds,
+}: AddToCartProps) => {
   const navigate = useNavigate();
 
   const { mutate, isPending } = useAddCartItemMutation();
@@ -42,9 +48,14 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
     });
   };
 
+  const openFolderSelectModal = () => {
+    setSelectedFolderIds(savedFolderIds);
+    setIsFolderSelectModalOpen(true);
+  };
+
   const confirmAndOpenModal = () => {
     if (confirm('이미 담긴 자료입니다. 다른 폴더에 추가하시겠어요?')) {
-      setIsFolderSelectModalOpen(true);
+      openFolderSelectModal();
     }
   };
 
@@ -65,8 +76,9 @@ const AddToCart = ({ postId, category, cartItemId }: AddToCartProps) => {
       { postId },
       {
         onSuccess: () => {
-          setIsFolderSelectModalOpen(true);
+          openFolderSelectModal();
         },
+
         onError: (error) => {
           if (getApiErrorCode(error) === 'CART_ITEM_DUPLICATED') {
             confirmAndOpenModal();
