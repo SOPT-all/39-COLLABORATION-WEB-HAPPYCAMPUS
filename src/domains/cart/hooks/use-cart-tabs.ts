@@ -4,7 +4,6 @@ import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-m
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { CartItem } from '@domains/cart/types/cart';
 import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
-import { isDefaultCategoryName } from '@domains/cart/utils/is-default-category-name';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
@@ -33,17 +32,13 @@ export const useCartTabs = (
     getInitialTab(initialCategory),
   );
 
-  const customFolders = folders.filter(
-    (folder) => !isDefaultCategoryName(folder.name),
-  );
-
   const tabs: FolderTabItem[] = [
     ...DEFAULT_CATEGORIES.map((category) => ({
       tab: { type: 'category', category } as const,
       name: DEFAULT_CATEGORY_LABEL[category],
       itemCount: cartItems.filter((item) => item.category === category).length,
     })),
-    ...customFolders.map(({ folderId, name, itemCount }) => ({
+    ...folders.map(({ folderId, name, itemCount }) => ({
       tab: { type: 'folder', folderId } as const,
       name,
       itemCount,
