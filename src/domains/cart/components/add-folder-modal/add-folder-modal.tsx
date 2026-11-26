@@ -9,7 +9,7 @@ import {
 
 import { FOLDER_CREATE_ERROR_MESSAGE } from '@domains/cart/constants/folder-create';
 import { IcClose } from '@shared/assets/icons';
-import { DEFAULT_CATEGORY_LABEL } from '@shared/constants/default-category';
+import { isDefaultCategoryName } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 import TextField from '@shared/ui/text-field/text-field';
 
@@ -50,9 +50,7 @@ const AddFolderModal = ({
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (
-      Object.values<string>(DEFAULT_CATEGORY_LABEL).includes(folderName.trim())
-    ) {
+    if (isDefaultCategoryName(folderName)) {
       alert(FOLDER_CREATE_ERROR_MESSAGE.duplicated);
       return;
     }
