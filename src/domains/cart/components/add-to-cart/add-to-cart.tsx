@@ -56,6 +56,12 @@ const AddToCart = ({
     setIsFolderSelectModalOpen(true);
   };
 
+  const closeFolderSelectModal = () => {
+    if (isAddFolderModalOpen) return;
+
+    setIsFolderSelectModalOpen(false);
+  };
+
   const confirmAndOpenModal = () => {
     if (confirm('이미 담긴 자료입니다. 다른 폴더에 추가하시겠어요?')) {
       openFolderSelectModal();
@@ -160,7 +166,7 @@ const AddToCart = ({
         selectedFolderIds={selectedFolderIds}
         onFolderToggle={handleFolderToggle}
         onCreateFolderClick={() => setIsAddFolderModalOpen(true)}
-        onClose={() => setIsFolderSelectModalOpen(false)}
+        onClose={closeFolderSelectModal}
         onCompareClick={navigateToCompare}
       />
       <AddFolderModal
