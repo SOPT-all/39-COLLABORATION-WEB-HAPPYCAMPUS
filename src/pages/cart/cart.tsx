@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 
 import CartCompareSection from '@domains/cart/components/cart-compare-section/cart-compare-section';
@@ -23,13 +24,19 @@ function CartPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: CartViewTypes =
     searchParams.get('view') === 'compare' ? 'compare' : 'list';
-  const { checkedIds, setItemsChecked } = useCheckedItems();
+  const { checkedIds, setItemsChecked, pruneCheckedIds } = useCheckedItems();
 
   const {
     data: cartItems = [],
+    isSuccess: isCartItemsSuccess,
     isPending: isCartItemsPending,
     isError: isCartItemsError,
   } = useCartItemsQuery({});
+
+  useEffect(() => {
+    if (!isCartItemsSuccess) return;
+    pruneCheckedIds(cartItems.map((item) => item.cartItemId));
+  }, [isCartItemsSuccess, cartItems, pruneCheckedIds]);
   const { tabs, selectedTab, setSelectedTab, addFolder, isFolderCreating } =
     useCartTabs(searchParams.get('category'), cartItems);
   const {
