@@ -57,6 +57,25 @@ const FolderSelectModal = ({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (!dialogRef.current?.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    const timerId = setTimeout(() =>
+      document.addEventListener('click', handleDocumentClick),
+    );
+
+    return () => {
+      clearTimeout(timerId);
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [isOpen, onClose]);
+
   const handleDialogKeyDown = (e: KeyboardEvent<HTMLDialogElement>) => {
     if (e.key === 'Escape') {
       onClose();

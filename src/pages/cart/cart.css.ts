@@ -1,6 +1,11 @@
 import { style } from '@vanilla-extract/css';
 
 import { pageContainer } from '@shared/styles/page.css';
+import { vars } from '@shared/styles/theme.css';
+
+export const page = style({
+  backgroundColor: vars.color.grey50,
+});
 
 export const content = style([
   pageContainer,

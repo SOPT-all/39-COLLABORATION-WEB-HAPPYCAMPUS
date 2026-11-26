@@ -74,6 +74,7 @@ export const folderList = style({
   flexDirection: 'column',
   gap: 4,
   borderBottom: `1px solid ${vars.color.grey200}`,
+  paddingBottom: 10,
   height: 200,
   overflowY: 'auto',
   scrollbarWidth: 'none',
