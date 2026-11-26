@@ -99,7 +99,7 @@ function CartPage() {
   };
 
   return (
-    <>
+    <div className={styles.page}>
       <TabProcess />
       <div className={styles.content}>
         <CartViewTabList selected={view} onSelect={handleViewSelect} />
@@ -144,7 +144,7 @@ function CartPage() {
           </aside>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
