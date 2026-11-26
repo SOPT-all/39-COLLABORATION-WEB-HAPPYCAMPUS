@@ -1,4 +1,5 @@
 // 단색 아이콘: svgr 컴포넌트로 import, CSS color로 색상 변경 가능
+export { default as GraphicError } from './mono/graphic-error.svg?react';
 export { default as IcAdd } from './mono/ic-add.svg?react';
 export { default as IcArrowUpRight } from './mono/ic-arrow-up-right.svg?react';
 export { default as IcCart } from './mono/ic-cart.svg?react';
@@ -23,7 +24,6 @@ export { default as IcShopping } from './mono/ic-shopping.svg?react';
 export { default as IcTooltipTail } from './mono/ic-tooltip-tail.svg?react';
 
 // 멀티컬러·이미지 아이콘: currentColor 변환 없이 URL로 import → <img src={...} />
-export { default as GraphicError } from './multi/graphic-error.svg';
 export { default as IcCartHuge } from './multi/ic-cart-huge.svg';
 export { default as IcFiletypeDocx } from './multi/ic-filetype-docx.svg';
 export { default as IcFiletypeHwp } from './multi/ic-filetype-hwp.svg';

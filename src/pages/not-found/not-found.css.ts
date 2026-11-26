@@ -18,6 +18,10 @@ export const messageContainer = style({
   gap: 20,
 });
 
+export const icon = style({
+  color: vars.color.grey400,
+});
+
 export const title = style({
   color: vars.color.grey700,
   ...vars.typography.heading2Sb18,
