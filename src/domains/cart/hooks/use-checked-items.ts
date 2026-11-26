@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   readCheckedIds,
@@ -20,5 +20,13 @@ export const useCheckedItems = () => {
     });
   };
 
-  return { checkedIds, setItemsChecked };
+  const pruneCheckedIds = useCallback((validIds: number[]) => {
+    setCheckedIds((prev) => {
+      const validIdSet = new Set(validIds);
+      const next = new Set([...prev].filter((id) => validIdSet.has(id)));
+      return next.size === prev.size ? prev : next;
+    });
+  }, []);
+
+  return { checkedIds, setItemsChecked, pruneCheckedIds };
 };
