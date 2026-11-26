@@ -15,6 +15,9 @@ export const label = recipe({
     hasText: {
       true: { padding: 4 },
     },
+    disabled: {
+      true: { cursor: 'not-allowed' },
+    },
   },
 });
 
@@ -40,8 +43,11 @@ export const box = style({
     [`${input}:checked + &`]: {
       backgroundColor: vars.color.blue500,
     },
-    [`${input} + &:hover`]: {
+    [`${input}:not(:disabled) + &:hover`]: {
       backgroundColor: vars.color.blue600,
+    },
+    [`${input}:disabled + &`]: {
+      backgroundColor: vars.color.grey300,
     },
     [`${input}:focus-visible + &`]: {
       outline: `2px solid ${vars.color.blue300}`,
