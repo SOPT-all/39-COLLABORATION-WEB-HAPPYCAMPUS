@@ -20,8 +20,9 @@ const CartCompareSection = ({
   onHide,
   onResetHidden,
 }: CartCompareSectionProps) => {
+  const hasVisibleItems = items.length > 0;
   const isAllChecked =
-    items.length > 0 && items.every((item) => checkedIds.has(item.cartItemId));
+    hasVisibleItems && items.every((item) => checkedIds.has(item.cartItemId));
 
   const handleAllCheckedChange = (checked: boolean) => {
     onItemsCheckedChange(
@@ -39,6 +40,7 @@ const CartCompareSection = ({
       <CartCompareToolbar
         isAllSelected={isAllChecked}
         onSelectAllChange={handleAllCheckedChange}
+        isSelectAllDisabled={!hasVisibleItems}
         onResetHidden={onResetHidden}
         isResetDisabled={!hasHiddenItems}
       />

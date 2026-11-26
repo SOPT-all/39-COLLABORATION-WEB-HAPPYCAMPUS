@@ -6,6 +6,7 @@ import * as styles from './cart-compare-toolbar.css';
 interface CartCompareToolbarProps {
   isAllSelected: boolean;
   onSelectAllChange: (checked: boolean) => void;
+  isSelectAllDisabled?: boolean;
   onResetHidden: () => void;
   isResetDisabled?: boolean;
 }
@@ -13,12 +14,17 @@ interface CartCompareToolbarProps {
 const CartCompareToolbar = ({
   isAllSelected,
   onSelectAllChange,
+  isSelectAllDisabled = false,
   onResetHidden,
   isResetDisabled = false,
 }: CartCompareToolbarProps) => {
   return (
     <div className={styles.container}>
-      <Checkbox checked={isAllSelected} onChange={onSelectAllChange}>
+      <Checkbox
+        checked={isAllSelected}
+        onChange={onSelectAllChange}
+        disabled={isSelectAllDisabled}
+      >
         전체 선택
       </Checkbox>
 
