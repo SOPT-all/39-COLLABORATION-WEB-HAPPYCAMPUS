@@ -1,4 +1,5 @@
 import {
+  type MouseEvent,
   type SubmitEvent,
   type SyntheticEvent,
   useEffect,
@@ -63,12 +64,30 @@ const AddFolderModal = ({
     onClose();
   };
 
+  const handleDialogClick = (event: MouseEvent<HTMLDialogElement>) => {
+    const { target, currentTarget, clientX, clientY } = event;
+
+    if (target !== currentTarget) return;
+
+    const { top, right, bottom, left } = currentTarget.getBoundingClientRect();
+
+    if (
+      clientX < left ||
+      clientX > right ||
+      clientY < top ||
+      clientY > bottom
+    ) {
+      onClose();
+    }
+  };
+
   return (
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
       className={styles.container}
       onCancel={handleDialogCancel}
+      onClick={handleDialogClick}
       onClose={() => setFolderName('')}
     >
       <header className={styles.header}>
