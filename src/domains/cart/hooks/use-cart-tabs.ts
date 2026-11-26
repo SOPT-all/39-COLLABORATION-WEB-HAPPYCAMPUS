@@ -7,6 +7,7 @@ import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
+  isDefaultCategoryName,
 } from '@shared/constants/default-category';
 
 const DEFAULT_CATEGORIES = Object.keys(
@@ -32,13 +33,17 @@ export const useCartTabs = (
     getInitialTab(initialCategory),
   );
 
+  const customFolders = folders.filter(
+    (folder) => !isDefaultCategoryName(folder.name),
+  );
+
   const tabs: FolderTabItem[] = [
     ...DEFAULT_CATEGORIES.map((category) => ({
       tab: { type: 'category', category } as const,
       name: DEFAULT_CATEGORY_LABEL[category],
       itemCount: cartItems.filter((item) => item.category === category).length,
     })),
-    ...folders.map(({ folderId, name, itemCount }) => ({
+    ...customFolders.map(({ folderId, name, itemCount }) => ({
       tab: { type: 'folder', folderId } as const,
       name,
       itemCount,
