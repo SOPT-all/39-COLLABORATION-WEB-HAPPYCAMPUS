@@ -8,6 +8,7 @@ export const container = style({
   alignItems: 'center',
   justifyContent: 'center',
   gap: 40,
+  backgroundColor: vars.color.grey50,
   height: 602,
 });
 
