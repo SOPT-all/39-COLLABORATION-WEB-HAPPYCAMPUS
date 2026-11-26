@@ -2,11 +2,11 @@ import { type KeyboardEvent, useEffect, useId, useRef } from 'react';
 
 import FolderOption from '@domains/cart/components/folder-option/folder-option';
 import type { Folder } from '@domains/cart/types/folder';
+import { isDefaultCategoryName } from '@domains/cart/utils/is-default-category-name';
 import { IcAdd, IcClose, IcInfo } from '@shared/assets/icons';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
-  isDefaultCategoryName,
 } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 

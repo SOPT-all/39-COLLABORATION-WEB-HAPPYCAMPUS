@@ -8,8 +8,8 @@ import {
 } from 'react';
 
 import { FOLDER_CREATE_ERROR_MESSAGE } from '@domains/cart/constants/folder-create';
+import { isDefaultCategoryName } from '@domains/cart/utils/is-default-category-name';
 import { IcClose } from '@shared/assets/icons';
-import { isDefaultCategoryName } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 import TextField from '@shared/ui/text-field/text-field';
 

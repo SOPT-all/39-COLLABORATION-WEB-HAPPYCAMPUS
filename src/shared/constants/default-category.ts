@@ -6,6 +6,3 @@ export const DEFAULT_CATEGORY_LABEL = {
 } as const;
 
 export type DefaultCategoryType = keyof typeof DEFAULT_CATEGORY_LABEL;
-
-export const isDefaultCategoryName = (name: string) =>
-  Object.values<string>(DEFAULT_CATEGORY_LABEL).includes(name.trim());

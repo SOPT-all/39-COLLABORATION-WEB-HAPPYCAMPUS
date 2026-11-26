@@ -4,10 +4,10 @@ import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-m
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { CartItem } from '@domains/cart/types/cart';
 import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
+import { isDefaultCategoryName } from '@domains/cart/utils/is-default-category-name';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
-  isDefaultCategoryName,
 } from '@shared/constants/default-category';
 
 const DEFAULT_CATEGORIES = Object.keys(
