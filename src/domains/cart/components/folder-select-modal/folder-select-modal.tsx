@@ -6,6 +6,7 @@ import { IcAdd, IcClose, IcInfo } from '@shared/assets/icons';
 import {
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
+  isDefaultCategoryName,
 } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 
@@ -45,6 +46,10 @@ const FolderSelectModal = ({
       (defaultCategory) => defaultCategory !== category,
     ),
   ];
+
+  const customFolders = folders.filter(
+    (folder) => !isDefaultCategoryName(folder.name),
+  );
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -98,7 +103,7 @@ const FolderSelectModal = ({
                 );
               })}
 
-              {folders.map((folder) => {
+              {customFolders.map((folder) => {
                 const isSelected = selectedFolderIds.includes(folder.folderId);
 
                 return (
