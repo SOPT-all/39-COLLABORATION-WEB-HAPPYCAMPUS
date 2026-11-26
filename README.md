@@ -4,7 +4,7 @@ PLAY SOPT 39기 합동 세미나 데스크탑 웹 1조
 
 > 과제부터 논문까지 필요한 자료를 찾고 거래하는 곳, 해피캠퍼스
 
-[프로젝트 소개 및 리디자인 포인트](#intro) / [팀원 소개](#team) / [역할 분담](#roles) / [팀원별 구현 사항](#implementation) / [Tech Stack](#tech-stack) / [Getting Started](#getting-started) / [Directory Structure](#directory-structure) / [Convention](#convention)
+[프로젝트 소개 및 리디자인 포인트](#intro) | [팀원 소개](#team) | [역할 분담](#roles) | [팀원별 구현 사항](#implementation) | [Tech Stack](#tech-stack) | [Getting Started](#getting-started) | [Directory Structure](#directory-structure) | [Convention](#convention)
 
 <br />
 
