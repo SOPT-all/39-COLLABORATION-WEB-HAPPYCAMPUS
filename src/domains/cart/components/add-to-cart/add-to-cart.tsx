@@ -7,6 +7,7 @@ import FolderSelectModal from '@domains/cart/components/folder-select-modal/fold
 import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
 import { useAddFolderItemsMutation } from '@domains/cart/hooks/use-add-folder-items-mutation';
 import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-mutation';
+import { useDeleteFolderItemMutation } from '@domains/cart/hooks/use-delete-folder-item-mutation';
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
@@ -30,6 +31,8 @@ const AddToCart = ({
   const { mutate, isPending } = useAddCartItemMutation();
   const { mutate: addFolderItems, isPending: isFolderSaving } =
     useAddFolderItemsMutation();
+  const { mutate: deleteFolderItem, isPending: isFolderDeleting } =
+    useDeleteFolderItemMutation();
 
   const isInCart = cartItemId !== null;
   const [isFolderSelectModalOpen, setIsFolderSelectModalOpen] =
@@ -100,11 +103,20 @@ const AddToCart = ({
   };
 
   const handleFolderToggle = (folderId: number, checked: boolean) => {
-    if (isFolderSaving || cartItemId === null) return;
+    if (isFolderSaving || isFolderDeleting || cartItemId === null) return;
 
     if (!checked) {
-      // TODO: 폴더에서 제외 API 호출 필요
       setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
+
+      deleteFolderItem(
+        { folderId, cartItemId },
+        {
+          onError: () => {
+            alert('저장에 실패했습니다. 다시 시도해주세요.');
+            setSelectedFolderIds((prev) => [...prev, folderId]);
+          },
+        },
+      );
       return;
     }
 
