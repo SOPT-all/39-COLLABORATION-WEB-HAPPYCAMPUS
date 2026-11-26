@@ -1,4 +1,5 @@
 // 단색 아이콘: svgr 컴포넌트로 import, CSS color로 색상 변경 가능
+export { default as GraphicError } from './mono/graphic-error.svg?react';
 export { default as IcAdd } from './mono/ic-add.svg?react';
 export { default as IcArrowUpRight } from './mono/ic-arrow-up-right.svg?react';
 export { default as IcCart } from './mono/ic-cart.svg?react';
