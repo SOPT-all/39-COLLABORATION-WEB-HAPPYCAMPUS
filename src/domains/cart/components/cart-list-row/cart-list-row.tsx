@@ -1,4 +1,5 @@
 import Checkbox from '@shared/ui/checkbox/checkbox';
+import { formatPrice } from '@shared/utils/format-price';
 import { getOptimizedImageUrl } from '@shared/utils/get-optimized-image-url';
 
 import * as styles from './cart-list-row.css';
@@ -55,7 +56,7 @@ const CartListRow = ({
           </div>
         </div>
       </td>
-      <td className={styles.priceCell}>{price.toLocaleString('ko-KR')}원</td>
+      <td className={styles.priceCell}>{formatPrice(price)}원</td>
       <td className={styles.savedDateCell}>{savedDate}</td>
       <td className={styles.deleteCell}>
         <button

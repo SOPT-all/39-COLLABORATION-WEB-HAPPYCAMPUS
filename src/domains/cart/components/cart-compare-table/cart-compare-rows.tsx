@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import CartCompareTocCell from '@domains/cart/components/cart-compare-toc-cell/cart-compare-toc-cell';
 import type { BadgeType } from '@domains/cart/constants/badge';
 import type { CartItem } from '@domains/cart/types/cart';
+import { formatPrice } from '@shared/utils/format-price';
 import { formatSavedYear } from '@shared/utils/format-saved-year';
 
 import * as styles from './cart-compare-table.css';
@@ -22,7 +23,7 @@ export const COMPARE_ROWS: CompareRow[] = [
     cell: 'value',
     badge: 'price',
     render: (item) => (
-      <span className={styles.priceText}>{item.price.toLocaleString()} 원</span>
+      <span className={styles.priceText}>{formatPrice(item.price)}원</span>
     ),
   },
   {
