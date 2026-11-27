@@ -5,9 +5,8 @@ import AddFolderModal from '@domains/cart/components/add-folder-modal/add-folder
 import CartEntry from '@domains/cart/components/cart-entry/cart-entry';
 import FolderSelectModal from '@domains/cart/components/folder-select-modal/folder-select-modal';
 import { useAddCartItemMutation } from '@domains/cart/hooks/use-add-cart-item-mutation';
-import { useAddFolderItemsMutation } from '@domains/cart/hooks/use-add-folder-items-mutation';
 import { useCreateFolderMutation } from '@domains/cart/hooks/use-create-folder-mutation';
-import { useDeleteFolderItemMutation } from '@domains/cart/hooks/use-delete-folder-item-mutation';
+import { useFolderSelection } from '@domains/cart/hooks/use-folder-selection';
 import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { DefaultCategoryType } from '@shared/constants/default-category';
 import { ROUTE_PATH } from '@shared/constants/path';
@@ -29,10 +28,8 @@ const AddToCart = ({
   const navigate = useNavigate();
 
   const { mutate, isPending } = useAddCartItemMutation();
-  const { mutate: addFolderItems, isPending: isFolderSaving } =
-    useAddFolderItemsMutation();
-  const { mutate: deleteFolderItem, isPending: isFolderDeleting } =
-    useDeleteFolderItemMutation();
+  const { selectedFolderIds, resetSelectedFolderIds, toggleFolder } =
+    useFolderSelection(cartItemId);
 
   const isInCart = cartItemId !== null;
   const [isFolderSelectModalOpen, setIsFolderSelectModalOpen] =
@@ -42,7 +39,6 @@ const AddToCart = ({
   const { data: folders = [] } = useFoldersQuery();
   const { mutate: createFolder, isPending: isFolderCreating } =
     useCreateFolderMutation();
-  const [selectedFolderIds, setSelectedFolderIds] = useState<number[]>([]);
 
   const navigateToCompare = () => {
     void navigate({
@@ -52,7 +48,7 @@ const AddToCart = ({
   };
 
   const openFolderSelectModal = () => {
-    setSelectedFolderIds(savedFolderIds);
+    resetSelectedFolderIds(savedFolderIds);
     setIsFolderSelectModalOpen(true);
   };
 
@@ -108,44 +104,13 @@ const AddToCart = ({
     }
   };
 
-  const handleFolderToggle = (folderId: number, checked: boolean) => {
-    if (isFolderSaving || isFolderDeleting || cartItemId === null) return;
-
-    if (!checked) {
-      setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
-
-      deleteFolderItem(
-        { folderId, cartItemId },
-        {
-          onError: () => {
-            alert('저장에 실패했습니다. 다시 시도해주세요.');
-            setSelectedFolderIds((prev) => [...prev, folderId]);
-          },
-        },
-      );
-      return;
-    }
-
-    setSelectedFolderIds((prev) => [...prev, folderId]);
-
-    addFolderItems(
-      { folderId, cartItemIds: [cartItemId] },
-      {
-        onError: () => {
-          alert('저장에 실패했습니다. 다시 시도해주세요.');
-          setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
-        },
-      },
-    );
-  };
-
   const handleFolderCreate = (folderName: string) => {
     createFolder(
       { name: folderName },
       {
         onSuccess: ({ folderId }) => {
           setIsAddFolderModalOpen(false);
-          handleFolderToggle(folderId, true);
+          toggleFolder(folderId, true);
         },
       },
     );
@@ -164,7 +129,7 @@ const AddToCart = ({
         category={category}
         folders={folders}
         selectedFolderIds={selectedFolderIds}
-        onFolderToggle={handleFolderToggle}
+        onFolderToggle={toggleFolder}
         onCreateFolderClick={() => setIsAddFolderModalOpen(true)}
         onClose={closeFolderSelectModal}
         onCompareClick={navigateToCompare}
