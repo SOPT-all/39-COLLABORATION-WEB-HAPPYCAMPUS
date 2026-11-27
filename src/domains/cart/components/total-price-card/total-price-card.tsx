@@ -1,4 +1,5 @@
 import Button from '@shared/ui/button/button';
+import { formatPrice } from '@shared/utils/format-price';
 
 import * as styles from './total-price-card.css';
 
@@ -35,9 +36,7 @@ const TotalPriceCard = ({
           {priceItems.map(({ label, amount }) => (
             <div key={label} className={styles.priceItem}>
               <dt>{label}</dt>
-              <dd className={styles.priceAmount}>
-                {amount.toLocaleString('ko-KR')}원
-              </dd>
+              <dd className={styles.priceAmount}>{formatPrice(amount)}원</dd>
             </div>
           ))}
         </dl>
@@ -45,7 +44,7 @@ const TotalPriceCard = ({
         <dl className={styles.total}>
           <dt>최종 구매금액</dt>
           <dd className={styles.totalAmount}>
-            {totalAmount.toLocaleString('ko-KR')}
+            {formatPrice(totalAmount)}
             <span className={styles.totalUnit}>원</span>
           </dd>
         </dl>

@@ -5,20 +5,14 @@ import { useFoldersQuery } from '@domains/cart/hooks/use-folders-query';
 import type { CartItem } from '@domains/cart/types/cart';
 import type { FolderTabItem, SelectedTab } from '@domains/cart/types/folder';
 import {
+  DEFAULT_CATEGORIES,
   DEFAULT_CATEGORY_LABEL,
-  type DefaultCategoryType,
+  isDefaultCategory,
 } from '@shared/constants/default-category';
-
-const DEFAULT_CATEGORIES = Object.keys(
-  DEFAULT_CATEGORY_LABEL,
-) as DefaultCategoryType[];
 
 const getInitialTab = (category: string | null): SelectedTab => ({
   type: 'category',
-  category:
-    category && category in DEFAULT_CATEGORY_LABEL
-      ? (category as DefaultCategoryType)
-      : DEFAULT_CATEGORIES[0],
+  category: isDefaultCategory(category) ? category : DEFAULT_CATEGORIES[0],
 });
 
 export const useCartTabs = (

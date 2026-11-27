@@ -13,7 +13,7 @@ const POST_ID = 1;
 function MaterialDetailPage() {
   const { data: material } = useMaterialDetailQuery(POST_ID);
 
-  if (!material) return null;
+  if (!material) return <div className={styles.loadingContainer} />;
 
   return (
     <div className={styles.materialDetailContainer}>

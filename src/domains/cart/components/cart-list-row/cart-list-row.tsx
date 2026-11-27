@@ -1,4 +1,6 @@
 import Checkbox from '@shared/ui/checkbox/checkbox';
+import { formatPrice } from '@shared/utils/format-price';
+import { getOptimizedImageUrl } from '@shared/utils/get-optimized-image-url';
 
 import * as styles from './cart-list-row.css';
 
@@ -35,7 +37,12 @@ const CartListRow = ({
       <td className={styles.infoCell}>
         <div className={styles.infoContainer}>
           {coverImageUrl ? (
-            <img src={coverImageUrl} alt="" className={styles.thumbnail} />
+            <img
+              src={getOptimizedImageUrl(coverImageUrl, 'thumbnail')}
+              alt=""
+              className={styles.thumbnail}
+              loading="lazy"
+            />
           ) : (
             <div className={styles.thumbnailPlaceholder} aria-hidden>
               <span className={styles.thumbnailPlaceholderTitle}>{title}</span>
@@ -49,7 +56,7 @@ const CartListRow = ({
           </div>
         </div>
       </td>
-      <td className={styles.priceCell}>{price.toLocaleString('ko-KR')}원</td>
+      <td className={styles.priceCell}>{formatPrice(price)}원</td>
       <td className={styles.savedDateCell}>{savedDate}</td>
       <td className={styles.deleteCell}>
         <button
