@@ -23,7 +23,7 @@ export const COMPARE_ROWS: CompareRow[] = [
     cell: 'value',
     badge: 'price',
     render: (item) => (
-      <span className={styles.priceText}>{formatPrice(item.price)}원</span>
+      <span className={styles.priceText}>{formatPrice(item.price)} 원</span>
     ),
   },
   {
