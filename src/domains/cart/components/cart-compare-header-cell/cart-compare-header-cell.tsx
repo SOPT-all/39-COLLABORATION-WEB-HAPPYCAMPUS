@@ -1,5 +1,6 @@
 import HideButton from '@domains/cart/components/hide-button/hide-button';
 import Checkbox from '@shared/ui/checkbox/checkbox';
+import { getOptimizedImageUrl } from '@shared/utils/get-optimized-image-url';
 
 import * as styles from './cart-compare-header-cell.css';
 
@@ -31,7 +32,7 @@ const CartCompareHeaderCell = ({
       {coverImageUrl ? (
         <img
           className={styles.cover}
-          src={coverImageUrl}
+          src={getOptimizedImageUrl(coverImageUrl, 'thumbnail')}
           alt={`${title} 표지`}
         />
       ) : (
