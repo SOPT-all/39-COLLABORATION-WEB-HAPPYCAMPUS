@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { IcExpand, IcPreviewEmpty } from '@shared/assets/icons';
+import { getOptimizedImageUrl } from '@shared/utils/get-optimized-image-url';
 
 import PaginationButton from './pagination-button';
 
@@ -29,8 +30,9 @@ const Preview = ({ images }: PreviewProps) => {
         {hasImage ? (
           <img
             className={styles.pageImage}
-            src={images[currentPage - 1]}
+            src={getOptimizedImageUrl(images[currentPage - 1], 'preview')}
             alt={`미리보기 ${currentPage}페이지`}
+            fetchPriority="high"
           />
         ) : (
           <div className={styles.emptyPage}>
