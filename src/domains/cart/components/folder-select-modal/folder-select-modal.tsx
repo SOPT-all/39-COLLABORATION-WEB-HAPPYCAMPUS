@@ -4,16 +4,13 @@ import FolderOption from '@domains/cart/components/folder-option/folder-option';
 import type { Folder } from '@domains/cart/types/folder';
 import { IcAdd, IcClose, IcInfo } from '@shared/assets/icons';
 import {
+  DEFAULT_CATEGORIES,
   DEFAULT_CATEGORY_LABEL,
   type DefaultCategoryType,
 } from '@shared/constants/default-category';
 import Button from '@shared/ui/button/button';
 
 import * as styles from './folder-select-modal.css';
-
-const DEFAULT_CATEGORIES = Object.keys(
-  DEFAULT_CATEGORY_LABEL,
-) as DefaultCategoryType[];
 
 interface FolderSelectModalProps {
   isOpen: boolean;
