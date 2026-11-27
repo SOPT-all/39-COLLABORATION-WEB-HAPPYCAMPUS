@@ -20,6 +20,10 @@ export const useFolderSelection = (cartItemId: number | null) => {
     setSelectedFolderIds((prev) => prev.filter((id) => id !== folderId));
   };
 
+  const resetSelectedFolderIds = (folderIds: number[]) => {
+    setSelectedFolderIds(folderIds);
+  };
+
   const toggleFolder = (folderId: number, checked: boolean) => {
     if (isFolderSaving || isFolderDeleting || cartItemId === null) return;
 
@@ -53,7 +57,7 @@ export const useFolderSelection = (cartItemId: number | null) => {
 
   return {
     selectedFolderIds,
-    resetSelectedFolderIds: setSelectedFolderIds,
+    resetSelectedFolderIds,
     toggleFolder,
   };
 };
