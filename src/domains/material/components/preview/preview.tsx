@@ -32,6 +32,7 @@ const Preview = ({ images }: PreviewProps) => {
             className={styles.pageImage}
             src={getOptimizedImageUrl(images[currentPage - 1], 'preview')}
             alt={`미리보기 ${currentPage}페이지`}
+            fetchPriority="high"
           />
         ) : (
           <div className={styles.emptyPage}>

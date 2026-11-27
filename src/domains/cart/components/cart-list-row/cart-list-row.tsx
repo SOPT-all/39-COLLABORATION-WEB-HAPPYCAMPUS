@@ -40,6 +40,7 @@ const CartListRow = ({
               src={getOptimizedImageUrl(coverImageUrl, 'thumbnail')}
               alt=""
               className={styles.thumbnail}
+              loading="lazy"
             />
           ) : (
             <div className={styles.thumbnailPlaceholder} aria-hidden>
