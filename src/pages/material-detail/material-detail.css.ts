@@ -11,6 +11,10 @@ export const materialDetailContainer = style([
   },
 ]);
 
+export const loadingContainer = style({
+  minHeight: '100vh',
+});
+
 export const bodyContainer = style({
   display: 'flex',
   alignItems: 'flex-start',
